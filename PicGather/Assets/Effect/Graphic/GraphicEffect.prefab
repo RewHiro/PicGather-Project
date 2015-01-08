@@ -12,7 +12,7 @@ GameObject:
   - 199: {fileID: 19931958}
   - 114: {fileID: 11431958}
   m_Layer: 0
-  m_Name: FairyEffect
+  m_Name: GraphicEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
