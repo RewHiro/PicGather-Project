@@ -37,7 +37,19 @@ TagManager:
   User Layer 30: 
   User Layer 31: 
   m_SortingLayers:
+  - name: BackGround
+    userID: 2
+    uniqueID: 297478383
+    locked: 0
   - name: Default
     userID: 0
     uniqueID: 0
+    locked: 0
+  - name: DrawingObject
+    userID: 3
+    uniqueID: 3586661081
+    locked: 0
+  - name: ParticleSystem
+    userID: 1
+    uniqueID: 3838204191
     locked: 0
