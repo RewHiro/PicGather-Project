@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb106826857b1bb48a25d033ae7962e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioEffectClip: {fileID: 8300000, guid: 4d23b756312dfb74b94f99e8a6aafeab, type: 3}
+  AudioEffectClip:
+  - {fileID: 8300000, guid: 4d23b756312dfb74b94f99e8a6aafeab, type: 3}
+  - {fileID: 8300000, guid: 378aaead9b41dc04cbb41cc8797d56f4, type: 3}
+  - {fileID: 8300000, guid: 14d1797282276364bbe2ab32cf049c04, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
