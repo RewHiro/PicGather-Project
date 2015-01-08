@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EffectGraphicsController : MonoBehaviour {
+public class EffectController : MonoBehaviour {
 
     [SerializeField]
     private GameObject EffectPrefab = null;
@@ -18,5 +18,6 @@ public class EffectGraphicsController : MonoBehaviour {
         {
             Instantiate(EffectPrefab, this.gameObject.transform.position, Quaternion.identity);
         }
+
 	}
 }
