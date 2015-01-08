@@ -590,7 +590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d53c626120467c428453191c3a34c65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EffectPrefab: {fileID: 131958, guid: f3f9ac3b14a9254438f44dcf82f872f9, type: 2}
+  GraphicEffectPrefab: {fileID: 131958, guid: f3f9ac3b14a9254438f44dcf82f872f9, type: 2}
+  SoundEffectPrefab: {fileID: 182950, guid: c3c8d6d61d1d3b349bcf8df7a6542059, type: 2}
 --- !u!23 &1584190238
 Renderer:
   m_ObjectHideFlags: 0
@@ -857,6 +858,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11403230, guid: 03bf7acbbcecc3e4b953cbfcc605aa71, type: 2}
+      propertyPath: GraphicEffectPrefab
+      value: 
+      objectReference: {fileID: 131958, guid: f3f9ac3b14a9254438f44dcf82f872f9, type: 2}
+    - target: {fileID: 11403230, guid: 03bf7acbbcecc3e4b953cbfcc605aa71, type: 2}
+      propertyPath: SoundEffectPrefab
+      value: 
+      objectReference: {fileID: 182950, guid: c3c8d6d61d1d3b349bcf8df7a6542059, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03bf7acbbcecc3e4b953cbfcc605aa71, type: 2}
   m_RootGameObject: {fileID: 1584190236}
