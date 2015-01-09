@@ -40,9 +40,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EffectPrefab:
-  - {fileID: 131958, guid: f3f9ac3b14a9254438f44dcf82f872f9, type: 2}
-  - {fileID: 148548, guid: 0a79d8512f01a4440b113c5f03686d53, type: 2}
-  - {fileID: 101018, guid: 78b539b9cefc26746bea1d001aff7888, type: 2}
+  - {fileID: 142932, guid: f3f9ac3b14a9254438f44dcf82f872f9, type: 2}
+  - {fileID: 194472, guid: 0a79d8512f01a4440b113c5f03686d53, type: 2}
+  - {fileID: 169710, guid: 78b539b9cefc26746bea1d001aff7888, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

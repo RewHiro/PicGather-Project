@@ -9,6 +9,8 @@ public class GraphicEffectController : MonoBehaviour
 
     GameObject Particles;
 
+    float LifeTime = 0;
+ 
     void Start () {
         var index = Random.Range(0, EffectPrefab.Count);
 
@@ -17,12 +19,16 @@ public class GraphicEffectController : MonoBehaviour
 
         Particles.transform.parent = transform;
 
-        Particles.particleSystem.renderer.sortingLayerName = "ParticleSystem";
+        foreach (Transform child in Particles.transform)
+        {
+            child.particleSystem.renderer.sortingLayerName = "ParticleSystem";
+            LifeTime = child.particleSystem.startLifetime;
+        }
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-        Destroy(this.gameObject, Particles.particleSystem.startLifetime);
+        Destroy(gameObject, LifeTime);
 	}
 }
