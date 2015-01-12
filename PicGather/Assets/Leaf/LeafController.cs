@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/12 
+/// brief ： 葉っぱのビルボード化
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 
 public class LeafController : MonoBehaviour {

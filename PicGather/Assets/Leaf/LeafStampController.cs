@@ -32,7 +32,8 @@ public class LeafStampController : MonoBehaviour {
             float Distance = Vector3.Distance(BeforeLeafObjectPos, TouchManager.TapPos);
             if (Distance >= CanInstanceDistance)
             {
-                Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
+                var LeafClone = (GameObject)Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
+                LeafClone.gameObject.name = LeafPrefab.gameObject.name;
                 BeforeLeafObjectPos = TouchManager.TapPos;
             }
         }

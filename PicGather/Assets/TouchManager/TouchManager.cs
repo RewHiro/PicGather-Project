@@ -6,7 +6,9 @@ public class TouchManager : MonoBehaviour {
     public static bool IsPhaseTap { get; private set; }
     public static bool IsPhaseSwipe { get; private set; }
     public static Vector3 TapPos { get; private set; }
- 
+
+    static GameObject RayCastHitObject = null;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -30,7 +32,7 @@ public class TouchManager : MonoBehaviour {
         if (touch.phase == TouchPhase.Moved) IsPhaseSwipe = true;
     }
 
-    public static bool IsTouching(GameObject gameObject_ )
+    public static bool IsTouching(GameObject gameObject_)
     {
         SetNonPhase();
 
@@ -41,7 +43,7 @@ public class TouchManager : MonoBehaviour {
                 Ray ray = Camera.main.ScreenPointToRay(touch.position);
                 RaycastHit hit = new RaycastHit();
 
-                if (IsRayCatsHit(ray, hit,touch, gameObject_))
+                if (IsRayCatsHit(ray, hit, touch, gameObject_, (1 << gameObject_.layer)))
                 {
                     return true;
                 }
@@ -61,7 +63,7 @@ public class TouchManager : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
-            if (IsRayCatsHit(ray, hit,gameObject_))
+            if (IsRayCatsHit(ray, hit, gameObject_, (1 << gameObject_.layer)))
             {
                 return true;
             }
@@ -80,13 +82,14 @@ public class TouchManager : MonoBehaviour {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
-            if (IsRayCatsHit(ray, hit, gameObject_))
+            if (IsRayCatsHit(ray, hit, gameObject_, (1 << gameObject_.layer)))
             {
                 return true;
             }
         }
         return false;
     }
+
 
     /// <summary>
     /// RayCastで当たったかどうかの判定
@@ -95,11 +98,13 @@ public class TouchManager : MonoBehaviour {
     /// <param name="ray"></param>
     /// <param name="hit"></param>
     /// <returns>当たったかどうか</returns>
-    static bool IsRayCatsHit(Ray ray, RaycastHit hit,GameObject gameObject_)
+    static bool IsRayCatsHit(Ray ray, RaycastHit hit, GameObject gameObject_, int layerMask)
     {
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, layerMask))
         {
-            if (hit.collider.gameObject == gameObject_)
+            RayCastHitObject = hit.collider.gameObject;
+
+            if (RayCastHitObject == gameObject_)
             {
                 TapPos = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 return true;
@@ -115,13 +120,14 @@ public class TouchManager : MonoBehaviour {
     /// <param name="ray"></param>
     /// <param name="hit"></param>
     /// <returns>当たったかどうか</returns>
-    static bool IsRayCatsHit(Ray ray, RaycastHit hit,Touch touch, GameObject gameObject_)
+    static bool IsRayCatsHit(Ray ray, RaycastHit hit, Touch touch, GameObject gameObject_, int layerMask)
     {
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, layerMask))
         {
             TouchPhaseJudgment(touch);
+            RayCastHitObject = hit.collider.gameObject;
 
-            if (hit.collider.gameObject == gameObject_)
+            if (RayCastHitObject == gameObject_)
             {
                 TapPos = new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 return true;
