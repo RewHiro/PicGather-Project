@@ -5,8 +5,8 @@ public class TouchManager : MonoBehaviour {
 
     public static bool IsPhaseTap { get; private set; }
     public static bool IsPhaseSwipe { get; private set; }
-    public static Vector3 TapPos {get;private set;}
-
+    public static Vector3 TapPos { get; private set; }
+ 
 	// Use this for initialization
 	void Start () 
     {
@@ -34,9 +34,6 @@ public class TouchManager : MonoBehaviour {
     {
         SetNonPhase();
 
-        if (IsMouseButton(gameObject_)) return true;
-        if (IsMouseButtonDown(gameObject_)) return true;
-
         foreach (var touch in Input.touches)
         {
             if (touch.phase == TouchPhase.Began)
@@ -54,12 +51,11 @@ public class TouchManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// デバックで使用
     /// マウス左ボタンが押されてるときの処理
     /// Rayを飛ばして当たってたら、trueを返す
     /// </summary>
     /// <returns>当たったかどうか?の判定</returns>
-    static bool IsMouseButton(GameObject gameObject_)
+    public static bool IsMouseButton(GameObject gameObject_)
     {
         if (Input.GetMouseButton(0))
         {
@@ -74,12 +70,11 @@ public class TouchManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// デバックで使用
     /// マウス左ボタンが押されたときの処理
     /// Rayを飛ばして当たってたら、trueを返す
     /// </summary>
     /// <returns>当たったかどうか?の判定</returns>
-    static bool IsMouseButtonDown(GameObject gameObject_)
+    public static bool IsMouseButtonDown(GameObject gameObject_)
     {
         if (Input.GetMouseButtonDown(0))
         {

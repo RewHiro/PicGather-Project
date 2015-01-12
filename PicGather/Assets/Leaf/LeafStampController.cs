@@ -1,6 +1,6 @@
 ﻿/// --------------------------------------------------------------------
 /// date ： 2015/01/12  
-/// brief ： 葉のスタンプ処理。　木の枝をアップしたら生成される
+/// brief ： 葉のスタンプ処理。　木の枝をタップしたら生成される
 /// author ： Yamada Masamistu
 /// --------------------------------------------------------------------
 
@@ -15,6 +15,11 @@ public class LeafStampController : MonoBehaviour {
     [SerializeField]
     GameObject TreeObject = null;
 
+    [SerializeField]
+    float CanInstanceDistance = 0.5f;
+
+    Vector3 BeforeLeafObjectPos = Vector3.zero;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -22,9 +27,14 @@ public class LeafStampController : MonoBehaviour {
     
 	void Update () 
     {
-        if (TouchManager.IsTouching(TreeObject))
+        if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButton(TreeObject))
         {
-            Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
+            float Distance = Vector3.Distance(BeforeLeafObjectPos, TouchManager.TapPos);
+            if (Distance >= CanInstanceDistance)
+            {
+                Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
+                BeforeLeafObjectPos = TouchManager.TapPos;
+            }
         }
 	}
 }
