@@ -19,32 +19,11 @@ public class EffectController : MonoBehaviour {
 	void Start () {
 	
 	}
-	
-    /// <summary>
-    /// デバックで使用
-    /// マウス左ボタンが押されたときの処理
-    /// Rayを飛ばして当たってたら、trueを返す
-    /// </summary>
-    /// <returns>当たったかどうか?の判定</returns>
-    bool IsMouseButtonDown()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit = new RaycastHit();
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
 
 	// Update is called once per frame
 	void Update () 
     {
-        if (TouchManager.IsTouching(this.gameObject) || IsMouseButtonDown())
+        if (TouchManager.IsTouching(this.gameObject) || TouchManager.IsMouseButtonDown(this.gameObject))
         {
             Instantiate(GraphicEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
             Instantiate(SoundEffectPrefab, this.gameObject.transform.position, Quaternion.identity);

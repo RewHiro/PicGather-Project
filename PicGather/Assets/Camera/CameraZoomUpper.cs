@@ -16,7 +16,7 @@ public class CameraZoomUpper : MonoBehaviour {
 
         MouseWheelCommand();
 
-        TouchDeltaYCommand();
+       // TouchDeltaYCommand();
     
         PinchCommand();
 	}

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 public class PaintManager : MonoBehaviour {
 
     [SerializeField]
-    GameObject prefab;
+    GameObject prefab = null;
 
     //　ペイントに必要な制御
     public bool isDraw { get; private set; }
