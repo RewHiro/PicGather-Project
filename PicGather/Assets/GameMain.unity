@@ -117,6 +117,10 @@ Prefab:
       propertyPath: CenterObject
       value: 
       objectReference: {fileID: 1660806533}
+    - target: {fileID: 122106, guid: a6dc96a2a79f69249b6ac0c3a014be51, type: 2}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6dc96a2a79f69249b6ac0c3a014be51, type: 2}
   m_RootGameObject: {fileID: 1409304612}
@@ -421,8 +425,8 @@ Transform:
 --- !u!1 &621807971
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 104166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+  m_PrefabInternal: {fileID: 1960005664}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 621807973}
@@ -437,8 +441,9 @@ GameObject:
 --- !u!114 &621807972
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11404166, guid: e02d279ad7f23aa4382175a607a6a217,
+    type: 2}
+  m_PrefabInternal: {fileID: 1960005664}
   m_GameObject: {fileID: 621807971}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -446,11 +451,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LeafPrefab: {fileID: 179472, guid: b513d0424e169f643ad4c1f2d233fd7f, type: 2}
+  TreeObject: {fileID: 1660806533}
+  CanInstanceDistance: .5
 --- !u!4 &621807973
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+  m_PrefabInternal: {fileID: 1960005664}
   m_GameObject: {fileID: 621807971}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -671,7 +678,7 @@ GameObject:
   - 64: {fileID: 1409304615}
   - 23: {fileID: 1409304614}
   - 114: {fileID: 1409304613}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -758,7 +765,8 @@ GameObject:
   - 65: {fileID: 1584190239}
   - 23: {fileID: 1584190238}
   - 114: {fileID: 1584190237}
-  m_Layer: 0
+  - 114: {fileID: 1584190242}
+  m_Layer: 9
   m_Name: Fairy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -833,6 +841,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!114 &1584190242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1584190236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47579b34141d994a88bb2756aa3ccb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TreeObject: {fileID: 1660806533}
 --- !u!1 &1660806533
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +864,7 @@ GameObject:
   - 33: {fileID: 1660806536}
   - 23: {fileID: 1660806535}
   - 64: {fileID: 1660806534}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -970,10 +990,62 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: c1234f2b24d7706418bd3b465e16c908, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9500000, guid: c1234f2b24d7706418bd3b465e16c908, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: c1234f2b24d7706418bd3b465e16c908, type: 3}
   m_RootGameObject: {fileID: 1660806533}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
+--- !u!1001 &1960005664
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11404166, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+      propertyPath: TreeObject
+      value: 
+      objectReference: {fileID: 1660806533}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e02d279ad7f23aa4382175a607a6a217, type: 2}
+  m_RootGameObject: {fileID: 621807971}
   m_IsPrefabParent: 0
   m_IsExploded: 1
 --- !u!1001 &2007798047
@@ -1067,6 +1139,10 @@ Prefab:
       propertyPath: SoundEffectPrefab
       value: 
       objectReference: {fileID: 182950, guid: c3c8d6d61d1d3b349bcf8df7a6542059, type: 2}
+    - target: {fileID: 103230, guid: 03bf7acbbcecc3e4b953cbfcc605aa71, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03bf7acbbcecc3e4b953cbfcc605aa71, type: 2}
   m_RootGameObject: {fileID: 1584190236}

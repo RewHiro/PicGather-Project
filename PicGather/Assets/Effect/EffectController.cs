@@ -23,10 +23,10 @@ public class EffectController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        if (TouchManager.IsTouching(this.gameObject) || TouchManager.IsMouseButtonDown(this.gameObject))
+        if (TouchManager.IsTouching(gameObject) || TouchManager.IsMouseButtonDown(gameObject))
         {
-            Instantiate(GraphicEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
-            Instantiate(SoundEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
+            Instantiate(GraphicEffectPrefab, gameObject.transform.position, Quaternion.identity);
+            Instantiate(SoundEffectPrefab, gameObject.transform.position, Quaternion.identity);
         }
 
 	}
