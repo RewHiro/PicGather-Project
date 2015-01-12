@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/08    
+/// brief ： SortingLayerを指定する
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+/// 
+using UnityEngine;
 using System.Collections;
 
 public class SortingLayerSetting : MonoBehaviour {
