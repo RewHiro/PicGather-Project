@@ -21,13 +21,13 @@ public class LeafStampController : MonoBehaviour {
 	}
     /// <summary>
     /// デバックで使用
-    /// マウス左ボタンが押されたときの処理
+    /// マウス左ボタンが押されてるときの処理
     /// Rayを飛ばして当たってたら、trueを返す
     /// </summary>
     /// <returns>当たったかどうか?の判定</returns>
-    bool IsMouseButtonDown()
+    bool IsMouseButton()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
@@ -38,7 +38,6 @@ public class LeafStampController : MonoBehaviour {
         }
         return false;
     }
-
 
     /// <summary>
     /// RayCastで当たったかどうかの判定
@@ -60,8 +59,9 @@ public class LeafStampController : MonoBehaviour {
         return false;
     }
 
-	void Update () {
-        if (IsMouseButtonDown())
+	void Update () 
+    {
+        if (IsMouseButton())
         {
             Instantiate(LeafPrefab, TapPos, Quaternion.identity);
         }
