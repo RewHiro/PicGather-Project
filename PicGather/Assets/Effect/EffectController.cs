@@ -35,7 +35,10 @@ public class EffectController : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit))
             {
-                return true;
+                if(hit.collider.gameObject.name == gameObject.name)
+                {
+                    return true;
+                }
             }
         }
         return false;
