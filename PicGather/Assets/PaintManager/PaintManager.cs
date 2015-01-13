@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -10,10 +11,18 @@ using System.Collections.Generic;
 public class PaintManager : MonoBehaviour {
 
     [SerializeField]
-    GameObject prefab = null;
+    GameObject prefab;
 
     //　ペイントに必要な制御
-    public bool isDraw { get; private set; }
+    public bool isDraw { get; private set; }    //　true：描画中
+    public Color32 lineColor { get; private set; }
+    public int lineCount { get; private set; }
+
+    void Start()
+    {
+        lineColor = Color.black;
+        lineCount = 0;
+    }
 
     void OnMouseDown()
     {
@@ -23,6 +32,9 @@ public class PaintManager : MonoBehaviour {
 
     void OnMouseUp()
     {
+        lineCount++;
         isDraw = false;
     }
+
+    public void ChangeColor(GameObject button) { lineColor = button.GetComponent<Image>().color; }
 }

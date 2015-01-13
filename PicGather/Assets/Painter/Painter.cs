@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//　マウスでペンのように描ける機能
-//　線描画
+//　マウスでペンのように描ける機能・線描画
 //
 //　FIXME:マウスをゆっくり動かすと線が途切れ、途切れになる。
 //
@@ -12,21 +11,31 @@ public class Painter : MonoBehaviour {
     Vector3 oldMousePos = Vector3.zero;
     LineRenderer line = null;
     int lineCount = 0;
-
+    
     //　一筆制御に必要な情報
-    bool isDrew  = false;
+    bool isDrew  = false;   //　true：描画終了
+    GameObject lineManager;
 
-    void Start()
-    {
+    void Start(){
+
+        //　線に必要な情報を取得
+        lineManager = GameObject.Find("PaintManager");
         line = GetComponent<LineRenderer>();
-        line.SetWidth(0.01f, 0.01f);
+        var component = gameObject.GetComponent<LineRenderer>();
+        var color = lineManager.GetComponent<PaintManager>().lineColor;
+        var offset = lineManager.GetComponent<PaintManager>().lineCount;
+
+        //　線の情報を設定
+        component.renderer.material.color = color;
         oldMousePos = Input.mousePosition;
+        gameObject.renderer.sortingOrder = offset;
+        line.SetWidth(0.01f, 0.01f);
     }
 
     void Update()
     {
         OneStrokeDraw();
-        StopDraw();
+        StopDrawing();
     }
 
     //　一筆描画
@@ -53,12 +62,9 @@ public class Painter : MonoBehaviour {
     }
 
     //　描画終了の制御
-    void StopDraw()
+    void StopDrawing()
     {
-        if (isDrew) return;
-
-        GameObject line_mgr = GameObject.Find("PaintManager");
-        if (line_mgr.GetComponent<PaintManager>().isDraw) return;
+        if (isDrew || lineManager.GetComponent<PaintManager>().isDraw) return;
         isDrew  = true;
     }
 }
