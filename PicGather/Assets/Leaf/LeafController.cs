@@ -15,6 +15,9 @@ public class LeafController : MonoBehaviour {
     [SerializeField]
     const float WitherTime = 10.0f;
 
+    [SerializeField]
+    GameObject FruitPrefab = null;
+
     Vector3 SwayVelocity = new Vector3(0, -1, 0);
     float LifeTime = 0;
     bool IsDead = false;
@@ -53,6 +56,8 @@ public class LeafController : MonoBehaviour {
         if (LifeTime >= WitherTime)
         {
             IsDead = true;
+            var GameClone = (GameObject)Instantiate(FruitPrefab, gameObject.transform.position, Quaternion.identity);
+            GameClone.name = FruitPrefab.name;
         }
     }
 
