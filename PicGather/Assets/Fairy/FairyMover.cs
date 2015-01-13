@@ -40,7 +40,7 @@ public class FairyMover : MonoBehaviour {
     void Move()
     {
         if (IsMove) return;
-        if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButton(TreeObject))
+        if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButtonDown(TreeObject))
         {
             iTween.MoveTo(gameObject, iTween.Hash("position", TouchManager.TapPos,
                             "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));

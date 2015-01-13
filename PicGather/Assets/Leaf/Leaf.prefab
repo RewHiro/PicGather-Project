@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703dcac56c3ed694aa053b3728d7bee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeadLeafColor: {r: 1, g: .278431386, b: 0, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
