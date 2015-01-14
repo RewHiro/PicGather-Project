@@ -12,6 +12,7 @@ public class CloudMover : MonoBehaviour {
     [SerializeField]
     private GameObject CenterObject = null;
 
+
     float Radius = 0.0f;
     float Angle = 0.0f;
 	

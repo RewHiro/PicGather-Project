@@ -7,7 +7,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LeafStampController : MonoBehaviour {
+public class LeafStampController : CharacterManager {
 
     [SerializeField]
     GameObject LeafPrefab = null;
@@ -22,10 +22,20 @@ public class LeafStampController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        NonSelect();
 	}
     
 	void Update () 
+    {
+        if (!IsSelect) return;
+            
+        CreateLeaf();
+	}
+
+    /// <summary>
+    /// 葉っぱを生成
+    /// </summary>
+    void CreateLeaf()
     {
         if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButton(TreeObject))
         {
@@ -37,5 +47,5 @@ public class LeafStampController : MonoBehaviour {
                 BeforeLeafObjectPos = TouchManager.TapPos;
             }
         }
-	}
+    }
 }
