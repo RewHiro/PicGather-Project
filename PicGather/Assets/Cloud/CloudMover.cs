@@ -18,7 +18,7 @@ public class CloudMover : MonoBehaviour {
 	
     // Use this for initialization
 	void Start () {
-        Radius = Random.Range(-5, -3);
+        Radius = Random.Range(-7, -6);
 	}
 	
 	void Update () 
