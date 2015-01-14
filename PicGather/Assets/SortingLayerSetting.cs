@@ -12,9 +12,13 @@ public class SortingLayerSetting : MonoBehaviour {
     [SerializeField]
     private GameObject SkyDomeObject = null;
 
+    [SerializeField]
+    private GameObject FerverGaugeObject = null;
+
 	// Use this for initialization
 	void Start () {
         SkyDomeObject.renderer.sortingLayerName = "BackGround";
+        FerverGaugeObject.renderer.sortingLayerName = "FerverGauge";
 	
 	}
 	
