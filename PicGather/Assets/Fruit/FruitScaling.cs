@@ -7,7 +7,6 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class FruitScaling : MonoBehaviour {
 
     const float GainTime = 10.0f; 

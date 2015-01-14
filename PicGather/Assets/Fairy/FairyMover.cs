@@ -19,7 +19,7 @@ public class FairyMover : MonoBehaviour {
     FairyManagerController Manager = null;
 
     float Count = 0;
-    bool IsMove = false;
+    public bool IsMove{get;private set;}
 
     const float ArrivalTime = 3.0f;
 
@@ -29,6 +29,7 @@ public class FairyMover : MonoBehaviour {
         {
             Manager = FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
         }
+        IsMove = false;
 	}
 	
 	// Update is called once per frame
@@ -47,15 +48,32 @@ public class FairyMover : MonoBehaviour {
     void Move()
     {
         if (IsMove) return;
+
         if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButtonDown(TreeObject))
         {
-            iTween.MoveTo(gameObject, iTween.Hash("position", TouchManager.TapPos,
-                            "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
-            IsMove = true;
-            Count = 0;
+            SetMoveTo();
+        }
+
+        GameObject[] Fruits = GameObject.FindGameObjectsWithTag("Fruit");
+        foreach (var fruit in Fruits)
+        {
+            if (TouchManager.IsTouching(fruit) || TouchManager.IsMouseButtonDown(fruit))
+            {
+                SetMoveTo();
+            }
         }
     }
 
+    /// <summary>
+    /// 指定した場所に移動させる様に設定している。
+    /// </summary>
+    void SetMoveTo()
+    {
+        iTween.MoveTo(gameObject, iTween.Hash("position", TouchManager.TapPos,
+                        "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
+        IsMove = true;
+        Count = 0;
+    }
     /// <summary>
     /// 到着時間に来たら移動フラグをfalseにする
     /// </summary>
