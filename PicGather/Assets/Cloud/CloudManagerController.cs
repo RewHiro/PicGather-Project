@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/14  
+/// brief ： 雲管理クラス
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+/// 
+using UnityEngine;
 using System.Collections;
 
 public class CloudManagerController : CharacterManager

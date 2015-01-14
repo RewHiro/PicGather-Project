@@ -1,4 +1,4 @@
-﻿Shader "Custom/Skydome" {
+﻿Shader "Custom/FerverGauge" {
     Properties {
         _MainTex ( "Base", 2D ) = "white" {}
     }
@@ -10,7 +10,6 @@
         CGPROGRAM
  
         #pragma surface surf Lambert alpha
-        #pragma surface surf Lambert vertex:vert
  
         sampler2D _MainTex;
  
@@ -18,15 +17,10 @@
             float2 uv_MainTex;
         };
  
-        void vert (inout appdata_full v) {
-            v.vertex.x += 1;
-            v.vertex.z += 1;
-        }
-
         void surf( Input IN, inout SurfaceOutput o ) {
             half4 color = tex2D( _MainTex, IN.uv_MainTex );
             o.Albedo = color.rgb;
-            o.Alpha = color.a;
+            o.Alpha = 0.6;
         }
  
         ENDCG
