@@ -16,6 +16,8 @@ public class FairyMover : MonoBehaviour {
     [SerializeField]
     GameObject TreeObject = null;
 
+    FairyManagerController Manager = null;
+
     float Count = 0;
     bool IsMove = false;
 
@@ -23,12 +25,17 @@ public class FairyMover : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        if (!Manager)
+        {
+            Manager = FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
+        if (!Manager.IsSelect) return;
+
         Move();
         Arrival();
 	}
