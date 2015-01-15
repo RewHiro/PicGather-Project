@@ -5,12 +5,12 @@ using System.Collections;
 /// ゲームオブジェクトを削除する機能
 /// </summary>
 
-public class GameObjectCleaner : MonoBehaviour
+public class LineClearner : MonoBehaviour
 {
 
-    public void ClearGameObjectByTag(string nameTag)
+    public void ClearLineByTag()
     {
-        var clones = GameObject.FindGameObjectsWithTag(nameTag);
+        var clones = GameObject.FindGameObjectsWithTag("Line");
         if (clones == null) return;
         foreach (var clone in clones)
         {
