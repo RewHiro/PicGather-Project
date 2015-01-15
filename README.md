@@ -1,7 +1,4 @@
-ImagineCup
-==========
 
-* ImagineCup2015 ゲームリボジトリ
 
 ## タイトル
 * PicGather 
