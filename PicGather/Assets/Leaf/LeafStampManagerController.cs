@@ -5,9 +5,10 @@
 /// --------------------------------------------------------------------
 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
-public class LeafStampController : CharacterManager {
+public class LeafStampManagerController : CharacterManager {
 
     [SerializeField]
     GameObject LeafPrefab = null;
@@ -20,9 +21,15 @@ public class LeafStampController : CharacterManager {
 
     Vector3 BeforeLeafObjectPos = Vector3.zero;
 
+    [SerializeField]
+    StampListMover ListMove = null;
+
+    Texture SelectTexture = null;
+
 	// Use this for initialization
 	void Start () {
-        NonSelect();
+        IsSelect = false;
+        SelectTexture = renderer.material.mainTexture;
 	}
     
 	void Update () 
@@ -44,8 +51,27 @@ public class LeafStampController : CharacterManager {
             {
                 var LeafClone = (GameObject)Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
                 LeafClone.gameObject.name = LeafPrefab.gameObject.name;
+                LeafClone.renderer.material.mainTexture = SelectTexture;
                 BeforeLeafObjectPos = TouchManager.TapPos;
             }
         }
+    }
+
+    public void ChangeSelectTexture(GameObject button)
+    {
+        SelectTexture = button.GetComponent<Image>().mainTexture;
+    }
+
+    public override void NonSelect()
+    {
+        IsSelect = false;
+        ListMove.Close();
+    }
+
+    public override void SetCanSelect()
+    {
+        Debug.Log(ListMove);
+        IsSelect = true;
+        ListMove.Open();
     }
 }
