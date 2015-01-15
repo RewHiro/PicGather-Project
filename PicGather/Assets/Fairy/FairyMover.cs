@@ -16,27 +16,20 @@ public class FairyMover : MonoBehaviour {
     [SerializeField]
     GameObject TreeObject = null;
 
-    FairyManagerController Manager = null;
-
     float Count = 0;
     public bool IsMove{get;private set;}
 
     const float ArrivalTime = 3.0f;
+    const float StandbyTime = 5.0f;
 
 	// Use this for initialization
 	void Start () {
-        if (!Manager)
-        {
-            Manager = FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
-        }
         IsMove = false;
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        if (!Manager.IsSelect) return;
-
         Move();
         Arrival();
 	}
@@ -48,32 +41,30 @@ public class FairyMover : MonoBehaviour {
     void Move()
     {
         if (IsMove) return;
-
-        if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButtonDown(TreeObject))
+        
+        Count += Time.deltaTime;
+        if (Count >= StandbyTime)
         {
             SetMoveTo();
-        }
-
-        GameObject[] Fruits = GameObject.FindGameObjectsWithTag("Fruit");
-        foreach (var fruit in Fruits)
-        {
-            if (TouchManager.IsTouching(fruit) || TouchManager.IsMouseButtonDown(fruit))
-            {
-                SetMoveTo();
-            }
+            Count = 0;
         }
     }
 
     /// <summary>
-    /// 指定した場所に移動させる様に設定している。
+    /// 木の実の番地をランダムで設定。
+    /// そこに向かって移動する。
     /// </summary>
     void SetMoveTo()
     {
-        iTween.MoveTo(gameObject, iTween.Hash("position", TouchManager.TapPos,
+        GameObject[] Fruits = GameObject.FindGameObjectsWithTag("Fruit");
+        if (Fruits.Length == 0) return;
+
+        var RandomNum = Random.Range(0, Fruits.Length);
+        iTween.MoveTo(gameObject, iTween.Hash("position", Fruits[RandomNum].transform.position,
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
         IsMove = true;
-        Count = 0;
     }
+
     /// <summary>
     /// 到着時間に来たら移動フラグをfalseにする
     /// </summary>
