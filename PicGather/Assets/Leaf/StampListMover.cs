@@ -11,13 +11,13 @@ public class StampListMover : MonoBehaviour {
 
     Animation MoveAnimation = null;
 
-    enum State
+    enum STATE
     {
         Open,
         Close,
     };
 
-    State state = State.Close;
+    STATE State = STATE.Close;
 
     // Use this for initialization
 	void Start () {
@@ -32,17 +32,17 @@ public class StampListMover : MonoBehaviour {
 
     public void Open()
     {
-        if (state == State.Open) return;
+        if (State == STATE.Open) return;
 
-        state = State.Open;
+        State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
     }
 
     public void Close()
     {
-        if (state == State.Close) return;
+        if (State == STATE.Close) return;
 
-        state = State.Close;
+        State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
     }
 

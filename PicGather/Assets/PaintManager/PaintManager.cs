@@ -11,6 +11,9 @@ using System.Collections.Generic;
 public class PaintManager : MonoBehaviour {
 
     [SerializeField]
+    ModeManager modeManager = null;
+
+    [SerializeField]
     GameObject prefab = null;
 
     [SerializeField]
@@ -31,6 +34,8 @@ public class PaintManager : MonoBehaviour {
 
     void Update()
     {
+        if (!modeManager.IsDrawingMode()) return;
+ 
         if (Input.GetMouseButtonDown(0))
         {
             CreateLine();
