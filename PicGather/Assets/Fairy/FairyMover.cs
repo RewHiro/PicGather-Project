@@ -10,12 +10,6 @@ using System.Collections.Generic;
 
 public class FairyMover : MonoBehaviour {
 
-    //[SerializeField]
-    //List<GameObject> TapObject = new List<GameObject>();
-
-    [SerializeField]
-    GameObject TreeObject = null;
-
     float Count = 0;
     public bool IsMove{get;private set;}
 

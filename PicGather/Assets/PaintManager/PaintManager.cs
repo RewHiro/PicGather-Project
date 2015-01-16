@@ -11,7 +11,12 @@ using System.Collections.Generic;
 public class PaintManager : MonoBehaviour {
 
     [SerializeField]
-    GameObject prefab;
+    GameObject prefab = null;
+
+    [SerializeField]
+    GameObject parent = null;
+
+    GameObject characterCanvas = null;
 
     //　ペイントに必要な制御
     public bool isDraw { get; private set; }    //　true：描画中
@@ -24,13 +29,37 @@ public class PaintManager : MonoBehaviour {
         lineCount = 0;
     }
 
-    void OnMouseDown()
+    void Update()
     {
-        isDraw = true;
-        Instantiate(prefab, Vector3.zero, Quaternion.identity);
+        if (Input.GetMouseButtonDown(0))
+        {
+            CreateLine();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            StopLine();
+        }
     }
 
-    void OnMouseUp()
+
+    void CreateLine()
+    {
+        isDraw = true;
+
+        var originPos = Vector3.zero;
+        if (!characterCanvas)
+        {
+            characterCanvas = (GameObject)Instantiate(parent, originPos, Quaternion.identity);
+            characterCanvas.name = parent.name;
+        }
+        var Clone = (GameObject)Instantiate(prefab, originPos, Quaternion.identity);
+
+        Clone.name = prefab.name;
+        Clone.transform.parent = characterCanvas.transform;
+    }
+
+    void StopLine()
     {
         lineCount++;
         isDraw = false;
