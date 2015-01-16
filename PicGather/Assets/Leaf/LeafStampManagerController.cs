@@ -70,7 +70,6 @@ public class LeafStampManagerController : CharacterManager {
 
     public override void SetCanSelect()
     {
-        Debug.Log(ListMove);
         IsSelect = true;
         ListMove.Open();
     }

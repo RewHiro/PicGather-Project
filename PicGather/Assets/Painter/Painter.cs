@@ -30,6 +30,8 @@ public class Painter : MonoBehaviour {
         oldMousePos = Input.mousePosition;
         gameObject.renderer.sortingOrder = offset;
         line.SetWidth(0.01f, 0.01f);
+        line.renderer.sortingLayerName = "Line";
+
     }
 
     void Update()
@@ -56,7 +58,6 @@ public class Painter : MonoBehaviour {
         line.SetVertexCount(lineCount + 2);
         line.SetPosition(lineCount, oldScreenPos);
         line.SetPosition(lineCount + 1, nowScreenPos);
-
         lineCount++;
         oldMousePos = Input.mousePosition;
     }
