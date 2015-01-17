@@ -20,11 +20,20 @@ public class LeafController : MonoBehaviour {
 
     Vector3 SwayVelocity = new Vector3(0, -1, 0);
     float LifeTime = 0;
-    bool IsDead = false;
+
+    enum STATE
+    {
+        None,
+        Live,
+        Wither,
+        Dead,
+    };
+
+    STATE State = STATE.None;
 
 	// Use this for initialization
 	void Start () {
-        Decolorization();
+        State = STATE.Live;
 	}
 	
 	// Update is called once per frame
@@ -35,6 +44,14 @@ public class LeafController : MonoBehaviour {
         Fall();
 	}
 
+    /// <summary>
+    /// 枯れる状態にする。
+    /// </summary>
+    void StartWither()
+    {
+        State = STATE.Wither;
+        Decolorization();
+    }
 
     /// <summary>
     /// ビルボード法に描画設定をする。
@@ -50,12 +67,12 @@ public class LeafController : MonoBehaviour {
     /// </summary>
     void WitheringTime()
     {
-        if (IsDead) return;
+        if (State != STATE.Wither) return;
 
         LifeTime += Time.deltaTime;
         if (LifeTime >= WitherTime)
         {
-            IsDead = true;
+            State = STATE.Dead;
             var GameClone = (GameObject)Instantiate(FruitPrefab, gameObject.transform.position, Quaternion.identity);
             GameClone.name = FruitPrefab.name;
         }
@@ -76,7 +93,7 @@ public class LeafController : MonoBehaviour {
     /// </summary>
     void Fall()
     {
-        if (!IsDead) return;
+        if (State != STATE.Dead) return;
 
         transform.Translate(SwayVelocity * Time.deltaTime);
 
