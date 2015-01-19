@@ -1,6 +1,6 @@
 ﻿/// ---------------------------------------------------
 /// date ： 2015/01/12  
-/// brief ： 雲オブジェクトの移動処理 / ビルボード処理
+/// brief ： 雲オブジェクトの移動処理 
 /// author ： Yamada Masamistu
 /// ---------------------------------------------------
 
@@ -54,11 +54,6 @@ public class CloudMover : MonoBehaviour {
         TreeTopMove();
         CreateRainMove();
         ReturnNormalPosition();
-
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.back);
-
-        transform.rotation *= Quaternion.Euler(0, 180, 0);
-
     }
 
     /// <summary>
