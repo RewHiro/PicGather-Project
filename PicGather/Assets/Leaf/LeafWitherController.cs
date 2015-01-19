@@ -1,13 +1,14 @@
 ﻿/// ---------------------------------------------------
 /// date ： 2015/01/12 
-/// brief ： 葉っぱのビルボード化
+/// brief ： 葉っぱ処理
 /// author ： Yamada Masamistu
 /// ---------------------------------------------------
 
 using UnityEngine;
 using System.Collections;
 
-public class LeafController : MonoBehaviour {
+public class LeafWitherController : MonoBehaviour
+{
 
     [SerializeField]
     Color DeadLeafColor = Color.white;
@@ -15,8 +16,7 @@ public class LeafController : MonoBehaviour {
     [SerializeField]
     const float WitherTime = 10.0f;
 
-    [SerializeField]
-    GameObject FruitPrefab = null;
+    FruitCreator FruitCreate = null;
 
     Vector3 SwayVelocity = new Vector3(0, -1, 0);
     float LifeTime = 0;
@@ -39,7 +39,6 @@ public class LeafController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-        BillboardSetting();
         WitheringTime();
         Fall();
 	}
@@ -49,17 +48,10 @@ public class LeafController : MonoBehaviour {
     /// </summary>
     void StartWither()
     {
+        if (State != STATE.Live) return;
+
         State = STATE.Wither;
         Decolorization();
-    }
-
-    /// <summary>
-    /// ビルボード法に描画設定をする。
-    /// </summary>
-    void BillboardSetting()
-    {
-        transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.back);
-        transform.rotation *= Quaternion.Euler(0, 180, 0);
     }
 
     /// <summary>
@@ -73,8 +65,8 @@ public class LeafController : MonoBehaviour {
         if (LifeTime >= WitherTime)
         {
             State = STATE.Dead;
-            var GameClone = (GameObject)Instantiate(FruitPrefab, gameObject.transform.position, Quaternion.identity);
-            GameClone.name = FruitPrefab.name;
+            FruitCreate = GetComponent<FruitCreator>();
+            FruitCreate.Create();
         }
     }
 
@@ -85,7 +77,6 @@ public class LeafController : MonoBehaviour {
     {
         iTween.ColorTo(gameObject, DeadLeafColor, WitherTime - 2);
     }
-
 
     /// <summary>
     /// 枯れ落ちる
@@ -104,4 +95,13 @@ public class LeafController : MonoBehaviour {
         }
     }
 
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.name == "Rain")
+        {
+            StartWither();
+        }
+
+    }
 }

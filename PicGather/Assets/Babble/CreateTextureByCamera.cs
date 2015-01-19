@@ -21,8 +21,6 @@ public class CreateTextureByCamera : MonoBehaviour {
 
     void OnPostRender()
     {
-        Debug.Log(Screenshot);
-
         Screenshot.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
         Screenshot.Apply();
     }
