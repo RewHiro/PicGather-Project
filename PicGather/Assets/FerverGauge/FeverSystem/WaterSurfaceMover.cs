@@ -26,7 +26,7 @@ public class WaterSurfaceMover : MonoBehaviour {
 	void Update () {
         
         ///フィーバーゲージの量に比例して高さを調整する
-        transform.position = new Vector3(DefaultPosition.x, DefaultPosition.y + MaxHeight * (FeverManager.FeverScore * 1.0f / FeverManager.MaxFeverScore), DefaultPosition.z);
+       // transform.position = new Vector3(DefaultPosition.x, DefaultPosition.y + MaxHeight * (FeverManager.FeverScore * 1.0f / FeverManager.MaxFeverScore), DefaultPosition.z);
 
 	}
 

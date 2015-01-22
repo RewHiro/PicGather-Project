@@ -21,7 +21,7 @@ public class CharacterManager : MonoBehaviour
     /// </summary>
     public virtual void LoadID()
     {
-        ID = 0;
+        ID = 2;
     }
 
     /// <summary>

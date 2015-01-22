@@ -2,37 +2,45 @@
 using System.Collections;
 
 public class FeverManager : MonoBehaviour {
-    
+
+    [SerializeField]
+    ModeManager Mode = null;
+
+    FerverSoundController Sound = null;
+
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
     public const int MaxFeverScore = 10000;
     public const int MinFeverScore = 0;
 
-
-
     /// <summary>
     /// Feverゲージの量
     /// </summary>
-    [Range(MinFeverScore,MaxFeverScore)]
-    public static int FeverScore = MinFeverScore;
+    public int FeverScore{get;private set;}
 
 
 	// Use this for initialization
 	void Start () {
-	
+        FeverScore = MinFeverScore;
+        Sound = GetComponent<FerverSoundController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        AddScore(10);
+
+        if (Mode.IsGameMode())
+        {
+            AddScore(10);
+        }
+        Ferver();
     }
 
     /// <summary>
     /// 引数に与えた整の値だけ加算される
     /// </summary>
     /// <param name="addValue"></param>
-    public static void AddScore(int addValue)
+    public void AddScore(int addValue)
     {
         FeverScore += addValue;
 
@@ -44,19 +52,27 @@ public class FeverManager : MonoBehaviour {
     /// <summary>
     /// もし上限を超えていたり、下限を下回っていたら直す
     /// </summary>
-    public static void LimitCheck()
+    void LimitCheck()
     {
-
-        if (FeverScore > MaxFeverScore)
+        if (FeverScore > MaxFeverScore && !Mode.IsFerverMode())
         {
             FeverScore = MaxFeverScore;
+            Mode.ChangeFerverMode();
+            Sound.Play();
         }
 
-        if (FeverScore < MinFeverScore)
+        if (FeverScore < MinFeverScore && Mode.IsFerverMode())
         {
             FeverScore = MinFeverScore;
+            Mode.ChangeGameMode();
+            Sound.Stop();
         }
-
     }
 
+
+    void Ferver()
+    {
+        if (!Mode.IsFerverMode()) return;
+        AddScore(-10);
+    }
 }
