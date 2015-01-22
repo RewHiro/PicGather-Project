@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class StampListMover : MonoBehaviour {
@@ -22,7 +23,6 @@ public class StampListMover : MonoBehaviour {
     // Use this for initialization
 	void Start () {
         MoveAnimation = GetComponent<Animation>();
-
 	}
 	
 	// Update is called once per frame

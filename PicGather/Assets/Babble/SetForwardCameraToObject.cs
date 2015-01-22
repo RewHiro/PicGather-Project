@@ -11,8 +11,8 @@ public class SetForwardCameraToObject : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
+        transform.LookAt(Vector3.zero);
         transform.forward = (this.transform.position - Camera.main.transform.position);
 //        transform.LookAt(this.transform.position - Camera.main.transform.position);
-	
 	}
 }
