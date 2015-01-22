@@ -7,6 +7,7 @@ public class ModeManager : MonoBehaviour {
     {
         Game,
         Drawing,
+        Fever,
     };
 
     STATE State = STATE.Game;
@@ -28,6 +29,16 @@ public class ModeManager : MonoBehaviour {
     public bool IsDrawingMode()
     {
         return (State == STATE.Drawing);
+    }
+
+    public bool IsFerverMode()
+    {
+        return (State == STATE.Fever);
+    }
+
+    public void ChangeFeverMode()
+    {
+        State = STATE.Fever;
     }
 
     public void ChangeDrawingMode()
