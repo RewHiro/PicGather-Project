@@ -20,7 +20,7 @@ public class WaterSurfaceScaling : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        SetScaleByfloat(MaxScale * Mathf.Sin((FeverManager.FeverScore * 2.0f / FeverManager.MaxFeverScore) * Mathf.PI));
+       // SetScaleByfloat(MaxScale * Mathf.Sin((FeverManager.FeverScore * 2.0f / FeverManager.MaxFeverScore) * Mathf.PI));
 
         ScaleCheck();
 

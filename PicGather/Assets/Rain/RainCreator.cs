@@ -16,13 +16,15 @@ public class RainCreator : MonoBehaviour {
     GameObject PrefabManager = null;
 
     GameObject Manager = null;
+    
+    ModeManager Mode = null;
 
     int Count = 0;
     bool IsCreate = false;
 
 	// Use this for initialization
 	void Start () {
-	    
+        Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
 	}
 	
 	// Update is called once per frame
@@ -44,7 +46,6 @@ public class RainCreator : MonoBehaviour {
         var PosX = transform.position.x + Random.Range(-Scale.x, Scale.x);
         var PosY = transform.position.y + -1;
         var PosZ = transform.position.z + Random.Range(-Scale.z, Scale.z);
-
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(PosX, PosY, PosZ), Prefab.transform.rotation);
         Clone.transform.parent = Manager.transform;
         Clone.name = Prefab.name;

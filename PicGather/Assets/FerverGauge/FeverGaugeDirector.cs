@@ -3,9 +3,11 @@ using System.Collections;
 
 public class FeverGaugeDirector : MonoBehaviour {
 
+    FeverManager Manager = null;
+
 	// Use this for initialization
 	void Start () {
-	
+        Manager = GetComponent<FeverManager>();
 	}
 
 	// Update is called once per frame
@@ -15,7 +17,7 @@ public class FeverGaugeDirector : MonoBehaviour {
         transform.LookAt(Camera.main.transform.position);
 
         ///FeverScoreの割合分だけ回転させる。
-        transform.Rotate(-180 * (FeverManager.FeverScore * 1.0f / FeverManager.MaxFeverScore), 0, 0);
+        transform.Rotate(-180 * (Manager.FeverScore * 1.0f / FeverManager.MaxFeverScore), 0, 0);
 
 	}
 }

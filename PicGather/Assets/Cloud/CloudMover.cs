@@ -38,13 +38,15 @@ public class CloudMover : MonoBehaviour {
 
     RainCreator RainCreate = null;
 
+    ModeManager Mode = null;
+
     // Use this for initialization
 	void Start () {
         State = STATE.Normal;
-        Radius = Random.Range(8, 9);
-        RotationPos.y = Random.Range(5, 7);
+        Radius = Random.Range(6, 10);
+        RotationPos.y = Random.Range(3, 7);
         RainCreate = GetComponent<RainCreator>();
-
+        Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
 	}
 	
 	void Update () 
@@ -66,6 +68,7 @@ public class CloudMover : MonoBehaviour {
         CreateRainPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
         transform.localPosition = CreateRainPos;
         RotationPos.y += Time.deltaTime;
+
         if (RotationPos.y >= 9)
         {
             State = STATE.CreateRain;
@@ -140,9 +143,11 @@ public class CloudMover : MonoBehaviour {
         Count += Time.deltaTime;
         if (Count <= StartCreateRainTime) return;
 
-        GameObject[] Leafs = GameObject.FindGameObjectsWithTag("Leaf");
-        if (Leafs.Length == 0) return;
-
+        if (Mode.IsGameMode())
+        {
+            GameObject[] Leafs = GameObject.FindGameObjectsWithTag("Leaf");
+            if (Leafs.Length == 0) return;
+        }
         Count = 0;
         State = STATE.TreeTop;
     }
