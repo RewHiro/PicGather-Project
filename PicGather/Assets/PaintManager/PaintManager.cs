@@ -22,35 +22,69 @@ public class PaintManager : MonoBehaviour {
     [SerializeField]
     GameObject drawingCampus = null;
 
+    [SerializeField]
+    GameObject campus = null;
+
     GameObject characterCanvas = null;
+    Vector2 campusSize;
 
     //　ペイントに必要な制御
     public bool isDraw { get; private set; }    //　true：描画中
     public Color32 lineColor { get; private set; }
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
+    readonly Vector2 campusOffSet = new Vector2(45, 25);
 
     void Start()
     {
         lineColor = Color.black;
         lineCount = 1;
         lineWidth = 0.03f;
+        campusSize = campus.GetComponent<RectTransform>().rect.size;
+
     }
-    
+
     void Update()
     {
+
         if (!modeManager.IsDrawingMode()) return;
- 
+
         if (Input.GetMouseButtonDown(0))
         {
-            CreateLine();
+            CanDrawLine();
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             StopLine();
         }
+        if (Input.GetMouseButton(0))
+        {
+            IsRunOffCampus();
+        }
     }
+
+    //　キャンパスからはみ出たら描画を止める
+    void IsRunOffCampus()
+    {
+        if (!isDraw) return;
+        var mouse = Input.mousePosition;
+        if (!(mouse.x < 0 || campusSize.x - campusOffSet.x < mouse.x
+            || mouse.y < 0 || campusSize.y - campusOffSet.y < mouse.y)) return;
+        StopLine();
+
+    }
+
+    //　キャンパス内だったら描画する
+    void CanDrawLine()
+    {
+        var mouse = Input.mousePosition;
+
+        if (!(mouse.x > 0 && campusSize.x - campusOffSet.x > mouse.x)) return;
+        if (!(mouse.y > 0 && campusSize.y - campusOffSet.y > mouse.y)) return;
+        CreateLine();
+    }
+            
 
 
     void CreateLine()

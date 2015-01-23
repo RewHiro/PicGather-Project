@@ -27,7 +27,11 @@ public class CaptureController : MonoBehaviour
     void Save()
     {
         ID++;
-        StartCoroutine("Capture", Application.dataPath + "/Share/" + ID + ".jpg");
+        string Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
+        string OutPath = string.Format("{0}/{1}", Path, ID + ".jpg");
+        System.IO.Directory.CreateDirectory(Path);
+
+        StartCoroutine("Capture", OutPath);
     }
 
     /// <summary>
