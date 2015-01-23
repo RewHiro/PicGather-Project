@@ -8,7 +8,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+using LegacySystem.IO;
+#else
 using System.IO;
+#endif
 
 public class CampusCaptureController : MonoBehaviour
 {
@@ -54,6 +59,7 @@ public class CampusCaptureController : MonoBehaviour
         Destroy(texture);
 
 	    File.WriteAllBytes(filePath, bytes);
+
     }
 
     /// <summary>
