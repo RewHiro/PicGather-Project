@@ -19,11 +19,13 @@ public class CloudMover : MonoBehaviour {
     float Radius = 0.0f;
     float RotationAngle = 0.0f;
     float Count = 0;
+    float StartCreateRainTime = 0;
+    float RadiusMoveSpeed = 0;
+    float RotationSpeed = 0;
+    float RotationRadius = 0;
+    float AppearanceSpeed = 0;
 
     const float ArrivalTime = 5.0f;
-    const float StartCreateRainTime = 4.0f;
-    const float RotationSpeed = 1.0f;
-    const float RadiusMoveSpeed = 0.5f;
 
     enum STATE
     {
@@ -42,9 +44,13 @@ public class CloudMover : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
-        State = STATE.Normal;
-        Radius = Random.Range(6, 10);
-        RotationPos.y = Random.Range(3, 7);
+        State = STATE.Appearance;
+        RotationPos.y = Random.Range(12.0f,14.0f);
+        StartCreateRainTime = Random.Range(2.0f, 4.0f);
+        RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
+        RotationSpeed = Random.Range(0.5f, 1.0f);
+        RotationRadius = Random.Range(6, 10);
+        AppearanceSpeed = Random.Range(1, 2);
         RainCreate = GetComponent<RainCreator>();
         Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
 	}
@@ -52,10 +58,41 @@ public class CloudMover : MonoBehaviour {
 	void Update () 
     {
         CircleRotation();
+        AppearanceMove();
+        NormalMove();
         StartLeafTopMove();
         TreeTopMove();
         CreateRainMove();
         ReturnNormalPosition();
+    }
+
+    /// <summary>
+    /// 円運動移動
+    /// </summary>
+    void CircleRotation()
+    {
+        TreePos = TreeObject.transform.position;
+        RotationPos.x = TreePos.x + Mathf.Cos(RotationAngle) * Radius;
+        RotationPos.z = TreePos.z + Mathf.Sin(RotationAngle) * Radius;
+
+        RotationAngle += RotationSpeed * Time.deltaTime;
+
+    }
+    /// <summary>
+    /// 登場移動
+    /// </summary>
+    void AppearanceMove()
+    {
+        if (State != STATE.Appearance) return;
+
+        transform.position = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
+        RotationPos.y -= AppearanceSpeed * Time.deltaTime;
+        Radius += RadiusMoveSpeed * Time.deltaTime * AppearanceSpeed;
+
+        if (Radius >= RotationRadius)
+        {
+            State = STATE.Normal;
+        }
     }
 
     /// <summary>
@@ -117,17 +154,12 @@ public class CloudMover : MonoBehaviour {
 
     }
 
+
     /// <summary>
-    /// 円運動移動
+    /// 通常の移動
     /// </summary>
-    void CircleRotation()
+    void NormalMove()
     {
-        TreePos = TreeObject.transform.position;
-        RotationPos.x = TreePos.x + Mathf.Cos(RotationAngle) * Radius;
-        RotationPos.z = TreePos.z + Mathf.Sin(RotationAngle) * Radius;
-
-        RotationAngle += RotationSpeed * Time.deltaTime;
-
         if (State != STATE.Normal) return;
 
         transform.position = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);

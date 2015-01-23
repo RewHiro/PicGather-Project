@@ -29,7 +29,8 @@ public class RainFerverController : MonoBehaviour {
 
         var TextureCampus = Resources.Load(Character.Folder + "/" + Random.Range(1, Character.ID + 1)) as Texture2D;
         renderer.material.mainTexture = TextureCampus;
-        transform.localScale = new Vector3(1, 1, 1);
+        var Scale = 0.8f;
+        transform.localScale = new Vector3(Scale, Scale, Scale);
     }
 	
 	// Update is called once per frame

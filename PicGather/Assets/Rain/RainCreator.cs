@@ -22,6 +22,8 @@ public class RainCreator : MonoBehaviour {
     int Count = 0;
     bool IsCreate = false;
 
+    int CreateCountSpace = 2;
+
 	// Use this for initialization
 	void Start () {
         Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
@@ -40,7 +42,7 @@ public class RainCreator : MonoBehaviour {
         if (!IsCreate) return;
 
         Count++;
-        if (Count % 2 != 0) return;
+        if (Count % CreateCountSpace != 0) return;
 
         var Scale = transform.localScale / 2;
         var PosX = transform.position.x + Random.Range(-Scale.x, Scale.x);
