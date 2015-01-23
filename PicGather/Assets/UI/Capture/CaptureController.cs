@@ -7,7 +7,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+using LegacySystem.IO;
+#else
 using System.IO;
+#endif
 
 public class CaptureController : MonoBehaviour
 {
@@ -27,7 +31,13 @@ public class CaptureController : MonoBehaviour
     void Save()
     {
         ID++;
-        StartCoroutine("Capture", Application.dataPath + "/Share/" + ID + ".jpg");
+        var Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
+        var OutPath = string.Format("{0},{1}", Path, ID + ".jpg");
+        if (!Directory.Exists(Path))
+        {
+            Directory.CreateDirectory(Path);
+        }
+        StartCoroutine("Capture", OutPath);
     }
 
     /// <summary>
@@ -49,5 +59,6 @@ public class CaptureController : MonoBehaviour
         Destroy(texture);
 
 	    File.WriteAllBytes(filePath, bytes);
+
     }
 }
