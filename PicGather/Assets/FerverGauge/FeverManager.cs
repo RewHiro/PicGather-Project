@@ -73,6 +73,6 @@ public class FeverManager : MonoBehaviour {
     void Ferver()
     {
         if (!Mode.IsFerverMode()) return;
-        AddScore(-10);
+        AddScore(-1);
     }
 }
