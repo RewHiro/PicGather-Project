@@ -12,13 +12,17 @@ using System.Collections.Generic;
 public class ChangeCameraPositionController : MonoBehaviour {
 
     [SerializeField]
-    List<GameObject> UIObject = new List<GameObject>();
-
     DrawingCanvasSlider Slider = null;
+
+    [SerializeField]
+    List<GameObject> UIObject = new List<GameObject>();
+    
+    public Vector3 StartPosition {get;private set;}
+
 
 	// Use this for initialization
 	void Start () {
-        Slider = GetComponent<DrawingCanvasSlider>();
+        StartPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -36,7 +40,7 @@ public class ChangeCameraPositionController : MonoBehaviour {
     {
         if (!Slider.IsOpend()) return;
 
-        Camera.main.transform.localPosition = new Vector3(15000, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        transform.position = new Vector3(15000, StartPosition.y, StartPosition.z);
 
         foreach (var ui in UIObject)
         {
@@ -66,7 +70,7 @@ public class ChangeCameraPositionController : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
 
-        Camera.main.transform.localPosition = new Vector3(0, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        transform.position = StartPosition;
 
         foreach (var ui in UIObject)
         {

@@ -3,6 +3,9 @@ using System.Collections;
 
 public class CameraZoomUpper : MonoBehaviour {
 
+    [SerializeField]
+    ModeManager Mode = null;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,6 +16,8 @@ public class CameraZoomUpper : MonoBehaviour {
   
     // Update is called once per frame
 	void Update () {
+
+        if (Mode.IsDrawingMode()) return;
 
         MouseWheelCommand();
 
