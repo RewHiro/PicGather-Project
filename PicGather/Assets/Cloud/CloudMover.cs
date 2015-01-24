@@ -39,9 +39,7 @@ public class CloudMover : MonoBehaviour {
     STATE State = STATE.Appearance;
 
     RainCreator RainCreate = null;
-
-    ModeManager Mode = null;
-
+    
     // Use this for initialization
 	void Start () {
         State = STATE.Appearance;
@@ -52,7 +50,6 @@ public class CloudMover : MonoBehaviour {
         RotationRadius = Random.Range(6, 10);
         AppearanceSpeed = Random.Range(1, 2);
         RainCreate = GetComponent<RainCreator>();
-        Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
 	}
 	
 	void Update () 
@@ -175,7 +172,7 @@ public class CloudMover : MonoBehaviour {
         Count += Time.deltaTime;
         if (Count <= StartCreateRainTime) return;
 
-        if (Mode.IsGameMode())
+        if (ModeManager.IsGameMode())
         {
             GameObject[] Leafs = GameObject.FindGameObjectsWithTag("Leaf");
             if (Leafs.Length == 0) return;

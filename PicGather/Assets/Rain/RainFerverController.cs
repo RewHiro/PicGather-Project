@@ -4,14 +4,11 @@ using System.Collections.Generic;
 
 public class RainFerverController : MonoBehaviour {
 
-    ModeManager Mode = null;
     CharacterManager Character = null;
 
 	// Use this for initialization
 	void Start () {
-        Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
-        
-        if (!Mode.IsFerverMode()) return;
+        if (!ModeManager.IsFerverMode()) return;
         var RandomCharacter = Random.Range(0, 3);
 
         switch(RandomCharacter)
