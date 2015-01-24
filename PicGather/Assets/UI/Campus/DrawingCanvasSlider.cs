@@ -16,9 +16,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
     AnimationClip CloseAnimClip = null;
 
     [SerializeField]
-    ModeManager ChangeMode = null;
-
-    [SerializeField]
     CampusTemplateSetting CampusTemplate = null;
 
     [SerializeField]
@@ -50,7 +47,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     {
         Opening();
 
-        if (!ChangeMode.IsDrawingMode()) return;
+        if (!ModeManager.IsDrawingMode()) return;
         Closed();
     }
 
@@ -81,7 +78,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         if (!MoveAnimation.isPlaying)
         {
             State = STATE.Opend;
-            ChangeMode.ChangeDrawingMode();
+            ModeManager.ChangeDrawingMode();
         }
     }
     /// <summary>
@@ -117,7 +114,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         if (!MoveAnimation.isPlaying)
         {
             CampusTemplate.NonSelect();
-            ChangeMode.ChangeGameMode();
+            ModeManager.ChangeGameMode();
             CampusDes.Des();
             State = STATE.Stop;
         }

@@ -10,7 +10,7 @@ public class ModeManager : MonoBehaviour {
         Ferver,
     };
 
-    STATE State = STATE.Game;
+    static STATE State = STATE.Game;
 
 	// Use this for initialization
 	void Start () {
@@ -25,7 +25,7 @@ public class ModeManager : MonoBehaviour {
     /// 今ゲームモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public bool IsGameMode()
+    public static bool IsGameMode()
     {
         return (State == STATE.Game);
     }
@@ -34,7 +34,7 @@ public class ModeManager : MonoBehaviour {
     /// 今お絵かきモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public bool IsDrawingMode()
+    public static bool IsDrawingMode()
     {
         return (State == STATE.Drawing);
     }
@@ -43,7 +43,7 @@ public class ModeManager : MonoBehaviour {
     /// 今フィーバーモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public bool IsFerverMode()
+    public static bool IsFerverMode()
     {
         return (State == STATE.Ferver);
     }
@@ -52,7 +52,7 @@ public class ModeManager : MonoBehaviour {
     /// お絵かきモードに切り替える
     /// </summary>
     /// <returns></returns>
-    public void ChangeDrawingMode()
+    public static void ChangeDrawingMode()
     {
         State = STATE.Drawing;
     }
@@ -61,7 +61,7 @@ public class ModeManager : MonoBehaviour {
     /// ゲームモードに切り替える
     /// </summary>
     /// <returns></returns>
-    public void ChangeGameMode()
+    public static void ChangeGameMode()
     {
         State = STATE.Game;
     }
@@ -70,7 +70,7 @@ public class ModeManager : MonoBehaviour {
     /// フィーバーモードに切り替える
     /// </summary>
     /// <returns></returns>
-    public void ChangeFerverMode()
+    public static void ChangeFerverMode()
     {
         State = STATE.Ferver;
     }

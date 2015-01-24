@@ -23,6 +23,7 @@ public class BabbleMover : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (ModeManager.IsDrawingMode()) return;
 
         ///スクリーン上での座標を得る
         Vector3 positionInScreen = Camera.main.WorldToScreenPoint(this.transform.position);

@@ -3,9 +3,6 @@ using System.Collections;
 
 public class FeverManager : MonoBehaviour {
 
-    [SerializeField]
-    ModeManager Mode = null;
-
     FerverSoundController Sound = null;
 
     /// <summary>
@@ -29,7 +26,7 @@ public class FeverManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Mode.IsGameMode())
+        if (ModeManager.IsGameMode())
         {
             AddScore(10);
         }
@@ -54,17 +51,17 @@ public class FeverManager : MonoBehaviour {
     /// </summary>
     void LimitCheck()
     {
-        if (FeverScore > MaxFeverScore && !Mode.IsFerverMode())
+        if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode())
         {
             FeverScore = MaxFeverScore;
-            Mode.ChangeFerverMode();
+            ModeManager.ChangeFerverMode();
             Sound.Play();
         }
 
-        if (FeverScore < MinFeverScore && Mode.IsFerverMode())
+        if (FeverScore < MinFeverScore && ModeManager.IsFerverMode())
         {
             FeverScore = MinFeverScore;
-            Mode.ChangeGameMode();
+            ModeManager.ChangeGameMode();
             Sound.Stop();
         }
     }
@@ -72,7 +69,7 @@ public class FeverManager : MonoBehaviour {
 
     void Ferver()
     {
-        if (!Mode.IsFerverMode()) return;
+        if (!ModeManager.IsFerverMode()) return;
         AddScore(-1);
     }
 }
