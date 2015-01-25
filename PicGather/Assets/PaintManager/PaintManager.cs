@@ -11,9 +11,6 @@ using System.Collections.Generic;
 public class PaintManager : MonoBehaviour {
 
     [SerializeField]
-    ModeManager modeManager = null;
-
-    [SerializeField]
     GameObject prefab = null;
 
     [SerializeField]

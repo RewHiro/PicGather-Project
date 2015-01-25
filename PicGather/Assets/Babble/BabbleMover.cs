@@ -23,17 +23,16 @@ public class BabbleMover : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (ModeManager.IsDrawingMode()) return;
 
         ///スクリーン上での座標を得る
         Vector3 positionInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
         positionInScreen.z = 1.2f;
 
+
         TouchMover();
 
         ///速度調整する
-        DecreaseMoveSpeed(ref Velocity.x);
-        DecreaseMoveSpeed(ref Velocity.y);
+        DecreaseMoveSpeed(ref Velocity);
 
         ///スクリーン座標上での位置で確認し、画面端なら跳ね返る
         Velocity.x *= ChangeVelocity(ref positionInScreen.x, Screen.width);
@@ -51,16 +50,18 @@ public class BabbleMover : MonoBehaviour {
     /// 自動で速度減少させる
     /// </summary>
     /// <param name="index">減少させる変数</param>
-    private void DecreaseMoveSpeed(ref float index)
+    private void DecreaseMoveSpeed(ref Vector2 index)
     {
         /// 移動速度の減少すると判断する閾値（いきち）
-        const float ThresholdMoveSpeed = 3.0f;
+        const float ThresholdMoveSpeed = 40.0f;
         ///減少量
-        const float DecreaseValue = 0.3f;
-        if (index > ThresholdMoveSpeed)
+        const float DecreaseValue = 0.97f;
+
+        ///x,yの移動量の合計で減速する判断をする
+        float AbsoluteMoveSpeed = Mathf.Sqrt((index.x * index.x) + (index.y * index.y));
+        if (AbsoluteMoveSpeed > ThresholdMoveSpeed)
         {
-            index -= DecreaseValue;
-            if (index < ThresholdMoveSpeed) index = ThresholdMoveSpeed;
+            index *= DecreaseValue;
         }
     }
 
@@ -111,5 +112,6 @@ public class BabbleMover : MonoBehaviour {
         }
 
     }
+
 
 }
