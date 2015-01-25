@@ -23,11 +23,9 @@ public class BabbleMover : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-
         ///スクリーン上での座標を得る
         Vector3 positionInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
         positionInScreen.z = 1.2f;
-
 
         TouchMover();
 

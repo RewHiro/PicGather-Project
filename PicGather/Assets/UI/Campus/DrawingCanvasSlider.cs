@@ -5,6 +5,7 @@
 /// ---------------------------------------------------
 /// 
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class DrawingCanvasSlider : MonoBehaviour {
@@ -25,6 +26,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     DrawingCampusBackGroundController CampusBackGround = null;
 
     Animation MoveAnimation = null;
+    GameModeButtonSetting UIButton = null;
 
     enum STATE
     {
@@ -40,6 +42,8 @@ public class DrawingCanvasSlider : MonoBehaviour {
     void Start()
     {
         MoveAnimation = GetComponent<Animation>();
+        UIButton = GetComponent<GameModeButtonSetting>();
+        UIButton.AddOnClick(Open);
     }
 
     // Update is called once per frame
@@ -48,6 +52,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         Opening();
 
         if (!ModeManager.IsDrawingMode()) return;
+        
         Closed();
     }
 
@@ -88,11 +93,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     public bool IsCloseOnClick()
     {
         if (State != STATE.Close) return false;
-        if (MoveAnimation.isPlaying)
-        {
-            return true;
-        } 
-        return false;
+        return true;
     }
 
     /// <summary>
@@ -107,23 +108,19 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
     IEnumerator WaitClosed()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1.0f);
         CampusBackGround.Enabled();
 
-        yield return new WaitForSeconds(1.0f);
-        if (!MoveAnimation.isPlaying)
-        {
-            CampusTemplate.NonSelect();
-            ModeManager.ChangeGameMode();
-            CampusDes.Des();
-            State = STATE.Stop;
-        }
+        CampusTemplate.NonSelect();
+        ModeManager.ChangeGameMode();
+        CampusDes.Des();
+        State = STATE.Stop;
     }
 
     /// <summary>
     /// 開くアニメーションの処理
     /// </summary>
-    public void Open()
+    void Open()
     {
         if (State == STATE.Open) return;
         if (MoveAnimation.isPlaying) return;
