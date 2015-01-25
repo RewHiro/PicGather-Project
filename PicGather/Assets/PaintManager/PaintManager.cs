@@ -10,6 +10,7 @@ using System.Collections.Generic;
 //
 public class PaintManager : MonoBehaviour {
 
+
     [SerializeField]
     GameObject prefab = null;
 
@@ -23,14 +24,16 @@ public class PaintManager : MonoBehaviour {
     GameObject campus = null;
 
     GameObject characterCanvas = null;
-    Vector2 campusSize;
+    public Vector2 campusSize;
 
     //　ペイントに必要な制御
     public bool isDraw { get; private set; }    //　true：描画中
     public Color32 lineColor { get; private set; }
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
-    readonly Vector2 campusOffSet = new Vector2(45, 25);
+    public readonly Vector2 valueAdjustment = new Vector2(3, 8);
+    public readonly Vector2 campusOffSet = new Vector2(34 + 5, 22 + 8);
+
 
     void Start()
     {
@@ -43,7 +46,6 @@ public class PaintManager : MonoBehaviour {
 
     void Update()
     {
-
         if (!ModeManager.IsDrawingMode()) return;
 
         if (Input.GetMouseButtonDown(0))
@@ -57,19 +59,42 @@ public class PaintManager : MonoBehaviour {
         }
         if (Input.GetMouseButton(0))
         {
-            IsRunOffCampus();
+            UpdateBeyondCampus();
         }
     }
 
-    //　キャンパスからはみ出たら描画を止める
-    void IsRunOffCampus()
+    /// <summary>
+    /// 範囲にでたら描画をやめる、範囲に入ったら描画する
+    /// </summary>
+    void UpdateBeyondCampus()
+    {
+        StartDraw();
+        StopDraw();
+    }
+
+
+    /// <summary>
+    /// 描画を始める
+    /// </summary>
+    void StartDraw()
+    {
+        if (isDraw) return;
+        var mouse = Input.mousePosition;
+        if (!(mouse.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > mouse.x
+                && mouse.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > mouse.y)) return;
+        CanDrawLine();
+    }
+
+    /// <summary>
+    /// 描画を止める
+    /// </summary>
+    void StopDraw()
     {
         if (!isDraw) return;
         var mouse = Input.mousePosition;
-        if (!(mouse.x < 0 || campusSize.x - campusOffSet.x < mouse.x
-            || mouse.y < 0 || campusSize.y - campusOffSet.y < mouse.y)) return;
+        if (!(mouse.x < 0 + campusOffSet.x || campusSize.x - valueAdjustment.x < mouse.x
+            || mouse.y < 0 + campusOffSet.y || campusSize.y - valueAdjustment.y < mouse.y)) return;
         StopLine();
-
     }
 
     //　キャンパス内だったら描画する
@@ -77,11 +102,11 @@ public class PaintManager : MonoBehaviour {
     {
         var mouse = Input.mousePosition;
 
-        if (!(mouse.x > 0 && campusSize.x - campusOffSet.x > mouse.x)) return;
-        if (!(mouse.y > 0 && campusSize.y - campusOffSet.y > mouse.y)) return;
+        if (!(mouse.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > mouse.x)) return;
+        if (!(mouse.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > mouse.y)) return;
         CreateLine();
     }
-            
+
 
 
     void CreateLine()
@@ -101,6 +126,7 @@ public class PaintManager : MonoBehaviour {
         Clone.name = prefab.name;
         Clone.transform.parent = characterCanvas.transform;
     }
+
 
     void StopLine()
     {
@@ -130,7 +156,8 @@ public class PaintManager : MonoBehaviour {
         lineColor = Color.black;
     }
 
-    public void ChangeColor(GameObject button) { 
+    public void ChangeColor(GameObject button)
+    {
         lineColor = button.GetComponent<Image>().color;
         lineWidth = 0.03f;
     }

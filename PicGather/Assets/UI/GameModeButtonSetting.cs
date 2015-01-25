@@ -4,13 +4,13 @@ using System.Collections;
 
 public class GameModeButtonSetting : MonoBehaviour
 {
-
     Button UIButton = null;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         UIButton = GetComponent<Button>();
     }
+
 
     /// <summary>
     /// OnClickを追加する

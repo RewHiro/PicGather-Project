@@ -6,8 +6,7 @@ public class CharacterManager : MonoBehaviour
 {
 
     public int ID { get; protected set; }
-    public bool IsSelect { get; protected set; }
-    public string Folder{get;protected set;}
+    public string Folder { get; protected set; }
 
     [SerializeField]
     CampusTemplateSetting Template = null;
@@ -38,21 +37,5 @@ public class CharacterManager : MonoBehaviour
     public void SetTemplate()
     {
         Template.SetSprite(TemplateSprite);
-    }
-
-    /// <summary>
-    /// 選択可能状態に設定する。
-    /// </summary>
-    public virtual void SetCanSelect()
-    {
-        IsSelect = true;
-    }
-
-    /// <summary>
-    /// 選択状態をなくす
-    /// </summary>
-    public virtual void NonSelect()
-    {
-        IsSelect = false;
     }
 }

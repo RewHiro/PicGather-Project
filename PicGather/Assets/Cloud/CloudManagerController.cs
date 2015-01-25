@@ -12,7 +12,6 @@ public class CloudManagerController : CharacterManager
 
 	// Use this for initialization
 	void Start () {
-        NonSelect();
         Folder = "Cloud";
         LoadID();
 	

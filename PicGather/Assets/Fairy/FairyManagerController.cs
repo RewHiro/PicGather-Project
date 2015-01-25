@@ -13,7 +13,6 @@ public class FairyManagerController : CharacterManager
 
 	// Use this for initialization
 	void Start () {
-        NonSelect();
 
         Folder = "Fairy";
         LoadID();
