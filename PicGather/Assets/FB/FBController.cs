@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 
 public class FBController : MonoBehaviour {
-
     CaptureController Capture = null;
 
     Button ClickButton = null;
@@ -21,7 +20,7 @@ public class FBController : MonoBehaviour {
     {
         FB.Init(SetInit, OnHideUnity);
         ClickButton = GetComponent<Button>();
-        ClickButton.onClick.AddListener(Login);
+      //  ClickButton.onClick.AddListener(Login);
     }
 
     void Start()
@@ -195,4 +194,5 @@ public class FBController : MonoBehaviour {
             title: "Invite your friends to join youu"
             );
     }
+
 }

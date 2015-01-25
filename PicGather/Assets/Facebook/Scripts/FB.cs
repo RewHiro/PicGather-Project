@@ -25,7 +25,7 @@ public sealed class FB : ScriptableObject
         {
             if (facebook == null)
             {
-                throw new NullReferenceException("Facebook object is not yet loaded.  Did you call FB.Init()?");
+             //   throw new NullReferenceException("Facebook object is not yet loaded.  Did you call FB.Init()?");
             }
             return facebook;
         }
@@ -136,7 +136,7 @@ public sealed class FB : ScriptableObject
             }
             else
             {
-                FbDebug.Info(String.Format("Using SDK {0}, Build {1}", versionInfo.SdkVersion, versionInfo.BuildVersion));
+                FbDebug.Info(string.Format("Using SDK {0}, Build {1}", versionInfo.SdkVersion, versionInfo.BuildVersion));
             }
 
 #if UNITY_EDITOR
@@ -148,7 +148,7 @@ public sealed class FB : ScriptableObject
 #elif UNITY_ANDROID
             FBComponentFactory.GetComponent<AndroidFacebookLoader>();
 #else
-            throw new NotImplementedException("Facebook API does not yet support this platform");
+            //throw new NotImplementedException("Facebook API does not yet support this platform");
 #endif
             isInitCalled = true;
             return;
@@ -261,7 +261,7 @@ public sealed class FB : ScriptableObject
         FacebookImpl.API(query, method, formData, callback);
     }
 
-    [Obsolete("use FB.ActivateApp()")]
+   // [Obsolete("use FB.ActivateApp()")]
     public static void PublishInstall(FacebookDelegate callback = null)
     {
         FacebookImpl.PublishInstall(AppId, callback);
@@ -406,7 +406,7 @@ public sealed class FB : ScriptableObject
                 www.Dispose();
                 yield break;
             }
-
+/*
 #if UNITY_WINRT
 #if UNITY_4_6
             var authTokenWww = new WWW(IntegratedPluginCanvasLocation.KeyUrl);
@@ -452,6 +452,7 @@ public sealed class FB : ScriptableObject
 
             callback(fb);
 #endif
+ */
             www.Dispose();
         }
 
