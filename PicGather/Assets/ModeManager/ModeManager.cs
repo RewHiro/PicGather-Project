@@ -8,6 +8,7 @@ public class ModeManager : MonoBehaviour {
         Game,
         Drawing,
         Ferver,
+        Share,
     };
 
     static STATE State = STATE.Game;
@@ -49,6 +50,15 @@ public class ModeManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// 今シェア機能なのかどうか
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsShareMode()
+    {
+        return (State == STATE.Share);
+    }
+
+    /// <summary>
     /// お絵かきモードに切り替える
     /// </summary>
     /// <returns></returns>
@@ -73,5 +83,14 @@ public class ModeManager : MonoBehaviour {
     public static void ChangeFerverMode()
     {
         State = STATE.Ferver;
+    }
+
+    /// <summary>
+    /// シェア機能に切り替える
+    /// </summary>
+    /// <returns></returns>
+    public static void ChangeShareMode()
+    {
+        State = STATE.Share;
     }
 }
