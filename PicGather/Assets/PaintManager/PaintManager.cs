@@ -28,7 +28,7 @@ public class PaintManager : MonoBehaviour {
 
     //　ペイントに必要な制御
     public bool isDraw { get; private set; }    //　true：描画中
-    public Color32 lineColor { get; private set; }
+    public Color lineColor { get; private set; }
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
@@ -156,10 +156,11 @@ public class PaintManager : MonoBehaviour {
         lineColor = Color.black;
     }
 
-    public void ChangeColor(GameObject button)
+    public void ChangeColor(Material material)
     {
-        lineColor = button.GetComponent<Image>().color;
+        lineColor = material.color;
         lineWidth = 0.03f;
     }
+
     public void ChangeLineWidth(float width) { lineWidth = width; }
 }
