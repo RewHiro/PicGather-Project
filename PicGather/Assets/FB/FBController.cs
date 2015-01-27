@@ -9,12 +9,11 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-
 public class FBController : MonoBehaviour {
     CaptureController Capture = null;
 
     Button ClickButton = null;
-
+    
     // Dictionary<string, string> Profile = null;
     void Awake()
     {
@@ -26,6 +25,7 @@ public class FBController : MonoBehaviour {
     void Start()
     {
         Capture = FindObjectOfType(typeof(CaptureController)) as CaptureController;
+
     }
 
     /// <summary>
@@ -65,6 +65,8 @@ public class FBController : MonoBehaviour {
         PostAPICapturePicture();
         ShareWithFriends();
     }
+
+    bool _loggedIn = false;
 
     /// <summary>
     /// ログイン機能
@@ -169,7 +171,7 @@ public class FBController : MonoBehaviour {
         FB.API("/me?fields=id,first_name,last_name", Facebook.HttpMethod.GET, GetUserName);
     }
 
-    /// <summary>
+    /// <summary>7
     /// 友達にシェアをする。
     /// 投稿画面が出る。
     /// </summary>

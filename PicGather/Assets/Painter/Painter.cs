@@ -16,7 +16,7 @@ public class Painter : MonoBehaviour {
 
     //　一筆制御に必要な情報
     bool isDrew = false;   //　true：描画終了
-    GameObject lineManager;
+    PaintManager lineManager;
 
     Vector2 campusOffSet;
     Vector2 campusSize;
@@ -26,12 +26,12 @@ public class Painter : MonoBehaviour {
     {
 
         //　線に必要な情報を取得
-        lineManager = GameObject.Find("PaintManager");
+        lineManager = FindObjectOfType(typeof(PaintManager)) as PaintManager;
         line = GetComponent<LineRenderer>();
         var component = gameObject.GetComponent<LineRenderer>();
-        var color = lineManager.GetComponent<PaintManager>().lineColor;
-        var offset = lineManager.GetComponent<PaintManager>().lineCount;
-        var width = lineManager.GetComponent<PaintManager>().lineWidth;
+        var color = lineManager.lineColor;
+        var offset = lineManager.lineCount;
+        var width = lineManager.lineWidth;
 
         //　線の情報を設定
         component.renderer.material.color = color;
@@ -39,10 +39,10 @@ public class Painter : MonoBehaviour {
         gameObject.renderer.sortingOrder = offset;
         line.SetWidth(width, width);
         line.renderer.sortingLayerName = "Line";
-        line.renderer.sortingOrder = 2;
+        line.renderer.sortingOrder = offset;
 
-        campusSize = lineManager.GetComponent<PaintManager>().campusSize;
-        campusOffSet = lineManager.GetComponent<PaintManager>().campusOffSet;
+        campusSize = lineManager.campusSize;
+        campusOffSet = lineManager.campusOffSet;
 
     }
 

@@ -1,5 +1,11 @@
 using Facebook;
+
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+using Windows;
+#else
 using System;
+#endif
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,7 +31,7 @@ public sealed class FB : ScriptableObject
         {
             if (facebook == null)
             {
-             //   throw new NullReferenceException("Facebook object is not yet loaded.  Did you call FB.Init()?");
+                //throw new System.NullReferenceException("Facebook object is not yet loaded.  Did you call FB.Init()?");
             }
             return facebook;
         }
@@ -55,13 +61,13 @@ public sealed class FB : ScriptableObject
         }
     }
 
-    public static DateTime AccessTokenExpiresAt
-    {
-        get
-        {
-            return (facebook != null) ? facebook.AccessTokenExpiresAt : DateTime.MinValue;
-        }
-    }
+    //public static DateTime AccessTokenExpiresAt
+    //{
+    //    get
+    //    {
+    //        return (facebook != null) ? facebook.AccessTokenExpiresAt : DateTime.MinValue;
+    //    }
+    //}
 
     public static bool IsLoggedIn
     {
@@ -264,7 +270,7 @@ public sealed class FB : ScriptableObject
    // [Obsolete("use FB.ActivateApp()")]
     public static void PublishInstall(FacebookDelegate callback = null)
     {
-        FacebookImpl.PublishInstall(AppId, callback);
+        //FacebookImpl.PublishInstall(AppId, callback);
     }
 
     public static void ActivateApp()
@@ -406,7 +412,7 @@ public sealed class FB : ScriptableObject
                 www.Dispose();
                 yield break;
             }
-/*
+            /*
 #if UNITY_WINRT
 #if UNITY_4_6
             var authTokenWww = new WWW(IntegratedPluginCanvasLocation.KeyUrl);
@@ -452,7 +458,7 @@ public sealed class FB : ScriptableObject
 
             callback(fb);
 #endif
- */
+             * */
             www.Dispose();
         }
 
