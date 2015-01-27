@@ -47,6 +47,9 @@ public class CaptureLocalSaveController : MonoBehaviour {
         ID++;
         var Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
         var OutPath = string.Format("{0}{1}", Path, ID + ".jpg");
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+        
+#else
         if (!Directory.Exists(Path))
         {
             Directory.CreateDirectory(Path);
@@ -56,6 +59,7 @@ public class CaptureLocalSaveController : MonoBehaviour {
         Destroy(Capture.Texture);
 
         File.WriteAllBytes(OutPath, bytes);
+#endif
     }
 
 }

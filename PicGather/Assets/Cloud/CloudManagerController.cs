@@ -14,12 +14,11 @@ public class CloudManagerController : CharacterManager
 	void Start () {
         Folder = "Cloud";
         LoadID();
-	
     }
 
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
 }
