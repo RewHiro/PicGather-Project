@@ -22,7 +22,7 @@ public class GameModeButtonSetting : MonoBehaviour
     }
 
 	void Update () {
-        if (ModeManager.IsGameMode())
+        if (ModeManager.IsGameMode() || ModeManager.IsFerverMode())
         {
             UIButton.enabled = true;
         }

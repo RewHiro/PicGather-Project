@@ -58,9 +58,10 @@ public class CampusCaptureController : MonoBehaviour
     void Save()
     {
         if (!CampusTemplate.IsSelect) return;
+        if (!CharaManager.CanSave) return;
 
         CharaManager.Entry();
-        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Folder + "/" + CharaManager.ID + ".png");
+        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png");
     }
 
     /// <summary>
@@ -75,7 +76,6 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
 	    texture.Apply ();
-
         var bytes = texture.EncodeToPNG();
         Destroy(texture);
 

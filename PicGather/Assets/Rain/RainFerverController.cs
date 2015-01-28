@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/20    
+/// brief ： フィーバー時の雨のコントローラー
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -24,7 +30,7 @@ public class RainFerverController : MonoBehaviour {
                 break;
         }
 
-        var TextureCampus = Resources.Load(Character.Folder + "/" + Random.Range(1, Character.ID + 1)) as Texture2D;
+        var TextureCampus = Resources.Load(Character.Name + "/" + Random.Range(0, Character.ID+1)) as Texture2D;
         renderer.material.mainTexture = TextureCampus;
         var Scale = 0.8f;
         transform.localScale = new Vector3(Scale, Scale, Scale);

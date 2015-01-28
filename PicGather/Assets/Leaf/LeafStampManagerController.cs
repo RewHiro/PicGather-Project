@@ -26,7 +26,7 @@ public class LeafStampManagerController : CharacterManager {
 	// Use this for initialization
 	void Start () {
         SelectTexture = renderer.material.mainTexture;
-        Folder = "Leaf";
+        Name = "Leaf";
         LoadID();
 
 	}

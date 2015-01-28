@@ -14,7 +14,7 @@ public class FairyManagerController : CharacterManager
 	// Use this for initialization
 	void Start () {
 
-        Folder = "Fairy";
+        Name = "Fairy";
         LoadID();
 	}
 	
