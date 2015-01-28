@@ -257,15 +257,15 @@ public sealed class FB : ScriptableObject
         FacebookImpl.FeedRequest(toId, link, linkName, linkCaption, linkDescription, picture, mediaSource, actionName, actionLink, reference, properties, callback);
     }
 
-    public static void API(string query, HttpMethod method, FacebookDelegate callback = null, Dictionary<string, string> formData = null)
-    {
-        FacebookImpl.API(query, method, formData, callback);
-    }
+    //public static void API(string query, HttpMethod method, FacebookDelegate callback = null, Dictionary<string, string> formData = null)
+    //{
+    //    FacebookImpl.API(query, method, formData, callback);
+    //}
 
-    public static void API(string query, HttpMethod method, FacebookDelegate callback, WWWForm formData)
-    {
-        FacebookImpl.API(query, method, formData, callback);
-    }
+    //public static void API(string query, HttpMethod method, FacebookDelegate callback, WWWForm formData)
+    //{
+    //    FacebookImpl.API(query, method, formData, callback);
+    //}
 
    // [Obsolete("use FB.ActivateApp()")]
     public static void PublishInstall(FacebookDelegate callback = null)

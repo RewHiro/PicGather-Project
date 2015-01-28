@@ -120,7 +120,7 @@ public class FBController : MonoBehaviour {
         var wwwForm = new WWWForm();
         wwwForm.AddBinaryData("image", bytes, "InteractiveConsole.png");
 
-        FB.API("me/photos", Facebook.HttpMethod.POST, PostCapturePicture, wwwForm);
+      //  FB.API("me/photos", Facebook.HttpMethod.POST, PostCapturePicture, wwwForm);
     }
     /// <summary>
     /// プロフィールの画像を取得
@@ -160,7 +160,7 @@ public class FBController : MonoBehaviour {
     /// </summary>
     void GetAPIProfilePicture()
     {
-        FB.API(Util.GetPictureURL("me", 128, 128), Facebook.HttpMethod.GET, GetProfilePicture);
+     //   FB.API(Util.GetPictureURL("me", 128, 128), Facebook.HttpMethod.GET, GetProfilePicture);
     }
 
     /// <summary>
@@ -168,7 +168,7 @@ public class FBController : MonoBehaviour {
     /// </summary>
     void GetAPIUserName()
     {
-        FB.API("/me?fields=id,first_name,last_name", Facebook.HttpMethod.GET, GetUserName);
+     //   FB.API("/me?fields=id,first_name,last_name", Facebook.HttpMethod.GET, GetUserName);
     }
 
     /// <summary>7

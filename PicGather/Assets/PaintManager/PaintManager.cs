@@ -32,7 +32,7 @@ public class PaintManager : MonoBehaviour {
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
-    public readonly Vector2 campusOffSet = new Vector2(34 + 5, 22 + 8);
+    public readonly Vector2 campusOffSet = new Vector2(100, 50);
 
 
     void Start()
@@ -41,7 +41,6 @@ public class PaintManager : MonoBehaviour {
         lineCount = 1;
         lineWidth = 0.03f;
         campusSize = campus.GetComponent<RectTransform>().rect.size;
-
     }
 
     void Update()
@@ -80,6 +79,7 @@ public class PaintManager : MonoBehaviour {
     {
         if (isDraw) return;
         var mouse = Input.mousePosition;
+        
         if (!(mouse.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > mouse.x
                 && mouse.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > mouse.y)) return;
         CanDrawLine();

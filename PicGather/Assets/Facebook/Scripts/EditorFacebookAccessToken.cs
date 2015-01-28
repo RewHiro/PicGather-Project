@@ -81,7 +81,7 @@ public class EditorFacebookAccessToken : MonoBehaviour
             formData["batch"] = "[{\"method\":\"GET\", \"relative_url\":\"me?fields=id\"},{\"method\":\"GET\", \"relative_url\":\"app?fields=id\"}]";
             formData["method"] = "POST";
             formData["access_token"] = accessToken;
-            FB.API("/", HttpMethod.GET, facebook.MockLoginCallback, formData);
+         //   FB.API("/", HttpMethod.GET, facebook.MockLoginCallback, formData);
             isLoggingIn = true;
         }
         GUI.enabled = true;
