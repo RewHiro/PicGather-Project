@@ -20,7 +20,10 @@ public class CampusCaptureController : MonoBehaviour
     [SerializeField]
     CampusTemplateSetting CampusTemplate = null;
 
-    readonly Rect CaptureRect = new Rect(25, -50, 325, 200);
+    [SerializeField]
+    GameObject CampusFrame = null;
+
+    Rect CaptureRect = new Rect(25, -50, 325, 200);
     
     Button ClickButton = null;
     CharacterManager CharaManager = null;
@@ -29,7 +32,25 @@ public class CampusCaptureController : MonoBehaviour
     {
         ClickButton = GetComponent<Button>();
         ClickButton.onClick.AddListener(Save);
+        SetCampusRect();
     }
+
+    /// <summary>
+    /// キャプチャーするキャンパスのRect型を設定する。
+    /// </summary>
+    void SetCampusRect()
+    {
+        var FrameRect = CampusFrame.GetComponent<RectTransform>().rect;
+        var RightShift = 100;
+        var DownShift = 50;
+        FrameRect.x += FrameRect.width / 2 + RightShift;
+        FrameRect.y += FrameRect.height / 2 + DownShift;
+        FrameRect.width -= RightShift;
+        FrameRect.height -= DownShift;
+
+        CaptureRect = FrameRect;
+    }
+
 
     /// <summary>
     /// 保存する。
@@ -39,7 +60,7 @@ public class CampusCaptureController : MonoBehaviour
         if (!CampusTemplate.IsSelect) return;
 
         CharaManager.Entry();
-        StartCoroutine("Capture", Application.dataPath + "/Resrouces/" + CharaManager.Folder + "/" + CharaManager.ID + ".png");
+        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Folder + "/" + CharaManager.ID + ".png");
     }
 
     /// <summary>

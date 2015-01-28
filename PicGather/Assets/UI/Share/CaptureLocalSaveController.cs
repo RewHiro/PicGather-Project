@@ -10,6 +10,7 @@ using System.Collections;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
 using LegacySystem.IO;
+using WinRTPlugin;
 #else
 using System.IO;
 #endif
@@ -48,7 +49,7 @@ public class CaptureLocalSaveController : MonoBehaviour {
         var Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
         var OutPath = string.Format("{0}{1}", Path, ID + ".jpg");
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
-        
+       // Plugin.FileReference();
 #else
         if (!Directory.Exists(Path))
         {
