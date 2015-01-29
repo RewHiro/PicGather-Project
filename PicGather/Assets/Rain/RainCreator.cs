@@ -17,8 +17,6 @@ public class RainCreator : MonoBehaviour {
 
     GameObject Manager = null;
     
-    ModeManager Mode = null;
-
     int Count = 0;
     bool IsCreate = false;
 
@@ -26,7 +24,6 @@ public class RainCreator : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Mode = FindObjectOfType(typeof(ModeManager)) as ModeManager;
 	}
 	
 	// Update is called once per frame

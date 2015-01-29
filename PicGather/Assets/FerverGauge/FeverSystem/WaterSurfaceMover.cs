@@ -12,7 +12,7 @@ public class WaterSurfaceMover : MonoBehaviour {
     [SerializeField]
     private const float MaxHeight = 8;
 
-    private Vector3 DefaultPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    private Vector3 DefaultPosition = Vector3.zero;
 
 	// Use this for initialization
 	void Start () {

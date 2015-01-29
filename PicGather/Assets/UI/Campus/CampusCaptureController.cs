@@ -23,7 +23,7 @@ public class CampusCaptureController : MonoBehaviour
     [SerializeField]
     GameObject CampusFrame = null;
 
-    Rect CaptureRect = new Rect(25, -50, 325, 200);
+    Rect CaptureRect = new Rect(0, 0, 0, 0);
     
     Button ClickButton = null;
     CharacterManager CharaManager = null;
@@ -41,6 +41,15 @@ public class CampusCaptureController : MonoBehaviour
     void SetCampusRect()
     {
         var FrameRect = CampusFrame.GetComponent<RectTransform>().rect;
+
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+        var RightShift = 100;
+        var DownShift = 50;
+        FrameRect.x += FrameRect.width / 2 + RightShift;
+        FrameRect.y += FrameRect.height / 2 + DownShift;
+        FrameRect.width -= RightShift;
+        FrameRect.height -= DownShift;
+#else
         var RightShift = 100;
         var DownShift = 50;
         FrameRect.x += FrameRect.width / 2 + RightShift;
@@ -48,6 +57,7 @@ public class CampusCaptureController : MonoBehaviour
         FrameRect.width -= RightShift;
         FrameRect.height -= DownShift;
 
+#endif
         CaptureRect = FrameRect;
     }
 
@@ -58,9 +68,10 @@ public class CampusCaptureController : MonoBehaviour
     void Save()
     {
         if (!CampusTemplate.IsSelect) return;
+        if (!CharaManager.CanSave) return;
 
         CharaManager.Entry();
-        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Folder + "/" + CharaManager.ID + ".png");
+        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png");
     }
 
     /// <summary>
@@ -75,7 +86,6 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
 	    texture.Apply ();
-
         var bytes = texture.EncodeToPNG();
         Destroy(texture);
 

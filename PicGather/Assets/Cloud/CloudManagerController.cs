@@ -12,7 +12,7 @@ public class CloudManagerController : CharacterManager
 
 	// Use this for initialization
 	void Start () {
-        Folder = "Cloud";
+        Name = "Cloud";
         LoadID();
     }
 
