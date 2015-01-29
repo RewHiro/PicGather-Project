@@ -28,7 +28,6 @@ public class LeafStampManagerController : CharacterManager {
         SelectTexture = renderer.material.mainTexture;
         Name = "Leaf";
         LoadID();
-
 	}
     
 	void Update () 

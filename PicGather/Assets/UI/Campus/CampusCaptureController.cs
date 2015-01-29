@@ -54,8 +54,8 @@ public class CampusCaptureController : MonoBehaviour
         var DownShift = 50;
         FrameRect.x += FrameRect.width / 2 + RightShift;
         FrameRect.y += FrameRect.height / 2 + DownShift;
-        FrameRect.width -= RightShift;
-        FrameRect.height -= DownShift;
+        FrameRect.width -= RightShift*3;
+        FrameRect.height -= DownShift*3;
 
 #endif
         CaptureRect = FrameRect;

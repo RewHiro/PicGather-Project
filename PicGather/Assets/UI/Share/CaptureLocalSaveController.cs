@@ -49,7 +49,7 @@ public class CaptureLocalSaveController : MonoBehaviour {
         var Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
         var OutPath = string.Format("{0}{1}", Path, ID + ".jpg");
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
-       // Plugin.FileReference();
+        Plugin.FileReference();
 #else
         if (!Directory.Exists(Path))
         {
