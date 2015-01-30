@@ -14,7 +14,7 @@ public class CameraZoomUpper : MonoBehaviour {
     // Update is called once per frame
 	void Update () {
 
-        if (ModeManager.IsDrawingMode()) return;
+        if (ModeManager.IsDrawingMode) return;
 
         MouseWheelCommand();
 

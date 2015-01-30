@@ -3,37 +3,50 @@ using System.Collections;
 
 public class FairyAppear : MonoBehaviour {
 
-    [SerializeField]
-    string TreeName = "Tree";
+    GameObject Tree = null;
 
-    bool IsMove = true;
+    Vector3 ArrivalPos = Vector3.zero;
+    bool IsStop = false;
 
     const float DownSpeed = -1.0f;
+    const float ArrivalTime = 3.0f;
+
 
 	// Use this for initialization
 	void Start () {
-        var TreeObject = GameObject.Find(TreeName);
-        var Position = TreeObject.transform.position;
-        var Scale = TreeObject.transform.lossyScale*3;
+        Tree = GameObject.Find("Tree");
 
-        var AppearancePosX = Position.x + Random.Range(-Scale.x, Scale.x);
-        var AppearancePosZ = Position.z + Random.Range(-Scale.z, Scale.z);
+        var Position = Tree.transform.position;
+        var Scale = Tree.transform.lossyScale*3;
+        var Value = Random.Range(0, 100);
+        var RandomY = Random.Range(-Screen.height, Screen.height);
+        var RandomZ = Random.Range(-Scale.z*10,Scale.z*10);
 
-        transform.position = new Vector3(AppearancePosX, Position.y + 10, AppearancePosZ);
+        var AppearancePos= Value > 50 ?
+            Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, RandomY, RandomZ)) :     
+            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, RandomY, RandomZ));  
+
+        transform.position = Camera.main.WorldToScreenPoint(AppearancePos);
+
+        ArrivalPos = Tree.transform.position + new Vector3(0, Random.Range(-Scale.y / 2, Scale.y / 2));
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (!IsMove) return;
+        if (IsStop) return;
 
-        transform.Translate(new Vector3(0, DownSpeed * Time.deltaTime, 0));
+        iTween.MoveUpdate(gameObject, iTween.Hash("position", ArrivalPos,
+                        "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
+
 	}
 
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.name == TreeName)
+        if (collision.gameObject.name == Tree.name)
         {
-            IsMove = false;
+            IsStop = true;
         }
     }
 }

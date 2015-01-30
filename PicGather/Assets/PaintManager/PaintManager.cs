@@ -51,7 +51,7 @@ public class PaintManager : MonoBehaviour {
 
     void Update()
     {
-        if (!ModeManager.IsDrawingMode()) return;
+        if (!ModeManager.IsDrawingMode) return;
 
         if (Input.GetMouseButtonDown(0))
         {

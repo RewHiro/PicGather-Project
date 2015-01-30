@@ -19,7 +19,7 @@ public class BabbleRendererController : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-        if (ModeManager.IsDrawingMode())
+        if (ModeManager.IsDrawingMode)
         {
             Renderer.enabled = false;
         }

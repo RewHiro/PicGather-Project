@@ -7,10 +7,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class StampLeafCreator : MonoBehaviour {
+public class StampListUpdater : MonoBehaviour
+{
 
     [SerializeField]
     CharacterManager Manager = null;
+
 
     void Update()
     {

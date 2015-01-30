@@ -26,36 +26,36 @@ public class ModeManager : MonoBehaviour {
     /// 今ゲームモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public static bool IsGameMode()
+    public static bool IsGameMode
     {
-        return (State == STATE.Game);
+        get { return (State == STATE.Game); }
     }
 
     /// <summary>
     /// 今お絵かきモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public static bool IsDrawingMode()
+    public static bool IsDrawingMode
     {
-        return (State == STATE.Drawing);
+        get { return (State == STATE.Drawing); }
     }
 
     /// <summary>
     /// 今フィーバーモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public static bool IsFerverMode()
+    public static bool IsFerverMode
     {
-        return (State == STATE.Ferver);
+        get { return (State == STATE.Ferver); }
     }
 
     /// <summary>
     /// 今シェア機能なのかどうか
     /// </summary>
     /// <returns></returns>
-    public static bool IsShareMode()
+    public static bool IsShareMode
     {
-        return (State == STATE.Share);
+        get { return (State == STATE.Share); }
     }
 
     /// <summary>
