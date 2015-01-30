@@ -51,7 +51,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     {
         Opening();
 
-        if (!ModeManager.IsDrawingMode()) return;
+        if (!ModeManager.IsDrawingMode) return;
         
         Closed();
     }

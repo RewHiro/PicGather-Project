@@ -172,7 +172,7 @@ public class CloudMover : MonoBehaviour {
         Count += Time.deltaTime;
         if (Count <= StartCreateRainTime) return;
 
-        if (ModeManager.IsGameMode())
+        if (ModeManager.IsGameMode)
         {
             GameObject[] Leafs = GameObject.FindGameObjectsWithTag("Leaf");
             if (Leafs.Length == 0) return;

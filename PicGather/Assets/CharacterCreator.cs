@@ -36,6 +36,7 @@ public class CharacterCreator : MonoBehaviour {
         var ReadPath = Manager.Name + "/" + Manager.ID;
         var TextureCampus = Resources.Load(ReadPath) as Texture2D;
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(0, 100, 0), Prefab.transform.rotation);
+        Clone.transform.parent = Manager.transform;
         Clone.name = Prefab.name;
         Clone.renderer.material.mainTexture = TextureCampus;
 

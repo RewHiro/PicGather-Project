@@ -26,7 +26,7 @@ public class FeverManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (ModeManager.IsGameMode())
+        if (ModeManager.IsGameMode)
         {
             AddScore(10);
         }
@@ -51,14 +51,14 @@ public class FeverManager : MonoBehaviour {
     /// </summary>
     void LimitCheck()
     {
-        if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode())
+        if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode)
         {
             FeverScore = MaxFeverScore;
             ModeManager.ChangeFerverMode();
             Sound.Play();
         }
 
-        if (FeverScore < MinFeverScore && ModeManager.IsFerverMode())
+        if (FeverScore < MinFeverScore && ModeManager.IsFerverMode)
         {
             FeverScore = MinFeverScore;
             ModeManager.ChangeGameMode();
@@ -69,7 +69,7 @@ public class FeverManager : MonoBehaviour {
 
     void Ferver()
     {
-        if (!ModeManager.IsFerverMode()) return;
+        if (!ModeManager.IsFerverMode) return;
         AddScore(-1);
     }
 }

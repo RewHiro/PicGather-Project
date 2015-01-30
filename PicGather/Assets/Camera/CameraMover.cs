@@ -16,7 +16,7 @@ public class CameraMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (ModeManager.IsDrawingMode()) return;
+        if (ModeManager.IsDrawingMode) return;
 
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {

@@ -14,7 +14,7 @@ public class RainFerverController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (!ModeManager.IsFerverMode()) return;
+        if (!ModeManager.IsFerverMode) return;
         var RandomCharacter = Random.Range(0, 3);
 
         switch(RandomCharacter)
