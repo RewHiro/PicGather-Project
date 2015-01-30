@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class FerverSoundController : MonoBehaviour {
+public class FeverSoundController : MonoBehaviour {
 
     [SerializeField]
     List<AudioClip> Audio = new List<AudioClip>();

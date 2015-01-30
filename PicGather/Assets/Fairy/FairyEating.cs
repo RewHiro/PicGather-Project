@@ -17,20 +17,22 @@ public class FairyEating : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        if (gameObject.transform.localScale.x >= MaxScale)
+        {
+            Move.SetStateAbsorption();
+        }
 	}
 
-    void OnCollisionStay(Collision col)
+    void OnCollisionStay(Collision collision)
     {
         if (Move.IsMove) return;
-        if (gameObject.transform.localScale.x >= MaxScale) return;
 
-        if (col.gameObject.name == "Fruit")
+        if (collision.gameObject.name == "Fruit")
         {
             Scale += 0.1f;
             iTween.ScaleTo(gameObject,new Vector3(Scale, Scale, Scale),ScaleTime);
 
-            Destroy(col.gameObject);
+            Destroy(collision.gameObject);
         }
 
     }

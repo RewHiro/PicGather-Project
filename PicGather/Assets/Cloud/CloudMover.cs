@@ -100,7 +100,7 @@ public class CloudMover : MonoBehaviour {
         if (State != STATE.TreeTop) return;
 
         CreateRainPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
-        transform.localPosition = CreateRainPos;
+        transform.position = CreateRainPos;
         RotationPos.y += Time.deltaTime;
 
         if (RotationPos.y >= 9)
@@ -139,7 +139,7 @@ public class CloudMover : MonoBehaviour {
 
         var NormalPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
 
-        transform.localPosition = NormalPos;
+        transform.position = NormalPos;
 
         RotationPos.y -= Time.deltaTime;
         Radius += RadiusMoveSpeed * 4 * Time.deltaTime;
