@@ -12,13 +12,13 @@ using System.Collections.Generic;
 public class FBController : MonoBehaviour {
     CaptureController Capture = null;
 
-    Button ClickButton = null;
+    //Button ClickButton = null;
     
     // Dictionary<string, string> Profile = null;
     void Awake()
     {
         FB.Init(SetInit, OnHideUnity);
-        ClickButton = GetComponent<Button>();
+        //ClickButton = GetComponent<Button>();
       //  ClickButton.onClick.AddListener(Login);
     }
 
@@ -65,8 +65,6 @@ public class FBController : MonoBehaviour {
         PostAPICapturePicture();
         ShareWithFriends();
     }
-
-    bool _loggedIn = false;
 
     /// <summary>
     /// ログイン機能
