@@ -16,7 +16,6 @@ public class FairyAppear : MonoBehaviour {
 	void Start () {
         Tree = GameObject.Find("Tree");
 
-        var Position = Tree.transform.position;
         var Scale = Tree.transform.lossyScale*3;
         var Value = Random.Range(0, 100);
         var RandomY = Random.Range(-Screen.height, Screen.height);
