@@ -11,7 +11,6 @@ using System.Collections;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
 using LegacySystem.IO;
-using WinRTPlugin;
 #else
 using System.IO;
 #endif
@@ -120,9 +119,8 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
         texture.Apply();
-
         
-        CharaManager.SetEncodeByte(texture.EncodeToPNG());
+        CharaManager.SetBytesToLoadImage(texture.EncodeToPNG());
 
         Destroy(texture);
 

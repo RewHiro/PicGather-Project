@@ -2,6 +2,12 @@
 using UnityEngine.UI;
 using System.Collections;
 
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+using LegacySystem.IO;
+#else
+using System.IO;
+#endif
+
 public class CharacterManager : MonoBehaviour
 {
 
@@ -72,15 +78,20 @@ public class CharacterManager : MonoBehaviour
     }
 
     /// <summary>
-    /// テクスチャをエンコードしたバイト配列を設定
+    /// バイト配列で画像を読み込みをしています。
+    /// 読み込んだ画像をキャラクターが持っておるキャンパステクスチャに設定する。
+    /// ファイルとして書き出す
     /// </summary>
     /// <param name="bytes">テクスチャのバイト配列</param>
-    public void SetEncodeByte(byte[] bytes)
+    public void SetBytesToLoadImage(byte[] bytes)
     {
         var tex = new Texture2D(128, 128);
         tex.LoadImage(bytes);
 
         CampusTexture = tex;
-        renderer.material.mainTexture = CampusTexture;
+
+        Destroy(tex);
+
+        File.WriteAllBytes(Application.persistentDataPath + "/" + Name + ID + ".png", bytes);
     }
 }
