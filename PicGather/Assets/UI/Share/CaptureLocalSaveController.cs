@@ -10,8 +10,10 @@ using System.Collections;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
 using LegacySystem.IO;
+using WinRTPlugin;
 #else
 using System.IO;
+using System;
 #endif
 
 public class CaptureLocalSaveController : MonoBehaviour {
@@ -21,7 +23,8 @@ public class CaptureLocalSaveController : MonoBehaviour {
     Button ClickButton = null;
 
     int ID = 0;
-    
+    string FilePath = "";
+
 	// Use this for initialization
 	void Start () {
         if (!ClickButton)
@@ -33,7 +36,7 @@ public class CaptureLocalSaveController : MonoBehaviour {
         if (Capture) return;
         Capture = FindObjectOfType(typeof(CaptureController)) as CaptureController;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	
@@ -45,17 +48,24 @@ public class CaptureLocalSaveController : MonoBehaviour {
     void Save()
     {
         ID++;
-        var Path = Application.persistentDataPath + "../../../../../Desktop/Share/";
-        var OutPath = string.Format("{0}{1}", Path, ID + ".jpg");
-        if (!Directory.Exists(Path))
+        
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+   //     FilePath = Plugin.GetPicturePath();
+        FilePath = Application.persistentDataPath + "/Share/";
+#else
+        FilePath = Application.persistentDataPath + "/Share/";
+#endif
+        if (!Directory.Exists(FilePath))
         {
-            Directory.CreateDirectory(Path);
+            Directory.CreateDirectory(FilePath);
         }
+
+        FilePath = string.Format("{0}{1}", FilePath, ID + ".jpg");
 
         var bytes = Capture.Texture.EncodeToJPG();
         Destroy(Capture.Texture);
 
-        File.WriteAllBytes(OutPath, bytes);
+        File.WriteAllBytes(FilePath, bytes);
     }
 
 }

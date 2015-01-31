@@ -1,6 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+using WinRTPlugin;
+#else
+using System.IO;
+#endif
+
 public class CameraMover : MonoBehaviour {
 
     [SerializeField]

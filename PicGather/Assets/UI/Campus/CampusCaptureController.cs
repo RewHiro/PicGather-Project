@@ -11,9 +11,11 @@ using System.Collections;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
 using LegacySystem.IO;
+using WinRTPlugin;
 #else
 using System.IO;
 #endif
+
 
 public class CampusCaptureController : MonoBehaviour
 {
@@ -27,6 +29,8 @@ public class CampusCaptureController : MonoBehaviour
     
     Button ClickButton = null;
     CharacterManager CharaManager = null;
+
+    string FilePath = "";
 
     void Start()
     {
@@ -61,7 +65,6 @@ public class CampusCaptureController : MonoBehaviour
         CaptureRect = FrameRect;
     }
 
-
     /// <summary>
     /// 保存する。
     /// </summary>
@@ -71,7 +74,19 @@ public class CampusCaptureController : MonoBehaviour
         if (!CharaManager.CanSave) return;
 
         CharaManager.Entry();
-        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png");
+
+        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/";
+
+        //if (!Directory.Exists(FilePath))
+        //{
+        //    Directory.CreateDirectory(FilePath);
+        //}
+
+        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png";
+
+        //StartCoroutine("Capture", FilePath);
+
+        StartCoroutine("SaveTexture");
     }
 
     /// <summary>
@@ -86,10 +101,30 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
 	    texture.Apply ();
+
         var bytes = texture.EncodeToPNG();
         Destroy(texture);
 
-	    File.WriteAllBytes(filePath, bytes);
+        File.WriteAllBytes(filePath, bytes);
+
+    }
+
+    /// <summary>
+    /// キャプチャー処理
+    /// </summary>
+    IEnumerator SaveTexture()
+    {
+        yield return new WaitForEndOfFrame();
+
+        var texture = new Texture2D((int)CaptureRect.width, (int)CaptureRect.height, TextureFormat.ARGB32, false);
+
+        texture.ReadPixels(CaptureRect, 0, 0);
+        texture.Apply();
+
+        
+        CharaManager.SetEncodeByte(texture.EncodeToPNG());
+
+        Destroy(texture);
 
     }
 

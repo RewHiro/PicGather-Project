@@ -9,6 +9,7 @@ public class CharacterManager : MonoBehaviour
     public string Name { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
+    public Texture2D CampusTexture { get; private set; }
 
     [SerializeField]
     CampusTemplateSetting Template = null;
@@ -32,6 +33,7 @@ public class CharacterManager : MonoBehaviour
     {
         ID = 0;
         State = STATE.None;
+        CampusTexture = null;
     }
 
     /// <summary>
@@ -53,7 +55,6 @@ public class CharacterManager : MonoBehaviour
         Template.SetSprite(TemplateSprite);
     }
 
-
     /// <summary>
     /// 生成された時の処理
     /// </summary>
@@ -68,5 +69,18 @@ public class CharacterManager : MonoBehaviour
     public void NoneState()
     {
         State = STATE.None;
+    }
+
+    /// <summary>
+    /// テクスチャをエンコードしたバイト配列を設定
+    /// </summary>
+    /// <param name="bytes">テクスチャのバイト配列</param>
+    public void SetEncodeByte(byte[] bytes)
+    {
+        var tex = new Texture2D(128, 128);
+        tex.LoadImage(bytes);
+
+        CampusTexture = tex;
+        renderer.material.mainTexture = CampusTexture;
     }
 }
