@@ -54,6 +54,8 @@ public class TextureAlLoading : MonoBehaviour {
     /// <returns></returns>
     public static Texture2D LoadTexture(CharacterManager character,int ID)
     {
+        if (character.ID == 0) return null;
+
         if (character.ID < ID)
         {
             ID = character.ID;

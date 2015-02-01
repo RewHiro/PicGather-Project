@@ -130,7 +130,6 @@ public class CampusCaptureController : MonoBehaviour
         var path = Application.persistentDataPath + "/" + CharaManager.Name;
         File.WriteAllBytes(path + "_" + CharaManager.ID + ".png", bytes);
 
-
         CharaManager.Entry();
 
     }
