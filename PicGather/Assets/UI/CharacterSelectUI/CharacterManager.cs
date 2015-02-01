@@ -1,6 +1,18 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/30  
+/// brief ： キャラクターの親クラス
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+/// 
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+
+#if UNITY_METRO && !UNITY_EDITOR
+using LegacySystem.IO;
+#else
+using System.IO;
+#endif
 
 public class CharacterManager : MonoBehaviour
 {
@@ -9,6 +21,7 @@ public class CharacterManager : MonoBehaviour
     public string Name { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
+    public Texture2D CampusTexture { get; private set; }
 
     [SerializeField]
     CampusTemplateSetting Template = null;
@@ -32,6 +45,7 @@ public class CharacterManager : MonoBehaviour
     {
         ID = 0;
         State = STATE.None;
+        CampusTexture = null;
     }
 
     /// <summary>
@@ -53,7 +67,6 @@ public class CharacterManager : MonoBehaviour
         Template.SetSprite(TemplateSprite);
     }
 
-
     /// <summary>
     /// 生成された時の処理
     /// </summary>
@@ -69,4 +82,14 @@ public class CharacterManager : MonoBehaviour
     {
         State = STATE.None;
     }
+
+    /// <summary>
+    /// お絵かきしたテクスチャデータを設定する。
+    /// </summary>
+    /// <param name="texture">テクスチャデータ</param>
+    public void SetTexture2D(Texture2D texture)
+    {
+        CampusTexture = texture;
+    }
+
 }

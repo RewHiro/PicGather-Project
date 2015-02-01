@@ -14,6 +14,7 @@ public class CloudManagerController : CharacterManager
 	void Start () {
         Name = "Cloud";
         LoadID();
+
     }
 
 	

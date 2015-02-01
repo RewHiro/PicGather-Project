@@ -9,11 +9,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 #else
 using System.IO;
 #endif
+
 
 public class CampusCaptureController : MonoBehaviour
 {
@@ -61,7 +62,6 @@ public class CampusCaptureController : MonoBehaviour
         CaptureRect = FrameRect;
     }
 
-
     /// <summary>
     /// 保存する。
     /// </summary>
@@ -71,7 +71,19 @@ public class CampusCaptureController : MonoBehaviour
         if (!CharaManager.CanSave) return;
 
         CharaManager.Entry();
-        StartCoroutine("Capture", Application.dataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png");
+
+        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/";
+
+        //if (!Directory.Exists(FilePath))
+        //{
+        //    Directory.CreateDirectory(FilePath);
+        //}
+
+        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png";
+
+        //StartCoroutine("Capture", FilePath);
+
+        StartCoroutine("SaveTexture");
     }
 
     /// <summary>
@@ -86,10 +98,39 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
 	    texture.Apply ();
+
         var bytes = texture.EncodeToPNG();
         Destroy(texture);
 
-	    File.WriteAllBytes(filePath, bytes);
+        File.WriteAllBytes(filePath, bytes);
+
+    }
+
+    /// <summary>
+    /// キャプチャー処理
+    /// キャプチャーしたテクスチャデータをまず、pngデータにエンコードする。
+    /// バイト配列で画像を読み込みをしています。
+    /// 読み込んだ画像をキャラクターが持っておるキャンパステクスチャに設定する。
+    /// ファイルとして書き出す
+    /// </summary>
+    IEnumerator SaveTexture()
+    {
+        yield return new WaitForEndOfFrame();
+
+        var texture = new Texture2D((int)CaptureRect.width, (int)CaptureRect.height, TextureFormat.ARGB32, false);
+
+        texture.ReadPixels(CaptureRect, 0, 0);
+        texture.Apply();
+
+        var bytes = texture.EncodeToPNG();
+
+        texture = new Texture2D(128, 128);
+        texture.LoadImage(bytes);
+
+        CharaManager.SetTexture2D(texture);
+
+        var path = Application.persistentDataPath + "/" + CharaManager.Name;
+        File.WriteAllBytes(path + CharaManager.ID + ".png", bytes);
 
     }
 
