@@ -30,8 +30,8 @@ public class RainFerverController : MonoBehaviour {
                 break;
         }
 
-        var TextureCampus = Resources.Load(Character.Name + "/" + Random.Range(0, Character.ID+1)) as Texture2D;
-        renderer.material.mainTexture = TextureCampus;
+        renderer.material.mainTexture = TextureAlLoading.RandomLoadTexture(Character);
+
         var Scale = 0.8f;
         transform.localScale = new Vector3(Scale, Scale, Scale);
     }

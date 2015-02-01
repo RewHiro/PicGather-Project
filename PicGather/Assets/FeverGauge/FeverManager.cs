@@ -8,13 +8,13 @@ public class FeverManager : MonoBehaviour {
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
-    public const int MaxFeverScore = 10;
-    public const int MinFeverScore = 0;
+    public const float MaxFeverScore = 10;
+    public const float MinFeverScore = 0;
 
     /// <summary>
     /// Feverゲージの量
     /// </summary>
-    public int FeverScore{get;private set;}
+    public float FeverScore{get;private set;}
 
 
 	// Use this for initialization
@@ -28,7 +28,7 @@ public class FeverManager : MonoBehaviour {
 
         if (ModeManager.IsGameMode)
         {
-            //AddScore(10);
+            AddScore(1f);
         }
 
         Ferver();
@@ -38,13 +38,11 @@ public class FeverManager : MonoBehaviour {
     /// 引数に与えた整の値だけ加算される
     /// </summary>
     /// <param name="addValue"></param>
-    public void AddScore(int addValue)
+    public void AddScore(float addValue)
     {
-        FeverScore += addValue;
+        FeverScore += addValue * Time.deltaTime;
 
         LimitCheck();
-
-        Debug.Log(FeverScore);
 
     }
 
@@ -73,6 +71,6 @@ public class FeverManager : MonoBehaviour {
     void Ferver()
     {
         if (!ModeManager.IsFerverMode) return;
-        AddScore(-1);
+        //AddScore(-0.1f);
     }
 }
