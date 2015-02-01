@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 #else
 using System.IO;
@@ -28,8 +28,6 @@ public class CampusCaptureController : MonoBehaviour
     
     Button ClickButton = null;
     CharacterManager CharaManager = null;
-
-    string FilePath = "";
 
     void Start()
     {

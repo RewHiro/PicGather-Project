@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 using WinRTPlugin;
 #else
@@ -49,7 +49,7 @@ public class CaptureLocalSaveController : MonoBehaviour {
     {
         ID++;
         
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
    //     FilePath = Plugin.GetPicturePath();
         FilePath = Application.persistentDataPath + "/Share/";
 #else

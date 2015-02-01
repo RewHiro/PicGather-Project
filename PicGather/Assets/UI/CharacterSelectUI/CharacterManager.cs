@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/01/30  
+/// brief ： キャラクターの親クラス
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+/// 
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 #else
 using System.IO;
@@ -90,8 +96,8 @@ public class CharacterManager : MonoBehaviour
 
         CampusTexture = tex;
 
-        Destroy(tex);
-
-        File.WriteAllBytes(Application.persistentDataPath + "/" + Name + ID + ".png", bytes);
+        var path = Application.persistentDataPath + "/" + Name;
+        File.WriteAllBytes(path + ID + ".png", bytes);
     }
+
 }
