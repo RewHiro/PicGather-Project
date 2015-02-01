@@ -70,8 +70,6 @@ public class CampusCaptureController : MonoBehaviour
         if (!CampusTemplate.IsSelect) return;
         if (!CharaManager.CanSave) return;
 
-        CharaManager.Entry();
-
         //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/";
 
         //if (!Directory.Exists(FilePath))
@@ -130,7 +128,10 @@ public class CampusCaptureController : MonoBehaviour
         CharaManager.SetTexture2D(texture);
 
         var path = Application.persistentDataPath + "/" + CharaManager.Name;
-        File.WriteAllBytes(path + CharaManager.ID + ".png", bytes);
+        File.WriteAllBytes(path + "_" + CharaManager.ID + ".png", bytes);
+
+
+        CharaManager.Entry();
 
     }
 
