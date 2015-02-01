@@ -6,7 +6,7 @@ public class BabbleMover : MonoBehaviour {
     /// <summary>
     /// 移動量の最大値、最小値
     /// </summary>
-    private const float MaxMoveValue = 10.0f;
+    private const float MaxMoveValue = 5.0f;
     private const float MinMoveValue = 0.0f;
 
     /// <summary>
@@ -14,33 +14,39 @@ public class BabbleMover : MonoBehaviour {
     /// </summary>
     private Vector2 Velocity = new Vector2(MinMoveValue, MinMoveValue);
 
+    /// <summary>
+    /// スクリーン座標を保存するための変数
+    /// </summary>
+    private Vector3 PositionInScreen = new Vector3(0.0f,0.0f,0.0f);
+
+
     // Use this for initialization
     void Start()
     {
         Velocity = new Vector2(Random.Range(-MaxMoveValue, MaxMoveValue), Random.Range(-MaxMoveValue, MaxMoveValue));
+
+        PositionInScreen.z = 1.3f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        ///スクリーン上での座標を得る
-        Vector3 positionInScreen = Camera.main.WorldToScreenPoint(this.transform.position);
-        positionInScreen.z = 1.2f;
-
+ 
         TouchMover();
 
         ///速度調整する
-        DecreaseMoveSpeed(ref Velocity);
+        DecreaseMoveSpeed();
 
         ///スクリーン座標上での位置で確認し、画面端なら跳ね返る
-        Velocity.x *= ChangeVelocity(ref positionInScreen.x, Screen.width);
-        Velocity.y *= ChangeVelocity(ref positionInScreen.y, Screen.height);
+        Velocity.x *= ChangeVelocity(ref PositionInScreen.x, Screen.width);
+        Velocity.y *= ChangeVelocity(ref PositionInScreen.y, Screen.height);
 
         ///移動処理
-        positionInScreen.x += Velocity.x * Time.deltaTime;
-        positionInScreen.y += Velocity.y * Time.deltaTime;
+        PositionInScreen.x += Velocity.x ;
+        PositionInScreen.y += Velocity.y ;
 
-        transform.position = Camera.main.ScreenToWorldPoint(positionInScreen);
+        transform.position = Camera.main.ScreenToWorldPoint(PositionInScreen);
 
     }
 
@@ -48,18 +54,18 @@ public class BabbleMover : MonoBehaviour {
     /// 自動で速度減少させる
     /// </summary>
     /// <param name="index">減少させる変数</param>
-    private void DecreaseMoveSpeed(ref Vector2 index)
+    private void DecreaseMoveSpeed()
     {
         /// 移動速度の減少すると判断する閾値（いきち）
-        const float ThresholdMoveSpeed = 40.0f;
+        const float ThresholdMoveSpeed = 3.0f;
         ///減少量
-        const float DecreaseValue = 0.97f;
+        const float DecreaseValue = 0.95f;
 
         ///x,yの移動量の合計で減速する判断をする
-        float AbsoluteMoveSpeed = Mathf.Sqrt((index.x * index.x) + (index.y * index.y));
+        float AbsoluteMoveSpeed = Mathf.Sqrt((Velocity.x * Velocity.x) + (Velocity.y * Velocity.y));
         if (AbsoluteMoveSpeed > ThresholdMoveSpeed)
         {
-            index *= DecreaseValue;
+            Velocity *= DecreaseValue;
         }
     }
 
@@ -97,19 +103,20 @@ public class BabbleMover : MonoBehaviour {
     /// </summary>
     private void TouchMover()
     {
+
+        const float ExtendValue = 10.0f;
         if (TouchManager.IsMouseButton(this.gameObject))
         {
-            Velocity.x = Input.GetAxisRaw("Mouse X") * Screen.width;
-            Velocity.y = Input.GetAxisRaw("Mouse Y") * Screen.height;
+            Velocity.x = Input.GetAxisRaw("Mouse X") * ExtendValue;
+            Velocity.y = Input.GetAxisRaw("Mouse Y") * ExtendValue;
         }
 
         if (TouchManager.IsTouching(this.gameObject))
         {
-            Velocity.x = Input.GetTouch(0).deltaPosition.x;
-            Velocity.y = Input.GetTouch(0).deltaPosition.y;
+            Velocity.x = Input.GetTouch(0).deltaPosition.x * ExtendValue;
+            Velocity.y = Input.GetTouch(0).deltaPosition.y * ExtendValue;
         }
 
     }
-
 
 }

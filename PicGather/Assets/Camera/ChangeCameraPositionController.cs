@@ -24,8 +24,7 @@ public class ChangeCameraPositionController : MonoBehaviour {
 	void Start () {
         StartPosition = transform.position;
 	}
-
-
+	
 	// Update is called once per frame
 	void Update () {
 

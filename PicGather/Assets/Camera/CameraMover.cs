@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
-using WinRTPlugin;
-#else
-using System.IO;
-#endif
-
 public class CameraMover : MonoBehaviour {
 
+   
+    /// <summary>
+    /// カメラをY軸回転させる中心となるGameObject
+    /// </summary>
     [SerializeField]
     private Transform CenterObject = null;
 
+    /// <summary>
+    /// カメラの移動量
+    /// </summary>
     [SerializeField]
     private float MoveValue = 1.0f;
 
-	// Use this for initialization
-	void Start () {
+    /// <summary>
+    /// BabbleDestroyerクラスのDestroyAllBabblesを呼ぶために用意する
+    /// </summary>
+    private BabbleDestroyer BblDestroyer = null;
 
+    // Use this for initialization
+	void Start () {
+        BblDestroyer = GetComponent<BabbleDestroyer>();
 	}
-	
+
+ 
 	// Update is called once per frame
 	void Update () {
         if (ModeManager.IsDrawingMode) return;
@@ -27,6 +34,8 @@ public class CameraMover : MonoBehaviour {
         if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             Camera.main.transform.RotateAround(CenterObject.localPosition, transform.up, MoveValue * Input.GetTouch(0).deltaPosition.x);
+
+            BblDestroyer.DestroyAllBabbles();
         }
 	}
 }
