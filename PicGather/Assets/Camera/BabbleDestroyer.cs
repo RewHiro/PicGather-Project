@@ -7,7 +7,7 @@ public class BabbleDestroyer : MonoBehaviour {
     /// シャボン玉削除時に生成するGameObject(パーティクル)のプレハブ
     /// </summary>
     [SerializeField]
-    private GameObject BabbleParticlePrefab;
+    private GameObject BabbleParticlePrefab = null;
 
     /// <summary>
     /// 現在存在するシャボン玉をすべて削除する
@@ -15,7 +15,7 @@ public class BabbleDestroyer : MonoBehaviour {
     public void DestroyAllBabbles()
     {
         
-        GameObject[] Babbles = GameObject.FindGameObjectsWithTag("Babble");
+        var Babbles = GameObject.FindGameObjectsWithTag("Babble");
 
         foreach(var babble in Babbles)
         {

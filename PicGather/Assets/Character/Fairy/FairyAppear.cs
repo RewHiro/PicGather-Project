@@ -9,7 +9,7 @@ public class FairyAppear : MonoBehaviour {
     bool IsStop = false;
 
     const float DownSpeed = -1.0f;
-    const float ArrivalTime = 3.0f;
+    const float ArrivalTime = 6.0f;
 
 
 	// Use this for initialization
