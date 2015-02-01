@@ -84,20 +84,12 @@ public class CharacterManager : MonoBehaviour
     }
 
     /// <summary>
-    /// バイト配列で画像を読み込みをしています。
-    /// 読み込んだ画像をキャラクターが持っておるキャンパステクスチャに設定する。
-    /// ファイルとして書き出す
+    /// お絵かきしたテクスチャデータを設定する。
     /// </summary>
-    /// <param name="bytes">テクスチャのバイト配列</param>
-    public void SetBytesToLoadImage(byte[] bytes)
+    /// <param name="texture">テクスチャデータ</param>
+    public void SetTexture2D(Texture2D texture)
     {
-        var tex = new Texture2D(128, 128);
-        tex.LoadImage(bytes);
-
-        CampusTexture = tex;
-
-        var path = Application.persistentDataPath + "/" + Name;
-        File.WriteAllBytes(path + ID + ".png", bytes);
+        CampusTexture = texture;
     }
 
 }

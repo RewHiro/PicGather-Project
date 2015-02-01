@@ -108,6 +108,10 @@ public class CampusCaptureController : MonoBehaviour
 
     /// <summary>
     /// キャプチャー処理
+    /// キャプチャーしたテクスチャデータをまず、pngデータにエンコードする。
+    /// バイト配列で画像を読み込みをしています。
+    /// 読み込んだ画像をキャラクターが持っておるキャンパステクスチャに設定する。
+    /// ファイルとして書き出す
     /// </summary>
     IEnumerator SaveTexture()
     {
@@ -117,10 +121,16 @@ public class CampusCaptureController : MonoBehaviour
 
         texture.ReadPixels(CaptureRect, 0, 0);
         texture.Apply();
-        
-        CharaManager.SetBytesToLoadImage(texture.EncodeToPNG());
 
-        Destroy(texture);
+        var bytes = texture.EncodeToPNG();
+
+        texture = new Texture2D(128, 128);
+        texture.LoadImage(bytes);
+
+        CharaManager.SetTexture2D(texture);
+
+        var path = Application.persistentDataPath + "/" + CharaManager.Name;
+        File.WriteAllBytes(path + CharaManager.ID + ".png", bytes);
 
     }
 
