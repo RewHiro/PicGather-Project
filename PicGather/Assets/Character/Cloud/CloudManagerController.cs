@@ -13,7 +13,7 @@ public class CloudManagerController : CharacterManager
 	// Use this for initialization
 	void Start () {
         Name = "Cloud";
-        LoadID();
+        Init();
 
     }
 
@@ -22,4 +22,5 @@ public class CloudManagerController : CharacterManager
 	void Update () {
 	    
 	}
+
 }

@@ -15,11 +15,12 @@ public class FairyManagerController : CharacterManager
 	void Start () {
 
         Name = "Fairy";
-        LoadID();
+        Init();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+	    
 	}
+
 }

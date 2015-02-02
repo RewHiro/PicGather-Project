@@ -19,6 +19,7 @@ public class CharacterManager : MonoBehaviour
 
     public int ID { get; protected set; }
     public string Name { get; protected set; }
+    public string TextureFilePath { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
     public Texture2D CampusTexture { get; private set; }
@@ -28,6 +29,8 @@ public class CharacterManager : MonoBehaviour
 
     [SerializeField]
     Sprite TemplateSprite = null;
+
+    CharacterDataWriting SaveData = null;
 
     enum STATE
     {
@@ -41,8 +44,9 @@ public class CharacterManager : MonoBehaviour
     /// <summary>
     /// データベースからIDをロードする。
     /// </summary>
-    public virtual void LoadID()
+    public virtual void Init()
     {
+        SaveData = GetComponent<CharacterDataWriting>();
         ID = 0;
         State = STATE.None;
         CampusTexture = null;
@@ -51,11 +55,12 @@ public class CharacterManager : MonoBehaviour
     /// <summary>
     /// 登録する
     /// </summary>
-    public void Entry()
+    public void Entry(string filePath)
     {
         if (State != STATE.None) return;
 
         ID++;
+        TextureFilePath = filePath;
         State = STATE.Create;
     }
 
@@ -92,4 +97,30 @@ public class CharacterManager : MonoBehaviour
         CampusTexture = texture;
     }
 
+    /// <summary>
+    /// 生成した子オブジェクトのデータを保存する。
+    /// </summary>
+    /// <param name="clone">生成するオブジェクト</param>
+    public void CreateChildrenDataSave(GameObject clone)
+    {
+        var children = clone.GetComponent<CharacterDataSave>();
+        children.SetSaveData(TextureFilePath);
+    }
+
+    /// <summary>
+    /// 子オブジェクトのデータ保存。
+    /// ファイルに書き出す
+    /// </summary>
+    public void ChildrensDataSave()
+    {
+        var childrens = GameObject.FindGameObjectsWithTag(Name);
+
+        foreach (var children in childrens)
+        {
+            var character = children.GetComponent<CharacterDataSave>();
+            SaveData.Write(new CharacterData(Name, character.Data.TextureFilePath, character.transform.lossyScale));
+        }
+
+        SaveData.FileWrite(Name);
+    }
 }
