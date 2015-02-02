@@ -28,7 +28,7 @@ public class FeverManager : MonoBehaviour {
 
         if (ModeManager.IsGameMode)
         {
-            AddScore(1f);
+            //AddScore(1f);
         }
 
         Ferver();

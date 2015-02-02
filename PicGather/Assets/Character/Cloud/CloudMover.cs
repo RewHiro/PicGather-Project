@@ -39,7 +39,7 @@ public class CloudMover : MonoBehaviour {
     STATE State = STATE.Appearance;
 
     RainCreator RainCreate = null;
-    
+
     // Use this for initialization
 	void Start () {
         State = STATE.Appearance;

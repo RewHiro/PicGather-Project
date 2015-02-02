@@ -13,7 +13,7 @@ public class LeafStampManagerController : CharacterManager {
 	// Use this for initialization
 	void Start () {
         Name = "Leaf";
-        LoadID();
+        Init();
 	}
     
 	void Update () 

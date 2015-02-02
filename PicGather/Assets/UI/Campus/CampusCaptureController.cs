@@ -128,9 +128,11 @@ public class CampusCaptureController : MonoBehaviour
         CharaManager.SetTexture2D(texture);
 
         var path = Application.persistentDataPath + "/" + CharaManager.Name;
-        File.WriteAllBytes(path + "_" + CharaManager.ID + ".png", bytes);
+        var filePath = path + "_" + CharaManager.ID + ".png";
+        File.WriteAllBytes(filePath, bytes);
 
-        CharaManager.Entry();
+
+        CharaManager.Entry(filePath);
 
     }
 
