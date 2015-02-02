@@ -8,7 +8,6 @@
 using UnityEngine;
 using System.Collections;
 using MiniJSON;
-using LitJson;
 using System.Collections.Generic;
 
 #if UNITY_METRO && !UNITY_EDITOR
@@ -34,8 +33,9 @@ public struct Vec3J
 
 public struct CharacterData
 {
-    public CharacterData(string name, string textureFilePath, Vector3 scale):this()
+    public CharacterData(int id,string name, string textureFilePath, Vector3 scale):this()
     {
+        ID = id;
         Name = name;
         TextureFilePath = textureFilePath;
         Scale = new Vec3J(scale.x, scale.y, scale.z);
@@ -44,13 +44,14 @@ public struct CharacterData
     public Vec3J Scale { get; set; }
     public string Name { get; set; }
     public string TextureFilePath { get; set; }
+    public int ID { get; set; }
 };
 
 
 public class CharacterDataWriting : MonoBehaviour
 {
-
-    List<CharacterData> CharacterDatas = new List<CharacterData>();
+    //IDictionary<string, object> CharacterDatas = new Dictionary<string, object>();
+    //List<CharacterData> DataList = new List<CharacterData>();
 
     /// <summary>
     /// 1体のキャラクターデータを書き出す。
@@ -61,7 +62,7 @@ public class CharacterDataWriting : MonoBehaviour
     /// <param name="isPresence">存在してたら true, 存在してないなら false</param>
     public void Write(CharacterData saveCharacterData)
     {
-        CharacterDatas.Add(saveCharacterData);
+        //CharacterDatas.Add(saveCharacterData.Name + saveCharacterData.ID, saveCharacterData);
     }
 
 
@@ -70,11 +71,11 @@ public class CharacterDataWriting : MonoBehaviour
     /// </summary>
     public void FileWrite(string name)
     {
-        string json = JsonMapper.ToJson(CharacterDatas);
+        //string json = Json.Serialize(CharacterDatas);
 
-        var path = Application.persistentDataPath + "/" + name + ".json";
+        //var path = Application.persistentDataPath + "/" + name + ".json";
 
-        File.WriteAllText(path, json);
+        //File.WriteAllText(path, json);
 
     }
 

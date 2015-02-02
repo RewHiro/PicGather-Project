@@ -104,7 +104,7 @@ public class CharacterManager : MonoBehaviour
     public void CreateChildrenDataSave(GameObject clone)
     {
         var children = clone.GetComponent<CharacterDataSave>();
-        children.SetSaveData(TextureFilePath);
+        children.SetSaveData(ID,TextureFilePath);
     }
 
     /// <summary>
@@ -118,7 +118,7 @@ public class CharacterManager : MonoBehaviour
         foreach (var children in childrens)
         {
             var character = children.GetComponent<CharacterDataSave>();
-            SaveData.Write(new CharacterData(Name, character.Data.TextureFilePath, character.transform.lossyScale));
+            SaveData.Write(new CharacterData(character.Data.ID, character.Data.Name, character.Data.TextureFilePath, character.transform.lossyScale));
         }
 
         SaveData.FileWrite(Name);

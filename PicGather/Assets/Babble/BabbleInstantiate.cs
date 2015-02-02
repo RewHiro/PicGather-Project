@@ -37,7 +37,7 @@ public class BabbleInstantiate : MonoBehaviour
             const int MaxBabbleNumber = 3;
 
             /// 現在生成されているシャボン玉の数を得るために検索し取得する
-            GameObject[] Babbles = GameObject.FindGameObjectsWithTag("Babble");
+            var Babbles = GameObject.FindGameObjectsWithTag("Babble");
 
             if (Babbles.Length >= MaxBabbleNumber) return false;
         }

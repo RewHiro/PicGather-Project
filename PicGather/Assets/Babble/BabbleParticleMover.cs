@@ -6,7 +6,7 @@ public class BabbleParticleMover : MonoBehaviour {
     /// <summary>
     /// スクリーン上での座標
     /// </summary>
-    private Vector3 PositionInScreen = new Vector3();
+    private Vector3 PositionInScreen = new Vector3(0.0f,0.0f,0.0f);
 
 	// Use this for initialization
 	void Start () {
