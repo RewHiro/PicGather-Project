@@ -71,11 +71,10 @@ public class CharacterDataWriting : MonoBehaviour
     public void FileWrite(string name)
     {
         string json = LitJson.JsonMapper.ToJson(DataList);
-        Debug.Log(json);
 
         var path = Application.persistentDataPath + "/" + name + ".json";
 
-        File.WriteAllText(path, json);
+       // File.WriteAllText(path, json);
 
     }
 

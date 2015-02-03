@@ -23,12 +23,12 @@ public class FairyAppear : MonoBehaviour {
 
         var Scale = Tree.transform.lossyScale * 3;
         var Value = Random.Range(0, 100);
-        var RandomY = Random.Range(-Screen.height, Screen.height);
+        var RandomY = Random.Range(-Screen.height/2, Screen.height/2);
         var RandomZ = Random.Range(-Scale.z * 10, Scale.z * 10);
 
         var AppearancePos = Value > 50 ?
-            Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, RandomY, RandomZ)) :
-            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, RandomY, RandomZ));
+            Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width/3, RandomY, RandomZ)) :
+            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/3, RandomY, RandomZ));
 
         transform.position = Camera.main.WorldToScreenPoint(AppearancePos);
 

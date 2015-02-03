@@ -112,7 +112,7 @@ public class FairyMover : MonoBehaviour {
     {
         if (collision.gameObject.name == FeverGauge.name)
         {
-            var value = (int)gameObject.transform.localScale.x;
+            var value = gameObject.transform.localScale.x;
             FeverGauge.GetComponent<FeverManager>().AddScore(value);
             Destroy(gameObject);
         }

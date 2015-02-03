@@ -70,38 +70,7 @@ public class CampusCaptureController : MonoBehaviour
         if (!CampusTemplate.IsSelect) return;
         if (!CharaManager.CanSave) return;
 
-        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/";
-
-        //if (!Directory.Exists(FilePath))
-        //{
-        //    Directory.CreateDirectory(FilePath);
-        //}
-
-        //FilePath = Application.persistentDataPath + "/Resources/" + CharaManager.Name + "/" + CharaManager.ID + ".png";
-
-        //StartCoroutine("Capture", FilePath);
-
         StartCoroutine("SaveTexture");
-    }
-
-    /// <summary>
-    /// キャプチャー処理
-    /// </summary>
-    /// <param name="filePath">ファイルのパスを指定</param>
-    IEnumerator Capture(string filePath)
-    {
-        yield return new WaitForEndOfFrame();
-
-        var texture = new Texture2D((int)CaptureRect.width, (int)CaptureRect.height, TextureFormat.ARGB32, false);
-
-        texture.ReadPixels(CaptureRect, 0, 0);
-	    texture.Apply ();
-
-        var bytes = texture.EncodeToPNG();
-        Destroy(texture);
-
-        File.WriteAllBytes(filePath, bytes);
-
     }
 
     /// <summary>
@@ -129,7 +98,7 @@ public class CampusCaptureController : MonoBehaviour
 
         var path = Application.persistentDataPath + "/" + CharaManager.Name;
         var filePath = path + "_" + CharaManager.ID + ".png";
-        File.WriteAllBytes(filePath, bytes);
+        //File.WriteAllBytes(filePath, bytes);
 
 
         CharaManager.Entry(filePath);
