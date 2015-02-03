@@ -10,7 +10,6 @@ using System.Collections.Generic;
 //
 public class PaintManager : MonoBehaviour {
 
-
     [SerializeField]
     GameObject prefab = null;
 
@@ -27,13 +26,13 @@ public class PaintManager : MonoBehaviour {
     public Vector2 campusSize;
 
     //　ペイントに必要な制御
-    public bool isDraw { get; private set; }    //　true：描画中
     public Color lineColor { get; private set; }
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
     public readonly Vector2 campusOffSet = new Vector2(100, 50);
-    
+
+    bool isOver = false;
 
     void Start()
     {
@@ -53,73 +52,66 @@ public class PaintManager : MonoBehaviour {
     {
         if (!ModeManager.IsDrawingMode) return;
 
+        if (Input.touchCount == 0)
+        {
+            //MouseEvent();
+        }
+        else
+        {
+            TouchEvent();
+        }
+
+    }
+
+    /// <summary>
+    /// マウスイベント
+    /// </summary>
+    void MouseEvent()
+    {
         if (Input.GetMouseButtonDown(0))
         {
-            CanDrawLine();
+            CanDrawLine(Input.mousePosition);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButton(0) && isOver)
         {
-            StopLine();
-        }
-        if (Input.GetMouseButton(0))
-        {
-            UpdateBeyondCampus();
+            CanDrawLine(Input.mousePosition);
         }
     }
 
     /// <summary>
-    /// 範囲にでたら描画をやめる、範囲に入ったら描画する
+    /// タッチのイベント
     /// </summary>
-    void UpdateBeyondCampus()
+    void TouchEvent()
     {
-        StartDraw();
-        StopDraw();
+        foreach (var touch in Input.touches)
+        { 
+            if (touch.phase == TouchPhase.Began)
+            {
+                CanDrawLine(touch.position);
+            }
+            if (touch.phase == TouchPhase.Moved && isOver)
+            {                  
+                CanDrawLine(touch.position);
+            }
+        }
     }
-
-
-    /// <summary>
-    /// 描画を始める
-    /// </summary>
-    void StartDraw()
-    {
-        if (isDraw) return;
-        var mouse = Input.mousePosition;
-        
-        if (!(mouse.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > mouse.x
-                && mouse.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > mouse.y)) return;
-        CanDrawLine();
-    }
-
-    /// <summary>
-    /// 描画を止める
-    /// </summary>
-    void StopDraw()
-    {
-        if (!isDraw) return;
-        var mouse = Input.mousePosition;
-        if (!(mouse.x < 0 + campusOffSet.x || campusSize.x - valueAdjustment.x < mouse.x
-            || mouse.y < 0 + campusOffSet.y || campusSize.y - valueAdjustment.y < mouse.y)) return;
-        StopLine();
-    }
-
+    
     //　キャンパス内だったら描画する
-    void CanDrawLine()
+    void CanDrawLine(Vector3 pos)
     {
-        var mouse = Input.mousePosition;
+        if (!(pos.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > pos.x)) return;
+        if (!(pos.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > pos.y)) return;
 
-        if (!(mouse.x > 0 + campusOffSet.x && campusSize.x - valueAdjustment.x > mouse.x)) return;
-        if (!(mouse.y > 0 + campusOffSet.y && campusSize.y - valueAdjustment.y > mouse.y)) return;
         CreateLine();
     }
 
-
-
     void CreateLine()
     {
-        isDraw = true;
+        StopLine();
 
         var originPos = Vector3.zero;
+
         if (!characterCanvas)
         {
             characterCanvas = (GameObject)Instantiate(parent, originPos, Quaternion.identity);
@@ -127,17 +119,18 @@ public class PaintManager : MonoBehaviour {
             characterCanvas.name = parent.name;
         }
 
-        var Clone = (GameObject)Instantiate(prefab, originPos, Quaternion.identity);
+        var clone = (GameObject)Instantiate(prefab, originPos, Quaternion.identity);
 
-        Clone.name = prefab.name;
-        Clone.transform.parent = characterCanvas.transform;
+        clone.name = prefab.name;
+        clone.transform.parent = characterCanvas.transform;
+
     }
 
 
     void StopLine()
     {
         lineCount++;
-        isDraw = false;
+        isOver = false;
     }
 
     /// <summary>
@@ -158,7 +151,7 @@ public class PaintManager : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         lineCount = 1;
-        isDraw = false;
+        isOver = false;
         lineColor = Color.black;
     }
 
@@ -169,4 +162,51 @@ public class PaintManager : MonoBehaviour {
     }
 
     public void ChangeLineWidth(float width) { lineWidth = width; }
+
+    /// <summary>
+    /// マウスの状態をチェック
+    /// </summary>
+    /// <param name="children"></param>
+    public void CheckMouse(Painter children)
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            children.StopDrawing();
+            StopLine();
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            InputCampusOver(children);
+        }
+    }
+
+    /// <summary>
+    /// タッチの状態をチェック
+    /// </summary>
+    /// <param name="children"></param>
+    public void CheckTouch(Painter children)
+    {
+        if (children.touch.phase == TouchPhase.Ended)
+        {
+            children.StopDrawing();
+            StopLine();
+        }
+        if (children.touch.phase == TouchPhase.Moved)
+        {
+            InputCampusOver(children);
+        }
+    }
+
+    /// <summary>
+    /// 入力情報がキャンパスの範囲外の処理
+    /// </summary>
+    /// <param name="children"></param>
+    void InputCampusOver(Painter children)
+    {
+        if (!children.isDraw)
+        {
+            isOver = true;
+        }
+    }
 }
