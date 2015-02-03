@@ -50,8 +50,7 @@ public struct CharacterData
 
 public class CharacterDataWriting : MonoBehaviour
 {
-    //IDictionary<string, object> CharacterDatas = new Dictionary<string, object>();
-    //List<CharacterData> DataList = new List<CharacterData>();
+    List<CharacterData> DataList = new List<CharacterData>();
 
     /// <summary>
     /// 1体のキャラクターデータを書き出す。
@@ -62,7 +61,7 @@ public class CharacterDataWriting : MonoBehaviour
     /// <param name="isPresence">存在してたら true, 存在してないなら false</param>
     public void Write(CharacterData saveCharacterData)
     {
-        //CharacterDatas.Add(saveCharacterData.Name + saveCharacterData.ID, saveCharacterData);
+        DataList.Add(saveCharacterData);
     }
 
 
@@ -71,11 +70,12 @@ public class CharacterDataWriting : MonoBehaviour
     /// </summary>
     public void FileWrite(string name)
     {
-        //string json = Json.Serialize(CharacterDatas);
+        string json = LitJson.JsonMapper.ToJson(DataList);
+        Debug.Log(json);
 
-        //var path = Application.persistentDataPath + "/" + name + ".json";
+        var path = Application.persistentDataPath + "/" + name + ".json";
 
-        //File.WriteAllText(path, json);
+        File.WriteAllText(path, json);
 
     }
 
