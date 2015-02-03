@@ -8,14 +8,17 @@ public class FeverManager : MonoBehaviour {
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
-    public const float MaxFeverScore = 10;
+    public const float MaxFeverScore = 2;
     public const float MinFeverScore = 0;
 
     /// <summary>
     /// Feverゲージの量
     /// </summary>
-    public float FeverScore{get;private set;}
+    public float FeverScore { get; private set; }
 
+    const float FeverTime = 30.0f;
+    float IncreaseScore = 0;
+    bool IsIncrease = false;
 
 	// Use this for initialization
 	void Start () {
@@ -25,13 +28,28 @@ public class FeverManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Increase();
+        Ferver();
+        LimitCheck();
 
-        if (ModeManager.IsGameMode)
+    }
+
+    /// <summary>
+    /// フィーバーゲージが増加する
+    /// </summary>
+    void Increase()
+    {
+        if (ModeManager.IsFerverMode) return;
+
+        if (IsIncrease)
         {
-            //AddScore(1f);
+            FeverScore += Time.deltaTime;
+            if (FeverScore > IncreaseScore)
+            {
+                IsIncrease = false;
+            }
         }
 
-        Ferver();
     }
 
     /// <summary>
@@ -40,9 +58,10 @@ public class FeverManager : MonoBehaviour {
     /// <param name="addValue"></param>
     public void AddScore(float addValue)
     {
-        FeverScore += addValue * Time.deltaTime;
+        if (ModeManager.IsFerverMode) return;
 
-        LimitCheck();
+        IncreaseScore += addValue;
+        IsIncrease = true;
 
     }
 
@@ -54,6 +73,7 @@ public class FeverManager : MonoBehaviour {
     {
         if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode)
         {
+            IncreaseScore = 0;
             FeverScore = MaxFeverScore;
             ModeManager.ChangeFerverMode();
             Sound.Play();
@@ -71,6 +91,8 @@ public class FeverManager : MonoBehaviour {
     void Ferver()
     {
         if (!ModeManager.IsFerverMode) return;
-        //AddScore(-0.1f);
+
+        FeverScore -= Time.deltaTime / 10;
     }
+  
 }

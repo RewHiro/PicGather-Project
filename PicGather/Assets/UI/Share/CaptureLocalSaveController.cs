@@ -55,17 +55,12 @@ public class CaptureLocalSaveController : MonoBehaviour {
 #else
         FilePath = Application.persistentDataPath + "/Share/";
 #endif
-        if (!Directory.Exists(FilePath))
-        {
-            Directory.CreateDirectory(FilePath);
-        }
-
         FilePath = string.Format("{0}{1}", FilePath, ID + ".jpg");
 
         var bytes = Capture.Texture.EncodeToJPG();
         Destroy(Capture.Texture);
 
-        File.WriteAllBytes(FilePath, bytes);
+       // File.WriteAllBytes(FilePath, bytes);
     }
 
 }

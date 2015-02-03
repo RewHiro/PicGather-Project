@@ -97,10 +97,10 @@ public class TextureAlLoading : MonoBehaviour {
     /// <returns>テクスチャ</returns>
     static Texture2D LoadImage(string filePath)
     {
-        var bytes = File.ReadAllBytes(filePath);
+        //var bytes = File.ReadAllBytes(filePath);
 
         var texture = new Texture2D(128, 128);
-        texture.LoadImage(bytes);
+        //texture.LoadImage(bytes);
 
         ReadTextureList.Add(new TextureData(filePath, texture));
 

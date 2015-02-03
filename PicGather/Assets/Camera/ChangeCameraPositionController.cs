@@ -16,13 +16,15 @@ public class ChangeCameraPositionController : MonoBehaviour {
 
     [SerializeField]
     List<GameObject> UIObject = new List<GameObject>();
-    
-    public Vector3 StartPosition {get;private set;}
+
+    public Vector3 StartPosition { get; private set; }
+    public Quaternion StartRotation { get; private set; }
 
 
 	// Use this for initialization
 	void Start () {
         StartPosition = transform.position;
+        StartRotation = transform.rotation;
 	}
 	
 	// Update is called once per frame
@@ -70,7 +72,8 @@ public class ChangeCameraPositionController : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
 
-        transform.position = StartPosition;
+        gameObject.transform.position = StartPosition;
+        gameObject.transform.rotation = StartRotation;
 
         foreach (var ui in UIObject)
         {
