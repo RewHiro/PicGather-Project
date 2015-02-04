@@ -57,8 +57,8 @@ public class Painter : MonoBehaviour {
         if (Input.touchCount > 0)
         {
             touchID = Input.touchCount;
-            touch = Input.GetTouch(touchID-1);
-            oldInputPos = Camera.main.ScreenToWorldPoint(touch.position);
+            touch = Input.GetTouch(touchID - 1);
+            oldInputPos = touch.position;
         }
         else
         {
@@ -72,17 +72,18 @@ public class Painter : MonoBehaviour {
 
         if (touchID == 0)
         {
-            LineDrawing(Input.mousePosition);
-
             lineManager.CheckMouse(this);
 
+            LineDrawing(Input.mousePosition);
         }
-        else
-        {
-            LineDrawing(touch.position);
+        else if (Input.touchCount >= touchID)
+        {            
+            touch = Input.GetTouch(touchID - 1);
 
             lineManager.CheckTouch(this);
-            
+
+            LineDrawing(touch.position);
+
         }
     }
 
@@ -91,6 +92,8 @@ public class Painter : MonoBehaviour {
     /// </summary>
     void LineDrawing(Vector3 inputPos)
     {
+        if (!isDraw) return;
+
         SetInputPosition(inputPos);
 
         LimitInputPos();

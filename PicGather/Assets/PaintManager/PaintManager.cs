@@ -54,7 +54,7 @@ public class PaintManager : MonoBehaviour {
 
         if (Input.touchCount == 0)
         {
-            //MouseEvent();
+            MouseEvent();
         }
         else
         {
