@@ -72,9 +72,10 @@ public class Painter : MonoBehaviour {
 
         if (touchID == 0)
         {
+            LineDrawing(Input.mousePosition);
+
             lineManager.CheckMouse(this);
 
-            LineDrawing(Input.mousePosition);
         }
         else if (Input.touchCount >= touchID)
         {            
