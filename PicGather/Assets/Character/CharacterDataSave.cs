@@ -16,9 +16,9 @@ public class CharacterDataSave : MonoBehaviour
     /// 保存するデータを格納する。
     /// </summary>
     /// <param name="textureFilePath">生成したテクスチャパス</param>
-    public void SetSaveData(int id,string textureFilePath)
+    public void SetSaveData(int id)
     {
-        Data = new CharacterData(id,name, textureFilePath, transform.lossyScale);
+        Data = new CharacterData(id,name,transform.position, transform.lossyScale);
     }
 
 }

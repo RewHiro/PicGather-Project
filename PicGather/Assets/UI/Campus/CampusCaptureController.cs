@@ -43,7 +43,7 @@ public class CampusCaptureController : MonoBehaviour
     {
         var FrameRect = CampusFrame.GetComponent<RectTransform>().rect;
 
-#if UNITY_METRO_8_1 && !UNITY_EDITOR
+#if UNITY_METRO && !UNITY_EDITOR
         var RightShift = 100;
         var DownShift = 50;
         FrameRect.x += FrameRect.width / 2 + RightShift;
@@ -96,15 +96,35 @@ public class CampusCaptureController : MonoBehaviour
 
         CharaManager.SetTexture2D(texture);
 
-        var path = Application.persistentDataPath + "/" + CharaManager.Name;
-        var filePath = path + "_" + CharaManager.ID + ".png";
-        //File.WriteAllBytes(filePath, bytes);
+        WriteFile(bytes);
 
-
-        CharaManager.Entry(filePath);
+        CharaManager.Entry();
 
     }
 
+    /// <summary>
+    /// ファイルを書き出す
+    /// </summary>
+    /// <param name="bytes"></param>
+    void WriteFile(byte[] bytes)
+    {
+
+#if UNITY_METRO && !UNITY_EDITOR
+        var fileName = CharaManager.ID + ".png";
+
+        LibForWinRT.WriteFile(CharaManager.Name, fileName, bytes);
+#else
+        var path = Application.persistentDataPath + "/" + CharaManager.Name + "/";
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        var filePath = path + CharaManager.ID + ".png";
+        File.WriteAllBytes(filePath, bytes);
+#endif
+
+    }
+    
     /// <summary>
     /// 保存するキャラクターデータを切り替える
     /// </summary>

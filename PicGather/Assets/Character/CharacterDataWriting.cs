@@ -33,17 +33,17 @@ public struct Vec3J
 
 public struct CharacterData
 {
-    public CharacterData(int id,string name, string textureFilePath, Vector3 scale):this()
+    public CharacterData(int id,string name,Vector3 pos,Vector3 scale):this()
     {
         ID = id;
         Name = name;
-        TextureFilePath = textureFilePath;
+        Pos = new Vec3J(pos.x, pos.y, pos.z);
         Scale = new Vec3J(scale.x, scale.y, scale.z);
     }
 
     public Vec3J Scale { get; set; }
+    public Vec3J Pos { get; set; }
     public string Name { get; set; }
-    public string TextureFilePath { get; set; }
     public int ID { get; set; }
 };
 
@@ -72,9 +72,16 @@ public class CharacterDataWriting : MonoBehaviour
     {
         string json = LitJson.JsonMapper.ToJson(DataList);
 
-        var path = Application.persistentDataPath + "/" + name + ".json";
-
-       // File.WriteAllText(path, json);
+#if UNITY_METRO && !UNITY_EDITOR
+        LibForWinRT.WriteFile("Database",name + ".json",json);
+#else
+        var path = Application.persistentDataPath + "/Database/" ;
+        if (!Directory.Exists(path))
+        {
+            Directory.CreateDirectory(path);
+        }
+        File.WriteAllText(path + name + ".json", json);
+#endif
 
     }
 

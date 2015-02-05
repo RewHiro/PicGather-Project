@@ -19,7 +19,6 @@ public class CharacterManager : MonoBehaviour
 
     public int ID { get; protected set; }
     public string Name { get; protected set; }
-    public string TextureFilePath { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
     public Texture2D CampusTexture { get; private set; }
@@ -55,12 +54,11 @@ public class CharacterManager : MonoBehaviour
     /// <summary>
     /// 登録する
     /// </summary>
-    public void Entry(string filePath)
+    public void Entry()
     {
         if (State != STATE.None) return;
 
         ID++;
-        TextureFilePath = filePath;
         State = STATE.Create;
     }
 
@@ -104,7 +102,7 @@ public class CharacterManager : MonoBehaviour
     public void CreateChildrenDataSave(GameObject clone)
     {
         var children = clone.GetComponent<CharacterDataSave>();
-        children.SetSaveData(ID,TextureFilePath);
+        children.SetSaveData(ID);
     }
 
     /// <summary>
@@ -118,7 +116,8 @@ public class CharacterManager : MonoBehaviour
         foreach (var children in childrens)
         {
             var character = children.GetComponent<CharacterDataSave>();
-            SaveData.Write(new CharacterData(character.Data.ID, character.Data.Name, character.Data.TextureFilePath, character.transform.lossyScale));
+            SaveData.Write(new CharacterData(character.Data.ID, character.Data.Name,
+                            character.transform.position, character.transform.lossyScale));
         }
 
         SaveData.FileWrite(Name);
