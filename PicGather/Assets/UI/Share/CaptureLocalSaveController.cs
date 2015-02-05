@@ -11,9 +11,11 @@ using System.Collections;
 #if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 using WinRTPlugin;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using System;
 #else
 using System.IO;
-using System;
 #endif
 
 public class CaptureLocalSaveController : MonoBehaviour {
@@ -23,7 +25,6 @@ public class CaptureLocalSaveController : MonoBehaviour {
     Button ClickButton = null;
 
     int ID = 0;
-    string FilePath = "";
 
 	// Use this for initialization
 	void Start () {
@@ -49,18 +50,15 @@ public class CaptureLocalSaveController : MonoBehaviour {
     {
         ID++;
         
+        var bytes = Capture.Texture.EncodeToJPG();
+
 #if UNITY_METRO && !UNITY_EDITOR
-   //     FilePath = Plugin.GetPicturePath();
-        FilePath = Application.persistentDataPath + "/Share/";
+        LibForWinRT.WriteSharePicture("PicGather", ID + ".jpg", bytes);
 #else
-        FilePath = Application.persistentDataPath + "/Share/";
-#endif
+        var FilePath = Application.persistentDataPath + "/Share/";
         FilePath = string.Format("{0}{1}", FilePath, ID + ".jpg");
 
-        var bytes = Capture.Texture.EncodeToJPG();
-        Destroy(Capture.Texture);
-
-       // File.WriteAllBytes(FilePath, bytes);
+        File.WriteAllBytes(FilePath, bytes);
+#endif
     }
-
 }
