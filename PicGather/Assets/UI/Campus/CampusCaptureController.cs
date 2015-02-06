@@ -44,15 +44,15 @@ public class CampusCaptureController : MonoBehaviour
         var FrameRect = CampusFrame.GetComponent<RectTransform>().rect;
 
 #if UNITY_METRO && !UNITY_EDITOR
-        var RightShift = 100;
-        var DownShift = 50;
+        var RightShift = 190;
+        var DownShift = 130;
         FrameRect.x += FrameRect.width / 2 + RightShift;
         FrameRect.y += FrameRect.height / 2 + DownShift;
-        FrameRect.width -= RightShift;
-        FrameRect.height -= DownShift;
+        FrameRect.width -= RightShift*1.4f;
+        FrameRect.height -= DownShift*1.2f;
 #else
-        var RightShift = 100;
-        var DownShift = 50;
+        var RightShift = 130;
+        var DownShift = 90;
         FrameRect.x += FrameRect.width / 2 + RightShift;
         FrameRect.y += FrameRect.height / 2 + DownShift;
         FrameRect.width -= RightShift*3;
