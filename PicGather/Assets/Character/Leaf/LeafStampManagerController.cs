@@ -14,6 +14,7 @@ public class LeafStampManagerController : CharacterManager {
 	void Start () {
         Name = "Leaf";
         Init();
+        ID = 3;
 	}
     
 	void Update () 

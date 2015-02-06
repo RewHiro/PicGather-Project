@@ -14,16 +14,6 @@ public class ChangeLeafStampShowList : MonoBehaviour
     LeafStampManagerController GraphicsPath = null;
 
     /// <summary>
-    /// スクロールしない場合...None する場合...RightかLeftで方向を示す
-    /// </summary>
-    enum ChangeModeID
-    {
-        None,
-        Left,
-        Right
-    }
-
-    /// <summary>
     /// 表示しているスタンプの最大数
     /// </summary>
     private const int MaxStampIconNumber = 3;
@@ -35,11 +25,6 @@ public class ChangeLeafStampShowList : MonoBehaviour
     private GameObject[] Leaf = new GameObject[MaxStampIconNumber];
 
     /// <summary>
-    /// スクロール方法をenumで扱う
-    /// </summary>
-    private ChangeModeID ChangeMode = ChangeModeID.None;
-
-    /// <summary>
     /// スタンプのリストがいくつスクロールされているのかのカウント
     /// </summary>
     private int ScrollValue = 0;
@@ -48,8 +33,7 @@ public class ChangeLeafStampShowList : MonoBehaviour
     void Start()
     {
         /// 開始時に表示するスタンプ一覧を用意する
-        IconsInitialize(CheckGraphicsNumber());
-
+        IconsInitialize(GraphicsPath.ID);
     }
 
     /// <summary>
@@ -66,38 +50,8 @@ public class ChangeLeafStampShowList : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /// リストに表示する最大数以下の画像数だった場合
-        if (CheckGraphicsNumber() < MaxStampIconNumber)
-        {
-            ChangeMode = ChangeModeID.None;
-            return;
-        }
-
-        /// スクロールするかどうかをswitchで判断する
-        switch (ChangeMode)
-        {
-            case ChangeModeID.Left:
-                IncreaceScrollValue();
-                break;
-            case ChangeModeID.Right:
-                DecreaceScrollValue();
-                break;
-            default:
-                break;
-        }
-
-        /// スクロールされているかどうか
-        if (ChangeMode != ChangeModeID.None)
-        {
-            IconsInitialize();
-        }
-
-        /// 一通りの処理が終えたのでスクロールしないようにする
-        ChangeMode = ChangeModeID.None;
 
     }
-
-
 
 
     /// <summary>
@@ -113,7 +67,7 @@ public class ChangeLeafStampShowList : MonoBehaviour
 
         for (int i = 0; i < canReadNumber; i++)
         {
-            SetLeafSprite(Leaf[i], GraphicsPath.Name + "/" + (ScrollValue + (i + 1)));
+            SetLeafSprite(Leaf[i],ScrollValue + i);
         }
     }
 
@@ -144,13 +98,36 @@ public class ChangeLeafStampShowList : MonoBehaviour
     /// 第一引数の葉オブジェクトのテクスチャを第二引数のパスにあるものに変更する
     /// </summary>
     /// <param name="_gameObject">変更される葉</param>
-    /// <param name="textureName">変更するテクスチャのパス</param>
-    private void SetLeafSprite(GameObject _gameObject, string textureName)
+    /// <param name="textureID">変更するテクスチャのパス</param>
+    private void SetLeafSprite(GameObject _gameObject, int textureID)
     {
         var MainImage = _gameObject.GetComponent<Image>();
-        var NewTexture = Resources.Load(textureName) as Texture2D;
+        var NewTexture = new Texture2D(128, 128);
+
+        if (textureID < MaxStampIconNumber)
+        {
+            NewTexture = Resources.Load(GraphicsPath.Name + "/" + textureID) as Texture2D;
+        }
+        else
+        {
+
+#if UNITY_METRO && !UNITY_EDITOR
+            var FolderName = GraphicsPath.Name + "/";
+            var FileName = textureID + ".png";
+            var Bytes = LibForWinRT.ReadFile(FolderName + FileName).Result;
+            NewTexture.LoadImage(Bytes);
+#else
+            var FolderName = Application.persistentDataPath + "/" + GraphicsPath.Name + "/";
+            var FileName = textureID + ".png";
+            var Bytes = File.ReadAllBytes(FolderName + FileName);
+            NewTexture.LoadImage(Bytes);
+#endif
+        }
+
         var NewSprite = Sprite.Create(NewTexture, new Rect(0, 0, NewTexture.width, NewTexture.height), Vector2.zero);
         MainImage.sprite = NewSprite;
+
+
     }
 
 
@@ -166,18 +143,15 @@ public class ChangeLeafStampShowList : MonoBehaviour
     }
 
 
-
-
-
     /// <summary>
     /// 右にあるボタンの押し込んだ際の処理
     /// </summary>
     public void RightScroll()
     {
-        ChangeMode = ChangeModeID.Right;
+        ScrollValue -= (ScrollValue > 0) ? 1 : 0;
+
+        IconsInitialize();
     }
-
-
 
 
     /// <summary>
@@ -185,52 +159,27 @@ public class ChangeLeafStampShowList : MonoBehaviour
     /// </summary>
     public void LeftScroll()
     {
-        ChangeMode = ChangeModeID.Left;
+        ScrollValue += (GraphicsPath.ID > ScrollValue + MaxStampIconNumber) ? 1 : 0;
+
+        IncreaceScrollValue();
+        IconsInitialize();
+
     }
 
-
-
-
     /// <summary>
-    /// スクロール後に画像があるかどうかをチェックし、
-    /// あるならスクロールする
+    /// スクロール後に画像があるかどうかをチェック
     /// </summary>
     private void IncreaceScrollValue()
     {
-        var graphic = Resources.Load(GraphicsPath.Name + "/" + (ScrollValue + MaxStampIconNumber + 1)) as Texture2D;
-        if (graphic)
-        {
-            ScrollValue++;
-        }
-    }
-
-
-
-    /// <summary>
-    /// リストのスクロールしている値を減少させる
-    /// </summary>
-    private void DecreaceScrollValue()
-    {
-        /// マイナスの値にはいかない
-        if (ScrollValue > 0)
-        {
-            ScrollValue--;
-        }
-        else
-        {
-            ScrollValue = 0;
-        }
-
-    }
-
-    /// <summary>
-    /// フォルダ内の画像ファイルを探し、その数を返す
-    /// </summary>
-    private int CheckGraphicsNumber()
-    {
-        var gameObjectArray = Resources.LoadAll(GraphicsPath.Name + "/");
-
-        return gameObjectArray.Length;
+#if UNITY_METRO && !UNITY_EDITOR
+        var folder = GraphicsPath.Name + "/";
+        var file = (ScrollValue + MaxStampIconNumber - 1) + ".png";
+        var bytes = LibForWinRT.ReadFile(folder + file).Result;
+#else
+        var folder = Application.persistentDataPath + "/" + GraphicsPath.Name + "/";
+        var file = (ScrollValue + MaxStampIconNumber - 1) + ".png";
+        var bytes = File.ReadAllBytes(folder + file);
+#endif
     }
 
 }
