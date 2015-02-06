@@ -11,6 +11,8 @@ using WinRTLegacy.Text;
 using Windows.Storage.Pickers;
 using System.Collections.Generic;
 using Windows.Storage.Provider;
+using Windows.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
 #else
 #endif
 
@@ -24,6 +26,37 @@ public class LibForWinRT
 #if UNITY_METRO && !UNITY_EDITOR
   
     /// <summary>
+    /// ファイルを読み込む
+    /// </summary>
+    /// <param name="fileName">ファイルパス</param>
+    /// <returns>ファイルのbyte型の配列が戻り値</returns>
+    public static async Task<byte[]> ReadFile( string filePath)
+    {
+        var url = "ms-appdata:///roaming/" + filePath;
+        var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
+        var buf = await FileIO.ReadBufferAsync(file);
+        var bytes = new byte[buf.Length];
+        var dr = DataReader.FromBuffer(buf);
+        dr.ReadBytes(bytes);
+        return bytes;
+
+    }
+
+      
+    private static async Task<byte[]> GetBtyeFromFile(StorageFile storageFile)
+    {
+        var stream = await storageFile.OpenReadAsync();
+
+        using (var dataReader = new DataReader(stream))
+        {
+            var bytes = new byte[stream.Size];
+            await dataReader.LoadAsync((uint)stream.Size);
+            dataReader.ReadBytes(bytes);
+
+            return bytes;
+        }
+    }  
+    /// <summary>
     /// 書き出す
     /// </summary>
     /// <param name="folderPath">Folderパス</param>
@@ -32,16 +65,16 @@ public class LibForWinRT
     public static async void WriteFile(string folderPath,string fileName, byte[] body)
     {
         // ローミングフォルダ
-        StorageFolder folder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
+        var folder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
 
         // ファイル（存在すれば上書き）
-        StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
         // 書き込み
-        using (IRandomAccessStream rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (IOutputStream oStream = rStream.GetOutputStreamAt(0))
+        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+        using (var oStream = rStream.GetOutputStreamAt(0))
         {
-            DataWriter writer = new DataWriter(oStream);
+            var writer = new DataWriter(oStream);
             writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             writer.WriteBytes(body);
             await writer.StoreAsync();
@@ -57,16 +90,16 @@ public class LibForWinRT
     public static async void WriteSharePicture(string folderPath, string fileName, byte[] body)
     {
         // ローミングフォルダ
-        StorageFolder folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
+        var folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
 
         // ファイル（存在すれば上書き）
-        StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
         // 書き込み
-        using (IRandomAccessStream rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (IOutputStream oStream = rStream.GetOutputStreamAt(0))
+        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+        using (var oStream = rStream.GetOutputStreamAt(0))
         {
-            DataWriter writer = new DataWriter(oStream);
+            var writer = new DataWriter(oStream);
             writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             writer.WriteBytes(body);
             await writer.StoreAsync();
@@ -83,16 +116,16 @@ public class LibForWinRT
     public static async void WriteFile(string folderPath, string fileName, string body)
     {
         // ローミングフォルダ
-        StorageFolder folder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
+        var folder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
 
         // ファイル（存在すれば上書き）
-        StorageFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
         // 書き込み
-        using (IRandomAccessStream rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (IOutputStream oStream = rStream.GetOutputStreamAt(0))
+        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+        using (var oStream = rStream.GetOutputStreamAt(0))
         {
-            DataWriter writer = new DataWriter(oStream);
+            var writer = new DataWriter(oStream);
             writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
             writer.WriteString(body);
             await writer.StoreAsync();

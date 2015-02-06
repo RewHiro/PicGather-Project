@@ -30,7 +30,12 @@ public class PaintManager : MonoBehaviour {
     public int lineCount { get; private set; }
     public float lineWidth { get; private set; }
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
-    public readonly Vector2 campusOffSet = new Vector2(100, 50);
+
+#if UNITY_METRO_8_1 && !UNITY_EDITOR
+    public readonly Vector2 campusOffSet = new Vector2(180, 110);
+#else    
+    public readonly Vector2 campusOffSet = new Vector2(140, 90);
+#endif
 
     bool isOver = false;
 
@@ -42,9 +47,11 @@ public class PaintManager : MonoBehaviour {
         campusSize = campus.GetComponent<RectTransform>().rect.size;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
+        campusSize.x -= 60;
+        campusSize.y -= 30;
 #else
-        campusSize.x -= 200;
-        campusSize.y -= 100;
+        campusSize.x -= 250;
+        campusSize.y -= 140;
 #endif
     }
 
