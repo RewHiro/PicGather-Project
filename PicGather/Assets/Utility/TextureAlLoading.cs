@@ -19,7 +19,7 @@ public class TextureAlLoading : MonoBehaviour {
 
     struct TextureData
     {
-        public TextureData(string filePath, Texture2D texture)
+        public TextureData(string filePath, Texture2D texture):this()
         {
             FilePath = filePath;
             ReadTexture = texture;
@@ -41,7 +41,7 @@ public class TextureAlLoading : MonoBehaviour {
     /// <returns>テクスチャ</returns>
     public static Texture2D RandomLoadTexture(CharacterManager character)
     {
-        var randomID = Random.Range(0, character.ID + 1);
+        var randomID = Random.Range(0, character.ID);
 
         return LoadTexture(character, randomID);
     }
@@ -61,14 +61,23 @@ public class TextureAlLoading : MonoBehaviour {
             ID = character.ID;
         }
 
-        var filePath = Application.persistentDataPath + "/" + character.Name + "/" + ID + ".png";
-
-        if (CheckFilePathSame(filePath))
+#if UNITY_METRO && !UNITY_EDITOR
+        if (CheckFilePathSame(character.Name, ID))
         {
             return TempTexture;
         }
 
-        return LoadImage(filePath);
+        return LoadImage(character.Name, ID);
+#else
+        var folderPath = Application.persistentDataPath + "/" + character.Name;
+        if (CheckFilePathSame(folderPath,ID))
+        {
+            return TempTexture;
+        }
+
+        return LoadImage(folderPath, ID);
+#endif
+
     }
 
     /// <summary>
@@ -76,8 +85,9 @@ public class TextureAlLoading : MonoBehaviour {
     /// </summary>
     /// <param name="filePath">読み込むファイルパス</param>
     /// <returns>trrue : ある false : ない</returns>
-    static bool CheckFilePathSame(string filePath)
+    static bool CheckFilePathSame(string folderPath ,int ID)
     {
+        var filePath = GetFilePath(folderPath, ID);
         foreach (var data in ReadTextureList)
         {
             if (data.FilePath == filePath)
@@ -96,9 +106,10 @@ public class TextureAlLoading : MonoBehaviour {
     /// </summary>
     /// <param name="filePath">ファイルパス</param>
     /// <returns>テクスチャ</returns>
-    static Texture2D LoadImage(string filePath)
+    static Texture2D LoadImage(string folderPath, int ID)
     {
-        var bytes = File.ReadAllBytes(filePath);
+        var filePath = GetFilePath(folderPath, ID);
+        var bytes = GetFileBytes(filePath, ID);
 
         if (bytes.Length == 0)
         {
@@ -113,6 +124,31 @@ public class TextureAlLoading : MonoBehaviour {
         return texture;
     }
 
+    /// <summary>
+    /// ファイルパスを取得
+    /// </summary>
+    /// <param name="folderName">フォルダー名</param>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    static string GetFilePath(string folderName,int ID)
+    {
+        return folderName + "/" + ID + ".png";
+    }
+
+    /// <summary>
+    /// ファイルのバイト配列を取得
+    /// </summary>
+    /// <param name="folderPath">フォルダーパス</param>
+    /// <param name="ID">ID</param>
+    /// <returns></returns>
+    static byte[] GetFileBytes(string filePath, int ID)
+    {
+#if UNITY_METRO && !UNITY_EDITOR
+        return LibForWinRT.ReadFile(filePath).Result;
+#else
+        return File.ReadAllBytes(filePath);
+#endif
+    }
 
     /// <summary>
     /// 指定した場所に画像がないならここが呼ばれる。
