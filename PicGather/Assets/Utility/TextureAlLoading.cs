@@ -54,7 +54,7 @@ public class TextureAlLoading : MonoBehaviour {
     /// <returns></returns>
     public static Texture2D LoadTexture(CharacterManager character,int ID)
     {
-        if (character.ID == 0) return null;
+        if (character.ID == 0) return FerverLoadImage();
 
         if (character.ID < ID)
         {
@@ -100,11 +100,28 @@ public class TextureAlLoading : MonoBehaviour {
     {
         var bytes = File.ReadAllBytes(filePath);
 
+        if (bytes.Length == 0)
+        {
+            FerverLoadImage();
+        }
+
         var texture = new Texture2D(128, 128);
         texture.LoadImage(bytes);
 
         ReadTextureList.Add(new TextureData(filePath, texture));
 
         return texture;
+    }
+
+
+    /// <summary>
+    /// 指定した場所に画像がないならここが呼ばれる。
+    /// フィーバー用の画像を読み込む
+    /// </summary>
+    /// <returns></returns>
+    static Texture2D FerverLoadImage()
+    {
+        var randomID = Random.Range(1, 3);
+        return Resources.Load("FeverGraphic/" + randomID) as Texture2D;
     }
 }

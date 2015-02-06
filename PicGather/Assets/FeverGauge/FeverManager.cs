@@ -8,7 +8,7 @@ public class FeverManager : MonoBehaviour {
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
-    public const float MaxFeverScore = 2;
+    public const float MaxFeverScore = 1;
     public const float MinFeverScore = 0;
 
     /// <summary>
