@@ -56,7 +56,7 @@ public class CampusCaptureController : MonoBehaviour
         FrameRect.x += FrameRect.width / 2 + RightShift;
         FrameRect.y += FrameRect.height / 2 + DownShift;
         FrameRect.width -= RightShift*3;
-        FrameRect.height -= DownShift*3;
+        FrameRect.height -= DownShift*2.7f;
 
 #endif
         CaptureRect = FrameRect;
@@ -91,7 +91,7 @@ public class CampusCaptureController : MonoBehaviour
 
         var bytes = texture.EncodeToPNG();
 
-        texture = new Texture2D(128, 128);
+        texture = new Texture2D(200, 200);
         texture.LoadImage(bytes);
 
         CharaManager.SetTexture2D(texture);
