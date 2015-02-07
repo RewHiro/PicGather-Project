@@ -11,9 +11,9 @@ using System.Collections;
 public class LeafStampManagerController : CharacterManager {
 
 	// Use this for initialization
-	void Start () {
+    void Awake()
+    {
         Name = "Leaf";
-        Init();
         ID = 3;
 	}
     

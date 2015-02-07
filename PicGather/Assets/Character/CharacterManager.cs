@@ -12,6 +12,7 @@ using System.Collections;
 using LegacySystem.IO;
 #else
 using System.IO;
+using MiniJSON;
 #endif
 
 public class CharacterManager : MonoBehaviour
@@ -29,6 +30,9 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     Sprite TemplateSprite = null;
 
+    [SerializeField]
+    GameObject ChildrenPrefab = null;
+
     CharacterDataWriting SaveData = null;
 
     enum STATE
@@ -40,15 +44,73 @@ public class CharacterManager : MonoBehaviour
 
     STATE State;
 
+    void Start()
+    {
+        Init();   
+    }
+
     /// <summary>
     /// データベースからIDをロードする。
     /// </summary>
     public virtual void Init()
     {
         SaveData = GetComponent<CharacterDataWriting>();
-        ID = 0;
         State = STATE.None;
         CampusTexture = null;
+        DataLoading();
+    }
+
+    /// <summary>
+    /// データロード
+    /// </summary>
+    void DataLoading()
+    {
+        var path = Application.persistentDataPath + "/Database/" + Name + ".json";
+
+        if (!File.Exists(path)) return;
+
+        var jsonText = File.ReadAllText(path);
+
+        var json = LitJson.JsonMapper.ToObject<CharacterData[]>(jsonText);
+
+        foreach (var chara in json)
+        {
+            Debug.Log(chara.ID);
+            Debug.Log(chara.Name);
+            if (chara.Name == name)
+            {
+                ID = chara.ID;
+            }
+            else 
+            {
+                ChildrensDataLoad(chara.Name,chara.ID,chara.Pos,chara.Scale);
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// 子オブジェクトのデータを読み込む
+    /// </summary>
+    /// <param name="name">名前</param>
+    /// <param name="id">ID</param>
+    /// <param name="pos">座標</param>
+    /// <param name="scale">Scale</param>
+    void ChildrensDataLoad(string name, int id, Vec3J pos, Vec3J scale)
+    {
+        var clonePos = new Vector3(pos.X,pos.Y,pos.Z);
+        var cloneScale = new Vector3(scale.X,scale.Y,scale.Z);
+        var clone = (GameObject)Instantiate(ChildrenPrefab, clonePos, Quaternion.identity);
+        
+        clone.name = name;
+        clone.transform.parent = transform;
+        clone.transform.lossyScale.Scale(cloneScale);
+
+        var bytes = File.ReadAllBytes(Application.persistentDataPath + "/" + name + "/" + id + ".png");
+        var texture = new Texture2D(128, 128);
+        texture.LoadImage(bytes);
+
+        clone.renderer.material.mainTexture = texture;
     }
 
     /// <summary>
@@ -60,6 +122,7 @@ public class CharacterManager : MonoBehaviour
 
         ID++;
         State = STATE.Create;
+        SaveData.Write(new CharacterData(ID, name, Vector3.zero, Vector3.zero));
     }
 
     /// <summary>
@@ -116,7 +179,7 @@ public class CharacterManager : MonoBehaviour
         foreach (var children in childrens)
         {
             var character = children.GetComponent<CharacterDataSave>();
-            SaveData.Write(new CharacterData(character.Data.ID, character.Data.Name,
+            SaveData.Write(new CharacterData(character.Data.ID, character.name,
                             character.transform.position, character.transform.lossyScale));
         }
 

@@ -31,22 +31,6 @@ public struct Vec3J
     public float Z { get; set; }
 };
 
-public struct CharacterData
-{
-    public CharacterData(int id,string name,Vector3 pos,Vector3 scale):this()
-    {
-        ID = id;
-        Name = name;
-        Pos = new Vec3J(pos.x, pos.y, pos.z);
-        Scale = new Vec3J(scale.x, scale.y, scale.z);
-    }
-
-    public Vec3J Scale { get; set; }
-    public Vec3J Pos { get; set; }
-    public string Name { get; set; }
-    public int ID { get; set; }
-};
-
 
 public class CharacterDataWriting : MonoBehaviour
 {
@@ -63,7 +47,6 @@ public class CharacterDataWriting : MonoBehaviour
     {
         DataList.Add(saveCharacterData);
     }
-
 
     /// <summary>
     /// ファイルに書き出す
@@ -82,7 +65,7 @@ public class CharacterDataWriting : MonoBehaviour
         }
         File.WriteAllText(path + name + ".json", json);
 #endif
-
+        DataList.Clear();
     }
 
 }

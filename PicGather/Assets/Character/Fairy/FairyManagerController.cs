@@ -12,10 +12,8 @@ public class FairyManagerController : CharacterManager
 
 
 	// Use this for initialization
-	void Start () {
-
+	void Awake () {
         Name = "Fairy";
-        Init();
 	}
 	
 	// Update is called once per frame

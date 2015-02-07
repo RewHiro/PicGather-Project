@@ -10,24 +10,41 @@ public class CameraMover : MonoBehaviour {
     private Transform CenterObject = null;
 
     /// <summary>
+    /// BabbleDestroyerクラスのDestroyAllBabblesを呼ぶために用意する
+    /// </summary>
+    private BabbleDestroyer BblDestroyer = null;
+
+    /// <summary>
     /// カメラの移動量
     /// </summary>
     private float MoveValue = 2.0f;
 
     /// <summary>
-    /// BabbleDestroyerクラスのDestroyAllBabblesを呼ぶために用意する
+    /// カメラの円運動量
     /// </summary>
-    private BabbleDestroyer BblDestroyer = null;
+    private float RotationAngle = 0.0f;
 
-    // Use this for initialization
-	void Start () {
-        BblDestroyer = GetComponent<BabbleDestroyer>();
-	}
+    /// <summary>
+    /// カメラの円運動するときの中心からの距離
+    /// </summary>
+    private float MoveRadius = 0.0f;
 
     /// <summary>
     /// カメラを動かすかどうか
     /// </summary>
     private bool CanMoveCamera = false;
+
+
+    // Use this for initialization
+	void Start () {
+        BblDestroyer = GetComponent<BabbleDestroyer>();
+
+        MoveRadius = Vector3.Distance(transform.position, CenterObject.position);
+
+        RotateCamera();
+
+
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -42,9 +59,15 @@ public class CameraMover : MonoBehaviour {
     private void TurnCamera()
     {
 
-        TurnByMouse();
-
-        TurnByTouch();
+        /// if分を使ってタッチ時にマウスカーソルが移動したと検知しないように分断する。
+        if (Input.touchCount == 1)
+        {
+            TurnByTouch();
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            TurnByMouse();
+        }
 
         StopTurningCamera();
     }
@@ -54,9 +77,12 @@ public class CameraMover : MonoBehaviour {
     /// </summary>
     private void StopTurningCamera()
     {
-        if (Input.touchCount == 0 && !Input.GetMouseButton(0)) CanMoveCamera = false;
-
+        if (Input.touchCount == 0 && !Input.GetMouseButton(0))
+        {
+            CanMoveCamera = false;
+        }
     }
+
 
 
     /// <summary>
@@ -69,37 +95,62 @@ public class CameraMover : MonoBehaviour {
             CanMoveCamera = true;
         }
 
-        if (CanMoveCamera && Input.GetMouseButton(0))
+        if (CanMoveCamera)
         {
-            var deltaMouseX = Input.GetAxis("Mouse X");
-            Camera.main.transform.RotateAround(CenterObject.localPosition, transform.up, MoveValue * deltaMouseX);
+            const float increaseValue = 3.0f;
+            AddAngle(increaseValue * Input.GetAxis("Mouse X"));
+
+            RotateCamera();
 
             BblDestroyer.DestroyAllBabbles();
         }
-
+        
     }
+
 
     /// <summary>
     /// タッチによるカメラの移動
     /// </summary>
     private void TurnByTouch()
     {
-        if (Input.touchCount > 0)
+        if (IsTouchingNothing() && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            if (IsTouchingNothing() && Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                CanMoveCamera = true;
-            }
+            CanMoveCamera = true;
+        }
 
-            if (CanMoveCamera && Input.GetTouch(0).phase == TouchPhase.Moved)
-            {
-                Camera.main.transform.RotateAround(CenterObject.localPosition, transform.up, Input.GetTouch(0).deltaPosition.x);
+        if (CanMoveCamera && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            AddAngle(Input.GetTouch(0).deltaPosition.x);
 
-                BblDestroyer.DestroyAllBabbles();
-            }
-
+            RotateCamera();
+                
+            BblDestroyer.DestroyAllBabbles();
         }
     }
+
+    /// <summary>
+    /// RotationAngleに応じた角度にカメラを回転させる
+    /// </summary>
+    private void RotateCamera()
+    {
+        Camera.main.transform.position = new Vector3(CenterObject.position.x + Mathf.Sin(RotationAngle) * MoveRadius, transform.position.y, CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
+
+        Camera.main.transform.LookAt(CenterObject.position);
+    }
+
+    /// <summary>
+    /// カメラを回転させる角度を加算する
+    /// * 画面上の移動量で回転させるため、角度で渡しているわけではない
+    /// </summary>
+    /// <param name="addValue">加える量</param>
+    private void AddAngle(float addValue)
+    {
+        RotationAngle += 0.01f * addValue;
+
+        if (RotationAngle > 2 * Mathf.PI) RotationAngle -= 2 * Mathf.PI;
+        if (RotationAngle < 2 * Mathf.PI) RotationAngle += 2 * Mathf.PI;
+    }
+
 
     /// <summary>
     /// 何とも当たっていないかどうかを判断する

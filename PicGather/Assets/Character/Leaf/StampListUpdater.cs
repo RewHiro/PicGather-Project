@@ -13,7 +13,6 @@ public class StampListUpdater : MonoBehaviour
     [SerializeField]
     CharacterManager Manager = null;
 
-
     void Update()
     {
         if (!Manager.IsCreate) return;
@@ -31,7 +30,9 @@ public class StampListUpdater : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
 
+        Manager.ChildrensDataSave();
         Manager.NoneState();
+
 
     }
 }
