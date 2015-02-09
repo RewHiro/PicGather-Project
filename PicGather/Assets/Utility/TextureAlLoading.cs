@@ -70,6 +70,7 @@ public class TextureAlLoading : MonoBehaviour {
         return LoadImage(character.Name, ID);
 #else
         var folderPath = Application.persistentDataPath + "/" + character.Name;
+
         if (CheckFilePathSame(folderPath,ID))
         {
             return TempTexture;
@@ -109,11 +110,11 @@ public class TextureAlLoading : MonoBehaviour {
     static Texture2D LoadImage(string folderPath, int ID)
     {
         var filePath = GetFilePath(folderPath, ID);
-        var bytes = GetFileBytes(filePath, ID);
-
-        if (bytes.Length == 0)
+        var bytes = GetFileBytes(filePath);
+        
+        if (bytes == null)
         {
-            FerverLoadImage();
+            return FerverLoadImage();
         }
 
         var texture = new Texture2D(128, 128);
@@ -141,11 +142,16 @@ public class TextureAlLoading : MonoBehaviour {
     /// <param name="folderPath">フォルダーパス</param>
     /// <param name="ID">ID</param>
     /// <returns></returns>
-    static byte[] GetFileBytes(string filePath, int ID)
+    static byte[] GetFileBytes(string filePath)
     {
 #if UNITY_METRO && !UNITY_EDITOR
-        return LibForWinRT.ReadFile(filePath).Result;
+        return LibForWinRT.ReadFileBytes(filePath).Result;
 #else
+        if (!File.Exists(filePath))
+        { 
+            return null;
+        }
+
         return File.ReadAllBytes(filePath);
 #endif
     }
@@ -157,7 +163,7 @@ public class TextureAlLoading : MonoBehaviour {
     /// <returns></returns>
     static Texture2D FerverLoadImage()
     {
-        var randomID = Random.Range(1, 3);
+        var randomID = Random.Range(0, 2);
         return Resources.Load("FeverGraphic/" + randomID) as Texture2D;
     }
 }

@@ -19,15 +19,19 @@ public class LeafCreator : MonoBehaviour {
     [SerializeField]
     StampListMover StampList = null;
 
+    LeafStampManagerController Manager = null;
+
     Vector3 BeforeLeafObjectPos = Vector3.zero;
     Texture SelectTexture = null;
+
+    int TextureID = 0;
 
     const float CanInstanceDistance = 0.5f;
 
 	// Use this for initialization
 	void Start () {
         SelectTexture = renderer.material.mainTexture;
-	
+        Manager = GetComponent<LeafStampManagerController>();
 	}
 	
 	// Update is called once per frame
@@ -46,14 +50,20 @@ public class LeafCreator : MonoBehaviour {
     /// </summary>
     void CreatePrefab()
     {
-        var Distance = Vector3.Distance(BeforeLeafObjectPos, TouchManager.TapPos);
-        if (Distance >= CanInstanceDistance)
+        var distance = Vector3.Distance(BeforeLeafObjectPos, TouchManager.TapPos);
+        if (distance >= CanInstanceDistance)
         {
-            var LeafClone = (GameObject)Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
-            LeafClone.transform.parent = gameObject.transform;
-            LeafClone.gameObject.name = LeafPrefab.gameObject.name;
-            LeafClone.renderer.material.mainTexture = SelectTexture;
+            var leafClone = (GameObject)Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
+            leafClone.transform.parent = gameObject.transform;
+            leafClone.gameObject.name = LeafPrefab.gameObject.name;
+            leafClone.renderer.material.mainTexture = SelectTexture;
+            leafClone.GetComponent<CharacterDataSave>().SetSaveData(TextureID);
+            
+            Manager.CreateChildrenDataSave(leafClone, TextureID);
+
             BeforeLeafObjectPos = TouchManager.TapPos;
+
+            Manager.ChildrensDataSave();
         }
     }
 
@@ -63,6 +73,7 @@ public class LeafCreator : MonoBehaviour {
     /// <param name="button"></param>
     public void ChangeSelectTexture(GameObject button)
     {
+        TextureID = button.GetComponent<LeafIDSetting>().ID;
         SelectTexture = button.GetComponent<Image>().mainTexture;
     }
 }

@@ -24,13 +24,49 @@ public class LibForWinRT
 {
 
 #if UNITY_METRO && !UNITY_EDITOR
-  
+
+    /// <summary>
+    /// ファイルパスがあるかどうかを調べる。
+    /// </summary>
+    /// <param name="filePath"></param>
+    /// <returns></returns>
+    public static async Task<bool> IsFileExistAsync(string filePath)
+    {
+        var folder = ApplicationData.Current.RoamingFolder;
+
+        try
+        {
+            var url = "ms-appdata:///roaming/" + filePath;
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
+
+            return true; 
+        }
+        catch
+        {
+            return false; 
+        }
+    }
+
     /// <summary>
     /// ファイルを読み込む
     /// </summary>
     /// <param name="fileName">ファイルパス</param>
     /// <returns>ファイルのbyte型の配列が戻り値</returns>
-    public static async Task<byte[]> ReadFile( string filePath)
+    public static async Task<string> ReadFileText(string filePath)
+    {
+        var url = "ms-appdata:///roaming/" + filePath;
+        var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
+        var text = await FileIO.ReadTextAsync(file);
+        return text;
+
+    }
+
+    /// <summary>
+    /// ファイルを読み込む
+    /// </summary>
+    /// <param name="fileName">ファイルパス</param>
+    /// <returns>ファイルのbyte型の配列が戻り値</returns>
+    public static async Task<byte[]> ReadFileBytes(string filePath)
     {
         var url = "ms-appdata:///roaming/" + filePath;
         var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
@@ -113,7 +149,7 @@ public class LibForWinRT
     /// <param name="folderPath">Folderパス</param>
     /// <param name="fileName">ファイルパス</param>
     /// <param name="body">stringの文字データ</param>
-    public static async void WriteFile(string folderPath, string fileName, string body)
+    public static async void WriteFileText(string folderPath, string fileName, string body)
     {
         // ローミングフォルダ
         var folder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);

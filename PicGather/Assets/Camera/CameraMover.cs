@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraMover : MonoBehaviour {
+public class CameraMover : MonoBehaviour
+{
 
     /// <summary>
     /// カメラをY軸回転させる中心となるGameObject
@@ -36,7 +37,8 @@ public class CameraMover : MonoBehaviour {
 
 
     // Use this for initialization
-	void Start () {
+    void Start()
+    {
         BblDestroyer = GetComponent<BabbleDestroyer>();
 
         MoveRadius = Vector3.Distance(transform.position, CenterObject.position);
@@ -44,14 +46,15 @@ public class CameraMover : MonoBehaviour {
         RotateCamera();
 
 
-	}
+    }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update()
+    {
         if (ModeManager.IsDrawingMode) return;
 
         TurnCamera();
-	}
+    }
 
     /// <summary>
     /// 何にもタッチしていない（＝背景にRayが当たっている）ならカメラを回転させる。
@@ -104,7 +107,7 @@ public class CameraMover : MonoBehaviour {
 
             BblDestroyer.DestroyAllBabbles();
         }
-        
+
     }
 
 
@@ -123,7 +126,7 @@ public class CameraMover : MonoBehaviour {
             AddAngle(Input.GetTouch(0).deltaPosition.x);
 
             RotateCamera();
-                
+
             BblDestroyer.DestroyAllBabbles();
         }
     }
@@ -160,7 +163,7 @@ public class CameraMover : MonoBehaviour {
     {
         var objects = GameObject.FindObjectsOfType<GameObject>();
 
-        foreach(var obj in objects)
+        foreach (var obj in objects)
         {
             if (TouchManager.IsMouseButton(obj)) return false;
             if (TouchManager.IsTouching(obj)) return false;
@@ -168,14 +171,14 @@ public class CameraMover : MonoBehaviour {
 
         if (IsBabbleInside(Input.mousePosition)) return false;
 
-        foreach(var touch in Input.touches)
+        foreach (var touch in Input.touches)
         {
             if (IsBabbleInside(touch.position)) return false;
         }
 
         return true;
     }
-    
+
     /// <summary>
     /// 引数の座標がシャボン玉内にあるかどうかを返す
     /// </summary>
@@ -201,4 +204,3 @@ public class CameraMover : MonoBehaviour {
         return false;
     }
 }
-

@@ -12,10 +12,16 @@ public class FruitCreator : MonoBehaviour
     [SerializeField]
     GameObject FruitPrefab = null;
 
-    public void Create()
+    void Start()
     {
-        var Clone = (GameObject)Instantiate(FruitPrefab, transform.position, FruitPrefab.transform.rotation);
-        Clone.name = FruitPrefab.name;
+    }
+
+    public GameObject Create(Vector3 pos)
+    {
+        var clone = (GameObject)Instantiate(FruitPrefab, pos, FruitPrefab.transform.rotation);
+        clone.transform.parent = transform;
+        clone.name = FruitPrefab.name;
+        return clone;
     }
 
 }

@@ -12,7 +12,6 @@ using System.Collections;
 using LegacySystem.IO;
 #else
 using System.IO;
-using MiniJSON;
 #endif
 
 public class CharacterManager : MonoBehaviour
@@ -33,7 +32,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField]
     GameObject ChildrenPrefab = null;
 
-    CharacterDataWriting SaveData = null;
+    protected CharacterDataWriting SaveData = null;
 
     enum STATE
     {
@@ -44,11 +43,6 @@ public class CharacterManager : MonoBehaviour
 
     STATE State;
 
-    void Start()
-    {
-        Init();   
-    }
-
     /// <summary>
     /// データベースからIDをロードする。
     /// </summary>
@@ -57,59 +51,82 @@ public class CharacterManager : MonoBehaviour
         SaveData = GetComponent<CharacterDataWriting>();
         State = STATE.None;
         CampusTexture = null;
-        DataLoading();
+        //ChildrensLoading();
     }
 
     /// <summary>
-    /// データロード
+    /// 子オブジェクト達を読み込む
     /// </summary>
-    void DataLoading()
-    {
-        var path = Application.persistentDataPath + "/Database/" + Name + ".json";
+    void ChildrensLoading()
+    { 
+#if UNITY_METRO && !UNITY_EDITOR
+        var folderPath = "Database/";
+        var filePath = folderPath + Name + ".json";
 
-        if (!File.Exists(path)) return;
+        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return;
+        var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
-        var jsonText = File.ReadAllText(path);
+#else
+        
+        var folderpath = Application.persistentDataPath + "/Database/" ;
+        var filePath = folderpath + Name + ".json";
+        
+        if (!File.Exists(filePath)) return;
 
+        var jsonText = File.ReadAllText(filePath);
+#endif
         var json = LitJson.JsonMapper.ToObject<CharacterData[]>(jsonText);
 
-        foreach (var chara in json)
+        foreach(var chara in json)
         {
-            Debug.Log(chara.ID);
-            Debug.Log(chara.Name);
             if (chara.Name == name)
             {
                 ID = chara.ID;
             }
-            else 
+            else
             {
-                ChildrensDataLoad(chara.Name,chara.ID,chara.Pos,chara.Scale);
+                ChildrenCreate(chara);
             }
-        }
 
+        }
     }
 
     /// <summary>
-    /// 子オブジェクトのデータを読み込む
+    /// 子オブジェクトを生成
     /// </summary>
-    /// <param name="name">名前</param>
-    /// <param name="id">ID</param>
-    /// <param name="pos">座標</param>
-    /// <param name="scale">Scale</param>
-    void ChildrensDataLoad(string name, int id, Vec3J pos, Vec3J scale)
+    /// <param name="chara"></param>
+    void ChildrenCreate(CharacterData chara)
     {
-        var clonePos = new Vector3(pos.X,pos.Y,pos.Z);
-        var cloneScale = new Vector3(scale.X,scale.Y,scale.Z);
-        var clone = (GameObject)Instantiate(ChildrenPrefab, clonePos, Quaternion.identity);
-        
-        clone.name = name;
-        clone.transform.parent = transform;
-        clone.transform.lossyScale.Scale(cloneScale);
+        if (!chara.IsCreateLoad) return;
 
-        var bytes = File.ReadAllBytes(Application.persistentDataPath + "/" + name + "/" + id + ".png");
+        var clone = (GameObject)Instantiate(ChildrenPrefab, Vector3.zero, Quaternion.identity);
+        clone.name = chara.Name;
+        clone.transform.parent = transform;
+        clone.transform.position = new Vector3(chara.Pos.X, chara.Pos.Y, chara.Pos.Z);
+        clone.transform.lossyScale.Scale(new Vector3(chara.Pos.X, chara.Pos.Y, chara.Pos.Z));
+        TextureLoad(clone, chara);
+        CreateChildrenDataSave(clone,chara.ID);
+    }
+
+    protected virtual void TextureLoad(GameObject clone,CharacterData chara)
+    {
+
+#if UNITY_METRO && !UNITY_EDITOR
+        
+        var filePath = chara.Name + "/" + (chara.ID - 1) + ".png";
+
+        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return;
+
+        var bytes = LibForWinRT.ReadFileBytes(filePath).Result;
+#else
+        var filePath = Application.persistentDataPath + "/" + chara.Name + "/" + (chara.ID - 1) + ".png";
+
+        if (!File.Exists(filePath)) return;
+        var bytes = File.ReadAllBytes(filePath);
+
+#endif
         var texture = new Texture2D(128, 128);
         texture.LoadImage(bytes);
-
         clone.renderer.material.mainTexture = texture;
     }
 
@@ -122,7 +139,8 @@ public class CharacterManager : MonoBehaviour
 
         ID++;
         State = STATE.Create;
-        SaveData.Write(new CharacterData(ID, name, Vector3.zero, Vector3.zero));
+        SaveData.Write(new CharacterData(ID, name,transform.position, transform.lossyScale));
+
     }
 
     /// <summary>
@@ -169,17 +187,27 @@ public class CharacterManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 生成した子オブジェクトのデータを保存する。
+    /// </summary>
+    /// <param name="clone">生成するオブジェクト</param>
+    public void CreateChildrenDataSave(GameObject clone,int id)
+    {
+        var children = clone.GetComponent<CharacterDataSave>();
+        children.SetSaveData(id);
+    }
+
+    /// <summary>
     /// 子オブジェクトのデータ保存。
     /// ファイルに書き出す
     /// </summary>
-    public void ChildrensDataSave()
+    public virtual void ChildrensDataSave()
     {
         var childrens = GameObject.FindGameObjectsWithTag(Name);
 
         foreach (var children in childrens)
         {
             var character = children.GetComponent<CharacterDataSave>();
-            SaveData.Write(new CharacterData(character.Data.ID, character.name,
+            SaveData.Write(new CharacterData(character.Data.ID, Name,
                             character.transform.position, character.transform.lossyScale));
         }
 

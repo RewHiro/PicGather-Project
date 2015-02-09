@@ -114,7 +114,7 @@ public class ChangeLeafStampShowList : MonoBehaviour
 #if UNITY_METRO && !UNITY_EDITOR
             var FolderName = GraphicsPath.Name + "/";
             var FileName = textureID + ".png";
-            var Bytes = LibForWinRT.ReadFile(FolderName + FileName).Result;
+            var Bytes = LibForWinRT.ReadFileBytes(FolderName + FileName).Result;
             NewTexture.LoadImage(Bytes);
 #else
             var FolderName = Application.persistentDataPath + "/" + GraphicsPath.Name + "/";
@@ -123,6 +123,8 @@ public class ChangeLeafStampShowList : MonoBehaviour
             NewTexture.LoadImage(Bytes);
 #endif
         }
+
+        _gameObject.GetComponent<LeafIDSetting>().ID = textureID;
 
         var NewSprite = Sprite.Create(NewTexture, new Rect(0, 0, NewTexture.width, NewTexture.height), Vector2.zero);
         MainImage.sprite = NewSprite;
@@ -159,10 +161,10 @@ public class ChangeLeafStampShowList : MonoBehaviour
     /// </summary>
     public void LeftScroll()
     {
-        if (IncreaceScrollValue()) return;
+        if (IsIncreaceScrollValue()) return;
 
         ScrollValue += (GraphicsPath.ID > ScrollValue + MaxStampIconNumber) ? 1 : 0;
-        
+
         IconsInitialize();
 
     }
@@ -170,19 +172,23 @@ public class ChangeLeafStampShowList : MonoBehaviour
     /// <summary>
     /// スクロール後に画像があるかどうかをチェック
     /// </summary>
-    private bool IncreaceScrollValue()
+    private bool IsIncreaceScrollValue()
     {
 #if UNITY_METRO && !UNITY_EDITOR
         var folder = GraphicsPath.Name + "/";
-        var file = (ScrollValue + MaxStampIconNumber ) + ".png";
-        var bytes = LibForWinRT.ReadFile(folder + file).Result;
+        var file = (ScrollValue + MaxStampIconNumber) + ".png";
+
+        if (!LibForWinRT.IsFileExistAsync(folder + file).Result) return false;
+
+        var bytes = LibForWinRT.ReadFileBytes(folder + file).Result;
 #else
         var folder = Application.persistentDataPath + "/" + GraphicsPath.Name + "/";
-        var file = (ScrollValue + MaxStampIconNumber ) + ".png";
+        var file = (ScrollValue + MaxStampIconNumber) + ".png";
+        
+        if (!File.Exists(file)) return false;
         var bytes = File.ReadAllBytes(folder + file);
 #endif
-
-        return bytes.Length == 0;
+        return true;
     }
 
 }

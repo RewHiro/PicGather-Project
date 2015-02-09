@@ -11,8 +11,11 @@ public class CloudManagerController : CharacterManager
 {
 
 	// Use this for initialization
-	void Awake () {
+    void Awake()
+    {
         Name = "Cloud";
+        Init();
+
     }
 
 	

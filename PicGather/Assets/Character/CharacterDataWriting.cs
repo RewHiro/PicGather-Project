@@ -48,6 +48,7 @@ public class CharacterDataWriting : MonoBehaviour
         DataList.Add(saveCharacterData);
     }
 
+
     /// <summary>
     /// ファイルに書き出す
     /// </summary>
@@ -56,7 +57,7 @@ public class CharacterDataWriting : MonoBehaviour
         string json = LitJson.JsonMapper.ToJson(DataList);
 
 #if UNITY_METRO && !UNITY_EDITOR
-        LibForWinRT.WriteFile("Database",name + ".json",json);
+        LibForWinRT.WriteFileText("Database",name + ".json",json);
 #else
         var path = Application.persistentDataPath + "/Database/" ;
         if (!Directory.Exists(path))

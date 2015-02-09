@@ -10,15 +10,20 @@ using System.Collections;
 public class LeafWitherController : MonoBehaviour
 {
 
+    public bool IsDead { get { return (State == STATE.Dead); } }
+
     [SerializeField]
     Color DeadLeafColor = Color.white;
 
     [SerializeField]
     const float WitherTime = 10.0f;
 
-    FruitCreator FruitCreate = null;
+    LeafStampManagerController Manager = null;
 
-    Vector3 SwayVelocity = new Vector3(0, -1, 0);
+    FruitManagerController FruitManager = null;
+
+    Vector3 SwayVelocity = new Vector3(0, -3, 0);
+
     float LifeTime = 0;
 
     enum STATE
@@ -65,8 +70,11 @@ public class LeafWitherController : MonoBehaviour
         if (LifeTime >= WitherTime)
         {
             State = STATE.Dead;
-            FruitCreate = GetComponent<FruitCreator>();
-            FruitCreate.Create();
+            FruitManager = GameObject.FindObjectOfType(typeof(FruitManagerController)) as FruitManagerController;
+            FruitManager.ChildrenCreate(transform.position);
+            
+            Manager = GameObject.FindObjectOfType<LeafStampManagerController>() as LeafStampManagerController;
+            Manager.ChildrensDataSave();
         }
     }
 
@@ -92,6 +100,8 @@ public class LeafWitherController : MonoBehaviour
         if (screenPos.y <= -100)
         {
             Destroy(gameObject);
+
+            Manager.ChildrensDataSave();
         }
     }
 
@@ -104,4 +114,5 @@ public class LeafWitherController : MonoBehaviour
         }
 
     }
+
 }

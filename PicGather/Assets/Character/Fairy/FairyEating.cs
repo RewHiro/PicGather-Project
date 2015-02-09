@@ -33,6 +33,9 @@ public class FairyEating : MonoBehaviour {
             iTween.ScaleTo(gameObject,new Vector3(Scale, Scale, Scale),ScaleTime);
 
             Destroy(collision.gameObject);
+
+            var Manager = GameObject.FindObjectOfType<FruitManagerController>() as FruitManagerController;
+            Manager.ChildrensDataSave();
         }
 
     }
