@@ -40,6 +40,8 @@ public class CloudMover : MonoBehaviour {
 
     RainCreator RainCreate = null;
 
+    public bool IsReturnlMove { get { return (State == STATE.ReturnNormal); } }
+
     // Use this for initialization
 	void Start () {
         RotationPos.y = Random.Range(14.0f,17.0f);

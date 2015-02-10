@@ -31,7 +31,10 @@ public class FeverManager : MonoBehaviour {
         Increase();
         Ferver();
         LimitCheck();
-
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            AddScore(0.1f);
+        }
     }
 
     /// <summary>
