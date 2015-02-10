@@ -53,7 +53,6 @@ public class FairyMover : MonoBehaviour {
         if (Count >= StandbyTime)
         {
             SetMoveTo();
-            Count = 0;
         }
     }
 
@@ -71,6 +70,8 @@ public class FairyMover : MonoBehaviour {
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
 
         State = STATE.Move;
+        Count = 0;
+
     }
 
     /// <summary>
