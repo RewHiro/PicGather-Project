@@ -63,7 +63,7 @@ public class FairyMover : MonoBehaviour {
     /// </summary>
     void SetMoveTo()
     {
-        GameObject[] Fruits = GameObject.FindGameObjectsWithTag("Fruit");
+        var Fruits = GameObject.FindGameObjectsWithTag("Fruit");
         if (Fruits.Length == 0) return;
 
         var RandomNum = Random.Range(0, Fruits.Length);
@@ -112,13 +112,25 @@ public class FairyMover : MonoBehaviour {
     {
         if (collision.gameObject.name == FeverGauge.name)
         {
-            var value = gameObject.transform.lossyScale.x;
-            FeverGauge.GetComponent<FeverManager>().AddScore(value);
-            Destroy(gameObject);
-
-            var Manager = GameObject.FindObjectOfType<FairyManagerController>() as FairyManagerController;
-            Manager.ChildrensDataSave();
-
+            FerverGaugeHit();
         }
+        if (collision.gameObject.name == name)
+        {
+            SetMoveTo();
+        }
+    }
+
+    /// <summary>
+    /// フィーバーゲージに当たった時の処理
+    /// </summary>
+    void FerverGaugeHit()
+    {
+        var value = gameObject.transform.lossyScale.x;
+        FeverGauge.GetComponent<FeverManager>().AddScore(value);
+        Destroy(gameObject);
+
+        var Manager = GameObject.FindObjectOfType<FairyManagerController>() as FairyManagerController;
+        Manager.ChildrensDataSave();
+
     }
 }
