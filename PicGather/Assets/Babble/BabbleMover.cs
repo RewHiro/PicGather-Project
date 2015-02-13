@@ -19,12 +19,20 @@ public class BabbleMover : MonoBehaviour {
     /// </summary>
     private Vector3 PositionInScreen = new Vector3(0.0f,0.0f,0.0f);
 
+    /// <summary>
+    /// スクリーン上でのシャボン玉の半径
+    /// Screen.width = 1280,Screen.height = 720
+    /// </summary>
+    public const float BabbleRadius = 70.0f;
+
+    public bool IsMoved{get;private set;}
 
     // Use this for initialization
     void Start()
     {
-        Velocity = new Vector2(Random.Range(-MaxMoveValue, MaxMoveValue), Random.Range(-MaxMoveValue, MaxMoveValue));
+        InitializePosition();
 
+        /// キャンパス等へ飛ぶUIとの干渉を避ける
         PositionInScreen.z = 1.3f;
 
     }
@@ -47,6 +55,7 @@ public class BabbleMover : MonoBehaviour {
         ///スクリーン座標上での位置で確認し、画面端なら跳ね返る
         Velocity.x *= ChangeVelocity(ref PositionInScreen.x, Screen.width);
         Velocity.y *= ChangeVelocity(ref PositionInScreen.y, Screen.height);
+
 
         transform.position = Camera.main.ScreenToWorldPoint(PositionInScreen);
 
@@ -111,6 +120,7 @@ public class BabbleMover : MonoBehaviour {
         {
             SetPosition(Input.mousePosition);
             SetVelocity();
+
             return;
         }
         else
@@ -122,6 +132,7 @@ public class BabbleMover : MonoBehaviour {
         {
             SetPosition(Input.GetTouch(0).position);
             SetVelocity();
+            
             return;
         }
         else
@@ -140,6 +151,7 @@ public class BabbleMover : MonoBehaviour {
     {
         PositionInScreen.x = velocity.x;
         PositionInScreen.y = velocity.y;
+        IsMoved = true;
     }
 
     /// <summary>
@@ -180,11 +192,6 @@ public class BabbleMover : MonoBehaviour {
         return false;
     }
 
-    /// <summary>
-    /// スクリーン上でのシャボン玉の半径
-    /// Screen.width = 1280,Screen.height = 720
-    /// </summary>
-    public const float BabbleRadius = 70.0f;
 
     /// <summary>
     /// 引数の座標がシャボン玉の半径内かどうかを確かめる
@@ -204,4 +211,14 @@ public class BabbleMover : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// シャボン玉の生成位置を設定する
+    /// </summary>
+    private void InitializePosition()
+    {
+        PositionInScreen.x = Screen.width/2;
+        PositionInScreen.y = Screen.height;
+
+        IsMoved = false;
+    }
 }

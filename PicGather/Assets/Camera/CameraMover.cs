@@ -100,7 +100,7 @@ public class CameraMover : MonoBehaviour
 
             RotateCamera();
 
-            BblDestroyer.DestroyAllBabbles();
+//            BblDestroyer.DestroyAllBabbles();
         }
 
     }
@@ -122,7 +122,7 @@ public class CameraMover : MonoBehaviour
 
             RotateCamera();
 
-            BblDestroyer.DestroyAllBabbles();
+//            BblDestroyer.DestroyAllBabbles();
         }
     }
 

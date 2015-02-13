@@ -16,10 +16,8 @@ public class BabbleInstantiate : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	    if(CanInstantiate())
-        {
-            Instantiate(CreateObjectPrefab,Vector3.zero,Quaternion.identity);
-        }
+
+        CreateBabble();
 	}
 
     /// <summary>
@@ -28,13 +26,10 @@ public class BabbleInstantiate : MonoBehaviour
     /// <returns>生成する...true 生成しない,できない...false</returns>
     private bool CanInstantiate()
     {
-        /// 条件１
-        if(!Input.GetKeyDown(KeyCode.B)) return false;
-
-        /// 条件２
+        /// 条件
         {
             /// 生成できるシャボン玉の最大数
-            const int MaxBabbleNumber = 3;
+            const int MaxBabbleNumber = 1;
 
             /// 現在生成されているシャボン玉の数を得るために検索し取得する
             var Babbles = GameObject.FindGameObjectsWithTag("Babble");
@@ -44,4 +39,13 @@ public class BabbleInstantiate : MonoBehaviour
 
         return true;
     }
+
+    private void CreateBabble()
+    {
+   	    if(CanInstantiate())
+        {
+            Instantiate(CreateObjectPrefab,Vector3.zero,Quaternion.identity);
+        }
+    }
+
 }
