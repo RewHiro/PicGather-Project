@@ -3,21 +3,26 @@ using System.Collections;
 
 public class FairyEating : MonoBehaviour {
 
+    [SerializeField]
+    float MaxScale = 5.0f;
+
+    [SerializeField]
+    float AddScale = 0.5f;
+
     FairyMover Move = null;
 
-    float Scale = 0.5f;
+    float Scale = 0;
     float ScaleTime = 5.0f;
-    const float MaxScale = 1;
 
 	// Use this for initialization
 	void Start () {
         Move = GetComponent<FairyMover>();
-
+        Scale = transform.lossyScale.x;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (gameObject.transform.localScale.x >= MaxScale)
+        if (transform.lossyScale.x >= MaxScale)
         {
             Move.SetStateAbsorption();
         }
@@ -29,7 +34,7 @@ public class FairyEating : MonoBehaviour {
 
         if (collision.gameObject.name == "Fruit")
         {
-            Scale += 0.1f;
+            Scale += AddScale;
             iTween.ScaleTo(gameObject,new Vector3(Scale, Scale, Scale),ScaleTime);
 
             Destroy(collision.gameObject);

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class FairyMover : MonoBehaviour {
 
     GameObject FeverGauge = null;
+    FairyAppear Appear = null;
 
     public bool IsMove { get { return (State == STATE.Move); } }
 
@@ -31,24 +32,36 @@ public class FairyMover : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         FeverGauge = GameObject.Find("FeverGauge");
+        Appear = GetComponent<FairyAppear>();
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        Move();
+        StartMove();
         Arrival();
         MoveToFerveGauge();
 	}
 
     /// <summary>
+    /// カメラの方向に向く
+    /// </summary>
+    void CameraForLookAt()
+    {
+        iTween.LookTo(gameObject, Camera.main.transform.position, ArrivalTime);
+    }
+
+    /// <summary>
     /// 移動処理
     /// 木をタップしたらそこに向かって移動していく
     /// </summary>
-    void Move()
+    void StartMove()
     {
         if (State != STATE.Stop) return;
-        
+        if (!Appear.IsStop) return;
+
+        CameraForLookAt();
+
         Count += Time.deltaTime;
         if (Count >= StandbyTime)
         {
@@ -62,12 +75,16 @@ public class FairyMover : MonoBehaviour {
     /// </summary>
     void SetMoveTo()
     {
-        var Fruits = GameObject.FindGameObjectsWithTag("Fruit");
-        if (Fruits.Length == 0) return;
+        var fruits = GameObject.FindGameObjectsWithTag("Fruit");
+        if (fruits.Length == 0) return;
 
-        var RandomNum = Random.Range(0, Fruits.Length);
-        iTween.MoveTo(gameObject, iTween.Hash("position", Fruits[RandomNum].transform.position,
+        var randomNum = Random.Range(0, fruits.Length);
+        var fruitsPos = fruits[randomNum].transform.position;
+
+        iTween.MoveTo(gameObject, iTween.Hash("position", fruitsPos,
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
+
+        iTween.LookTo(gameObject, fruitsPos, ArrivalTime);
 
         State = STATE.Move;
         Count = 0;
@@ -104,8 +121,12 @@ public class FairyMover : MonoBehaviour {
     {
         if (State != STATE.Absorption) return;
 
-        iTween.MoveTo(gameObject, iTween.Hash("position", FeverGauge.transform.position,
+        var ferverGaugePos = FeverGauge.transform.position;
+        iTween.MoveTo(gameObject, iTween.Hash("position", ferverGaugePos,
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
+
+        iTween.LookTo(gameObject, ferverGaugePos, ArrivalTime);
+
     }
 
 

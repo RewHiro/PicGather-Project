@@ -16,11 +16,6 @@ public class CameraMover : MonoBehaviour
     private BabbleDestroyer BblDestroyer = null;
 
     /// <summary>
-    /// カメラの移動量
-    /// </summary>
-    private float MoveValue = 2.0f;
-
-    /// <summary>
     /// カメラの円運動量
     /// </summary>
     private float RotationAngle = 0.0f;
