@@ -46,8 +46,8 @@ public class RainCreator : MonoBehaviour {
         var PosY = transform.position.y + -1;
         var PosZ = transform.position.z + Random.Range(-Scale.z, Scale.z);
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(PosX, PosY, PosZ), Prefab.transform.rotation);
+        
         Clone.transform.parent = Manager.transform;
-        Manager.transform.parent = transform;
         Clone.name = Prefab.name;
     }
 
