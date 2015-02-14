@@ -36,7 +36,8 @@ public class CameraMover : MonoBehaviour
     {
         BblDestroyer = GetComponent<BabbleDestroyer>();
 
-        MoveRadius = Vector3.Distance(transform.position, CenterObject.position);
+        MoveRadius = transform.position.z;
+//        MoveRadius = Vector3.Distance(transform.position, CenterObject.position);
 
         RotateCamera();
 
@@ -131,9 +132,12 @@ public class CameraMover : MonoBehaviour
     /// </summary>
     private void RotateCamera()
     {
-        Camera.main.transform.position = new Vector3(CenterObject.position.x + Mathf.Sin(RotationAngle) * MoveRadius, transform.position.y, CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
+        Camera.main.transform.position = new Vector3(
+            CenterObject.position.x + Mathf.Sin(RotationAngle) * MoveRadius,
+            transform.position.y, 
+            CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
 
-        Camera.main.transform.LookAt(CenterObject.position);
+        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.5f,0));
     }
 
     /// <summary>

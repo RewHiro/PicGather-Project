@@ -13,11 +13,11 @@ public class LeafCreator : MonoBehaviour {
     [SerializeField]
     GameObject LeafPrefab = null;
 
-    [SerializeField]
-    GameObject TreeObject = null;
 
     [SerializeField]
     StampListMover StampList = null;
+
+    GameObject TreeBranch = null;
 
     LeafStampManagerController Manager = null;
 
@@ -32,6 +32,7 @@ public class LeafCreator : MonoBehaviour {
 	void Start () {
         SelectTexture = renderer.material.mainTexture;
         Manager = GetComponent<LeafStampManagerController>();
+        ChangeTreeBranch();
 	}
 	
 	// Update is called once per frame
@@ -39,11 +40,23 @@ public class LeafCreator : MonoBehaviour {
         if (!ModeManager.IsGameMode) return;
         if (!StampList.IsCreate) return;
 
-        if (TouchManager.IsTouching(TreeObject) || TouchManager.IsMouseButton(TreeObject))
+        ChangeTreeBranch();
+
+        if (TouchManager.IsTouching(TreeBranch) || TouchManager.IsMouseButton(TreeBranch))
         {
             CreatePrefab();
         }
 	}
+
+    /// <summary>
+    /// 木の枝オブジェクトを切り替える
+    /// </summary>
+    void ChangeTreeBranch()
+    {
+        if (TreeBranch) return;
+
+        TreeBranch = GameObject.Find("Branch");
+    }
 
     /// <summary>
     /// PrefabをGameObjectとして生成する
