@@ -25,8 +25,6 @@ public class BabbleMover : MonoBehaviour {
     /// </summary>
     public const float BabbleRadius = 70.0f;
 
-    public bool IsMoved{get;private set;}
-
     // Use this for initialization
     void Start()
     {
@@ -151,7 +149,6 @@ public class BabbleMover : MonoBehaviour {
     {
         PositionInScreen.x = velocity.x;
         PositionInScreen.y = velocity.y;
-        IsMoved = true;
     }
 
     /// <summary>
@@ -216,9 +213,7 @@ public class BabbleMover : MonoBehaviour {
     /// </summary>
     private void InitializePosition()
     {
-        PositionInScreen.x = Screen.width/2;
+        PositionInScreen.x = Screen.width;
         PositionInScreen.y = Screen.height;
-
-        IsMoved = false;
     }
 }
