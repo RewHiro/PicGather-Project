@@ -19,11 +19,7 @@ public class BabbleDestroyer : MonoBehaviour {
         
         foreach(var babble in Babbles)
         {
-            var mover = babble.GetComponent<BabbleMover>();
-            if(mover.IsMoved)
-            {
-                Destroyer.DestroyAndCreateObject(babble, BabbleParticlePrefab);
-            }
+            Destroyer.DestroyAndCreateObject(babble, BabbleParticlePrefab);
         }
 
     }

@@ -33,7 +33,7 @@ public class FeverManager : MonoBehaviour {
         LimitCheck();
         if (Input.GetKeyDown(KeyCode.A))
         {
-            AddScore(0.1f);
+            AddScore(0.5f);
         }
     }
 
@@ -95,7 +95,8 @@ public class FeverManager : MonoBehaviour {
     {
         if (!ModeManager.IsFerverMode) return;
 
-        FeverScore -= Time.deltaTime / 10;
+        FeverScore -= Time.deltaTime / 4;
+        //FeverScore -= Time.deltaTime / 10;
     }
   
 }
