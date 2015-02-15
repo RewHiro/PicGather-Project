@@ -11,11 +11,6 @@ public class CameraMover : MonoBehaviour
     private Transform CenterObject = null;
 
     /// <summary>
-    /// BabbleDestroyerクラスのDestroyAllBabblesを呼ぶために用意する
-    /// </summary>
-    private BabbleDestroyer BblDestroyer = null;
-
-    /// <summary>
     /// カメラの円運動量
     /// </summary>
     private float RotationAngle = 0.0f;
@@ -34,14 +29,11 @@ public class CameraMover : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        BblDestroyer = GetComponent<BabbleDestroyer>();
 
         MoveRadius = transform.position.z;
-//        MoveRadius = Vector3.Distance(transform.position, CenterObject.position);
 
         RotateCamera();
-
-
+        
     }
 
     // Update is called once per frame
@@ -100,8 +92,6 @@ public class CameraMover : MonoBehaviour
             AddAngle(increaseValue * Input.GetAxis("Mouse X"));
 
             RotateCamera();
-
-            BblDestroyer.DestroyAllBabbles();
         }
 
     }
@@ -123,7 +113,6 @@ public class CameraMover : MonoBehaviour
 
             RotateCamera();
 
-            BblDestroyer.DestroyAllBabbles();
         }
     }
 

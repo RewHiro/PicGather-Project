@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class BabbleDestroyer : MonoBehaviour {
 
     /// <summary>
@@ -14,12 +15,11 @@ public class BabbleDestroyer : MonoBehaviour {
     /// </summary>
     public void DestroyAllBabbles()
     {
-        
         var Babbles = GameObject.FindGameObjectsWithTag("Babble");
-
+        
         foreach(var babble in Babbles)
         {
-            Destroyer.DestroyAndCreateObject(babble,BabbleParticlePrefab);
+            Destroyer.DestroyAndCreateObject(babble, BabbleParticlePrefab);
         }
 
     }
