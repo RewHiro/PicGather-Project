@@ -126,7 +126,7 @@ public class CameraMover : MonoBehaviour
             transform.position.y, 
             CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
 
-        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.5f,0));
+        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.2f,0));
     }
 
     /// <summary>
