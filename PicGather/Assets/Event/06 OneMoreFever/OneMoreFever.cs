@@ -21,11 +21,6 @@ public class OneMoreFever : EventBase
     private const int MaxInstantiate = 10;
 
     /// <summary>
-    /// イベントを継続する時間
-    /// </summary>
-    private const float MaxLifeTime = 5.0f;
-
-    /// <summary>
     /// 今生成されてから何秒経っているか
     /// </summary>
     private float NowLifeTime = 0.0f;
@@ -56,12 +51,9 @@ public class OneMoreFever : EventBase
         if (NowLifeTime > BeginAddScoreTime)
         {
             FeverMngr.AddScore(FeverManager.MaxFeverScore);
-        }
-
-        if(NowLifeTime >= MaxLifeTime)
-        {
             Finish();
         }
+
     }
 
     /// <summary>
@@ -71,5 +63,6 @@ public class OneMoreFever : EventBase
     {
 
         base.Finish();
+        UIEnabled.Unavailable();
     }
 }

@@ -28,22 +28,24 @@ public class EventManager : MonoBehaviour {
     /// <summary>
     /// イベントの情報を統括するメンバ変数
     /// </summary>
-    public EventInfo EventInfomation = new EventInfo();
+    public EventInfo EventInformation = new EventInfo();
 
     void Start()
     {
-        EventInfomation.BeginEvent = false;
-        EventInfomation.NowPlayingEvent = false;
+        EventInformation.BeginEvent = false;
+        EventInformation.NowPlayingEvent = false;
     }
 
 	// Update is called once per frame
 	void Update () {
-        if(EventInfomation.BeginEvent)
+        if(EventInformation.BeginEvent)
         {
-            Instantiate(EventInfomation.PlayingEvent);
-            EventInfomation.NowPlayingEvent = true;
+            Instantiate(EventInformation.PlayingEvent);
+            EventInformation.NowPlayingEvent = true;
 
-            EventInfomation.BeginEvent = false;
+            EventInformation.BeginEvent = false;
+
+            UIEnabled.Unavailable();
         }
 	}
 
@@ -54,10 +56,10 @@ public class EventManager : MonoBehaviour {
     public void BeginEvent(GameObject eventPrefab)
     {
         /// イベント中なら発生させない
-        if (EventInfomation.PlayingEvent) return;
+        if (EventInformation.PlayingEvent) return;
 
-        EventInfomation.PlayingEvent = eventPrefab;
-        EventInfomation.BeginEvent = true;
+        EventInformation.PlayingEvent = eventPrefab;
+        EventInformation.BeginEvent = true;
     }
 
 }

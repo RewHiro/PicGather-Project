@@ -23,7 +23,7 @@ public class CloudMover : MonoBehaviour {
     float RotationSpeed = 0;
     float RotationRadius = 0;
     float AppearanceSpeed = 0;
-
+    float StopAppearancePosY = 0;
     const float ArrivalTime = 5.0f;
 
     enum STATE
@@ -47,7 +47,8 @@ public class CloudMover : MonoBehaviour {
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
         RotationSpeed = Random.Range(0.5f, 1.0f);
-        RotationRadius = Random.Range(5, 10);
+        StopAppearancePosY = Random.Range(200.0f, 400.0f);
+        RotationRadius = Random.Range(5, 8);
         AppearanceSpeed = Random.Range(1, 2);
         RainCreate = GetComponent<RainCreator>();
         TreeObject = GameObject.Find("TreeManager");
@@ -76,6 +77,8 @@ public class CloudMover : MonoBehaviour {
         RotationAngle += RotationSpeed * Time.deltaTime;
 
     }
+
+
     /// <summary>
     /// 登場移動
     /// </summary>
@@ -87,7 +90,9 @@ public class CloudMover : MonoBehaviour {
         RotationPos.y -= AppearanceSpeed * Time.deltaTime;
         Radius += RadiusMoveSpeed * Time.deltaTime * AppearanceSpeed;
 
-        if (Radius >= RotationRadius)
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (screenPos.y <= StopAppearancePosY)
         {
             State = STATE.Normal;
         }
@@ -104,7 +109,9 @@ public class CloudMover : MonoBehaviour {
         transform.position = CreateRainPos;
         RotationPos.y += Time.deltaTime;
 
-        if (RotationPos.y >= 9)
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (screenPos.y >= Screen.height - 100)
         {
             State = STATE.CreateRain;
             RainCreate.StartCreate();
@@ -145,7 +152,9 @@ public class CloudMover : MonoBehaviour {
         RotationPos.y -= Time.deltaTime;
         Radius += RadiusMoveSpeed * 4 * Time.deltaTime;
 
-        if (Radius >= 7 || RotationPos.y <= TreePos.y)
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (screenPos.y <= StopAppearancePosY)
         {
             State = STATE.Normal;
         }
