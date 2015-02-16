@@ -4,19 +4,42 @@ using System.Collections;
 public class OneMoreFeverStarter : EventStarterBase
 {
 
+    FeverManager FeverMngr = null;
+
     // Use this for initialization
     void Start()
     {
         EventMngr = GetComponent<EventManager>();
+
+        FeverMngr = GetComponent<FeverManager>();
+
     }
+
+    /// <summary>
+    /// すでに１度スコアゲージがマックスになったかどうか
+    /// </summary>
+    private bool IsAlreadyMaxScore = false;
 
     // Update is called once per frame
     void Update()
     {
 
         /*イベントの開始条件*/
-        //      if()
-        BeginEvent();
+        /// フィーバーゲージがMAX→MINになった時
+        if (FeverMngr.FeverScore == FeverManager.MaxFeverScore) IsAlreadyMaxScore = true;
+
+        if(IsAlreadyMaxScore && FeverMngr.FeverScore == FeverManager.MinFeverScore)
+        {
+            IsAlreadyMaxScore = false;
+
+
+            const int MaxRange = 9;
+            if(Random.Range(0,MaxRange) == 0)
+            {
+                BeginEvent();
+            }
+        }   
+        
     }
 
     /// <summary>
