@@ -25,5 +25,6 @@ public class EventBase : MonoBehaviour {
     protected virtual void Finish()
     {
         UIEnabled.Enabled();
+        Destroy(this.gameObject);
     }
 }
