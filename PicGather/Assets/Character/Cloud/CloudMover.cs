@@ -92,8 +92,6 @@ public class CloudMover : MonoBehaviour {
 
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        Debug.Log(screenPos);
-
         if (screenPos.y <= StopAppearancePosY)
         {
             State = STATE.Normal;
