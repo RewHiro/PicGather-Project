@@ -9,7 +9,7 @@ public class ShareListCloseController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ShareList = GameObject.Find("ShareListUI");
+        ShareList = GameObject.Find("PictureSaveUI");
         CloseButton = GetComponent<Button>();
         CloseButton.onClick.AddListener(None);
 	}
