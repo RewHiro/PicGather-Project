@@ -161,34 +161,10 @@ public class ChangeLeafStampShowList : MonoBehaviour
     /// </summary>
     public void LeftScroll()
     {
-        if (IsIncreaceScrollValue()) return;
-
         ScrollValue += (GraphicsPath.ID > ScrollValue + MaxStampIconNumber) ? 1 : 0;
 
         IconsInitialize();
 
-    }
-
-    /// <summary>
-    /// スクロール後に画像があるかどうかをチェック
-    /// </summary>
-    private bool IsIncreaceScrollValue()
-    {
-#if UNITY_METRO && !UNITY_EDITOR
-        var folder = GraphicsPath.Name + "/";
-        var file = (ScrollValue + MaxStampIconNumber) + ".png";
-
-        if (!LibForWinRT.IsFileExistAsync(folder + file).Result) return false;
-
-        var bytes = LibForWinRT.ReadFileBytes(folder + file).Result;
-#else
-        var folder = Application.persistentDataPath + "/" + GraphicsPath.Name + "/";
-        var file = (ScrollValue + MaxStampIconNumber) + ".png";
-        
-        if (!File.Exists(file)) return false;
-        var bytes = File.ReadAllBytes(folder + file);
-#endif
-        return true;
     }
 
 }

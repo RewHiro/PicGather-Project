@@ -9,8 +9,7 @@ using System.Collections;
 
 public class CloudMover : MonoBehaviour {
 
-    [SerializeField]
-    private GameObject TreeObject = null;
+    GameObject TreeObject = null;
 
     Vector3 CreateRainPos = Vector3.zero;
     Vector3 TreePos = Vector3.zero;
@@ -51,6 +50,7 @@ public class CloudMover : MonoBehaviour {
         RotationRadius = Random.Range(5, 10);
         AppearanceSpeed = Random.Range(1, 2);
         RainCreate = GetComponent<RainCreator>();
+        TreeObject = GameObject.Find("TreeManager");
 	}
 	
 	void Update () 
