@@ -80,6 +80,7 @@ public class FeverManager : MonoBehaviour {
             FeverScore = MaxFeverScore;
             ModeManager.ChangeFerverMode();
             Sound.Play();
+            UIEnabled.Unavailable();
         }
 
         if (FeverScore < MinFeverScore && ModeManager.IsFerverMode)
@@ -87,6 +88,8 @@ public class FeverManager : MonoBehaviour {
             FeverScore = MinFeverScore;
             ModeManager.ChangeGameMode();
             Sound.Stop();
+            UIEnabled.Enabled();
+
         }
     }
 
@@ -95,7 +98,7 @@ public class FeverManager : MonoBehaviour {
     {
         if (!ModeManager.IsFerverMode) return;
 
-        FeverScore -= Time.deltaTime / 4;
+        FeverScore -= Time.deltaTime / 6;
         //FeverScore -= Time.deltaTime / 10;
     }
   
