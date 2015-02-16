@@ -11,7 +11,7 @@ public class OneMoreFeverStarter : EventStarterBase
     {
         EventMngr = GetComponent<EventManager>();
 
-        FeverMngr = GetComponent<FeverManager>();
+        FeverMngr = GameObject.FindObjectOfType<FeverManager>();
 
     }
 
@@ -33,8 +33,8 @@ public class OneMoreFeverStarter : EventStarterBase
             IsAlreadyMaxScore = false;
 
 
-            const int MaxRange = 9;
-            if(Random.Range(0,MaxRange) == 0)
+            const int MaxRange = 1;
+            if(true)
             {
                 BeginEvent();
             }
