@@ -32,9 +32,9 @@ public class PaintManager : MonoBehaviour {
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
-    public readonly Vector2 campusOffSet = new Vector2(180, 110);
+    public readonly Vector2 campusOffSet = new Vector2(180, 115);
 #else    
-    public readonly Vector2 campusOffSet = new Vector2(140, 90);
+    public readonly Vector2 campusOffSet = new Vector2(140, 100);
 #endif
 
     bool isOver = false;

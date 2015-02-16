@@ -47,9 +47,9 @@ public class CloudMover : MonoBehaviour {
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
         RotationSpeed = Random.Range(0.5f, 1.0f);
-        StopAppearancePosY = Random.Range(200.0f, 400.0f);
+        StopAppearancePosY = Random.Range(Screen.height / 2, Screen.height / 2 + 200);
         RotationRadius = Random.Range(5, 8);
-        AppearanceSpeed = Random.Range(1, 2);
+        AppearanceSpeed = Random.Range(1, 3);
         RainCreate = GetComponent<RainCreator>();
         TreeObject = GameObject.Find("TreeManager");
 	}
@@ -59,7 +59,7 @@ public class CloudMover : MonoBehaviour {
         CircleRotation();
         AppearanceMove();
         NormalMove();
-        StartLeafTopMove();
+        StartTreeTopMove();
         TreeTopMove();
         CreateRainMove();
         ReturnNormalPosition();
@@ -87,16 +87,18 @@ public class CloudMover : MonoBehaviour {
         if (State != STATE.Appearance) return;
 
         transform.position = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
-        RotationPos.y -= AppearanceSpeed * Time.deltaTime;
-        Radius += RadiusMoveSpeed * Time.deltaTime * AppearanceSpeed;
+        RotationPos.y -= Time.deltaTime * AppearanceSpeed;
 
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        RotationControl(screenPos.x);
 
         if (screenPos.y <= StopAppearancePosY)
         {
             State = STATE.Normal;
         }
     }
+
 
     /// <summary>
     /// 木の上に向けて移動中の処理
@@ -146,19 +148,17 @@ public class CloudMover : MonoBehaviour {
         if (State != STATE.ReturnNormal) return;
 
         var NormalPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
-
         transform.position = NormalPos;
-
-        RotationPos.y -= Time.deltaTime;
-        Radius += RadiusMoveSpeed * 4 * Time.deltaTime;
+        RotationPos.y -= Time.deltaTime * AppearanceSpeed;
 
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        if (screenPos.y <= StopAppearancePosY)
+        RotationControl(screenPos.x);
+
+        if (screenPos.y <= 200)
         {
             State = STATE.Normal;
         }
-
     }
 
 
@@ -173,9 +173,9 @@ public class CloudMover : MonoBehaviour {
     }
 
     /// <summary>
-    /// 葉っぱの上に移動する
+    /// 木の上に移動する
     /// </summary>
-    void StartLeafTopMove()
+    void StartTreeTopMove()
     {
         if (State != STATE.Normal) return;
 
@@ -191,5 +191,22 @@ public class CloudMover : MonoBehaviour {
         }
 
         State = STATE.TreeTop;
+    }
+
+
+    /// <summary>
+    /// 半径を制御
+    /// </summary>
+    /// <param name="speed"></param>
+    void RotationControl(float screenPosX)
+    {
+        Radius += Time.deltaTime * AppearanceSpeed;
+
+        if (screenPosX <= 150 || screenPosX >= Screen.width - 150)
+        {
+            State = STATE.Normal;
+        }
+
+
     }
 }

@@ -91,7 +91,7 @@ public class CampusCaptureController : MonoBehaviour
 
         var bytes = texture.EncodeToPNG();
 
-        texture = new Texture2D(200, 200);
+        texture = new Texture2D(256, 256);
         texture.LoadImage(bytes);
 
         CharaManager.SetTexture2D(texture);
