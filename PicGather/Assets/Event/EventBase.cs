@@ -24,5 +24,6 @@ public class EventBase : MonoBehaviour {
     /// </summary>
     protected virtual void Finish()
     {
+        UIEnabled.Enabled();
     }
 }
