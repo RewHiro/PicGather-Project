@@ -17,7 +17,7 @@ public class CloudDisappear : MonoBehaviour
         Finish, //  終了した。
     };
 
-    const float DisappearTime = 10.0f;
+    const float DisappearTime = 7.0f;
 
     CloudMover Mover = null;
 
@@ -47,7 +47,6 @@ public class CloudDisappear : MonoBehaviour
 
         State = STATE.Start;
         Mover = GetComponent<CloudMover>();
-
     }
 
     /// <summary>
@@ -75,7 +74,6 @@ public class CloudDisappear : MonoBehaviour
         if (Count >= DisappearTime)
         {
             Destroy(gameObject);
-            Debug.Log("Des");
 
             var manager = GameObject.FindObjectOfType<CloudManagerController>();
             manager.ChildrensDataSave();

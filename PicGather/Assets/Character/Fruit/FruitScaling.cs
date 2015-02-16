@@ -9,10 +9,10 @@ using System.Collections;
 
 public class FruitScaling : MonoBehaviour {
 
-    const float GainTime = 10.0f; 
+    const float GainTime = 3.0f; 
 
     [SerializeField]
-    float MaxScale = 5.0f;
+    float MaxScale = 30.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -24,4 +24,6 @@ public class FruitScaling : MonoBehaviour {
 	void Update () {
         
 	}
+
+
 }
