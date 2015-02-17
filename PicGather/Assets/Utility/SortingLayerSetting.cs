@@ -13,12 +13,12 @@ public class SortingLayerSetting : MonoBehaviour {
     private GameObject SkyDomeObject = null;
 
     [SerializeField]
-    private GameObject FerverGaugeObject = null;
+    private GameObject FlaskObject = null;
 
 	// Use this for initialization
 	void Start () {
         SkyDomeObject.renderer.sortingLayerName = "BackGround";
-        FerverGaugeObject.renderer.sortingLayerName = "FerverGauge";
+        FlaskObject.renderer.sortingLayerName = "FerverGauge";
 	
 	}
 	
