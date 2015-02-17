@@ -16,8 +16,8 @@ public class CurtainMover : MonoBehaviour {
 	void Start () {
         ScreenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
-        var MaxVelocity = Screen.width*1.0f;
-        var MinVelocity = Screen.width / 2;
+        float MaxVelocity = Screen.width / 4;
+        float MinVelocity = Screen.width / 5;
 
         Velocity = Random.Range(MinVelocity, MaxVelocity);
 	}

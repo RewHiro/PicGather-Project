@@ -5,7 +5,7 @@ public class CurtainDestroyer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Destroy(gameObject, 3.0f);
+        Destroy(gameObject, 7.0f);
 	}
 	
 	// Update is called once per frame

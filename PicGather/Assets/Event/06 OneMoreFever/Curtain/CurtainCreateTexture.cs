@@ -24,7 +24,7 @@ public class CurtainCreateTexture : MonoBehaviour {
 
         renderer.material.mainTexture = TextureAlLoading.RandomLoadTexture(Character);
 
-        var Scale = 0.8f;
+        var Scale = 0.25f;
 
         transform.localScale = new Vector3(Scale, Scale, Scale);
     }

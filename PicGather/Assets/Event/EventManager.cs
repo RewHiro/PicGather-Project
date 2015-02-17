@@ -12,7 +12,7 @@ public class EventManager : MonoBehaviour {
         /// <summary>
         /// 発生させるイベント
         /// </summary>
-        public GameObject PlayingEvent;
+        public GameObject PlayingEventPrefab;
 
         /// <summary>
         /// イベントを開始するフレームならtrue
@@ -22,7 +22,7 @@ public class EventManager : MonoBehaviour {
         /// <summary>
         /// 現在イベント中かどうかを判断する
         /// </summary>
-        public bool NowPlayingEvent;
+        public bool NowPlaying;
     }
 
     /// <summary>
@@ -33,15 +33,15 @@ public class EventManager : MonoBehaviour {
     void Start()
     {
         EventInformation.BeginEvent = false;
-        EventInformation.NowPlayingEvent = false;
+        EventInformation.NowPlaying = false;
     }
 
 	// Update is called once per frame
 	void Update () {
         if(EventInformation.BeginEvent)
         {
-            Instantiate(EventInformation.PlayingEvent);
-            EventInformation.NowPlayingEvent = true;
+            Instantiate(EventInformation.PlayingEventPrefab);
+            EventInformation.NowPlaying = true;
 
             EventInformation.BeginEvent = false;
 
@@ -56,9 +56,9 @@ public class EventManager : MonoBehaviour {
     public void BeginEvent(GameObject eventPrefab)
     {
         /// イベント中なら発生させない
-        if (EventInformation.PlayingEvent) return;
+        if (EventInformation.NowPlaying) return;
 
-        EventInformation.PlayingEvent = eventPrefab;
+        EventInformation.PlayingEventPrefab = eventPrefab;
         EventInformation.BeginEvent = true;
     }
 

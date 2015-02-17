@@ -9,6 +9,9 @@ public class OneMoreFeverStarter : EventStarterBase
     // Use this for initialization
     void Start()
     {
+
+        DeltaFeverTime = AgainCoolTime;
+
         EventMngr = GetComponent<EventManager>();
 
         FeverMngr = GameObject.FindObjectOfType<FeverManager>();
@@ -20,26 +23,44 @@ public class OneMoreFeverStarter : EventStarterBase
     /// </summary>
     private bool IsAlreadyMaxScore = false;
 
+    /// <summary>
+    /// 前回フィーバーした時からの経過時間
+    /// </summary>
+    private float DeltaFeverTime = 0.0f;
+
+    /// <summary>
+    /// フィーバー確変を行わないクールタイム
+    /// </summary>
+    private const float AgainCoolTime = 60.0f;
+
     // Update is called once per frame
     void Update()
     {
 
         /*イベントの開始条件*/
         /// フィーバーゲージがMAX→MINになった時
-        if (FeverMngr.FeverScore == FeverManager.MaxFeverScore) IsAlreadyMaxScore = true;
+        if (ModeManager.IsFerverMode && DeltaFeverTime >= AgainCoolTime)
+        {
+            IsAlreadyMaxScore = true;
+        }
 
-        if(IsAlreadyMaxScore && FeverMngr.FeverScore == FeverManager.MinFeverScore)
+        if(IsAlreadyMaxScore && !ModeManager.IsFerverMode)
         {
             IsAlreadyMaxScore = false;
 
-
-            const int MaxRange = 1;
-            if(true)
+            /// 生成する確率
+            const int MaxRange = 5;
+            if (Random.Range(0, MaxRange) == 0)
             {
                 BeginEvent();
+                DeltaFeverTime = 0.0f;
             }
-        }   
-        
+        }
+
+        if(DeltaFeverTime < AgainCoolTime)
+        {
+            DeltaFeverTime += Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -48,8 +69,6 @@ public class OneMoreFeverStarter : EventStarterBase
     protected override void BeginEvent()
     {
         base.BeginEvent();
-
-        ///イベントの発生条件を書く
 
         EventMngr.BeginEvent(OriginEventPrefab);
     }
