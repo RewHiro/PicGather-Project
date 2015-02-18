@@ -54,9 +54,13 @@ public class TreeChanger : MonoBehaviour {
         if (ModeManager.IsFerverMode ) return;
         if (State != STATE.Change) return;
 
-        var clone = (GameObject)Instantiate(TreeObject[CreateIndex], transform.position, transform.rotation);
+        var clone = (GameObject)Instantiate(TreeObject[CreateIndex]);
+
         clone.name = "Tree";
         clone.transform.parent = transform;
+        clone.transform.localPosition = clone.transform.position;
+
+        Debug.Log(clone.transform.localPosition.y);
 
         iTween.ScaleTo(clone.gameObject,new Vector3(1,1,1),0);
 

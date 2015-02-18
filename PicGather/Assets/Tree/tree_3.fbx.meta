@@ -6,15 +6,25 @@ ModelImporter:
     100000: eda_3
     100002: miki_3
     100004: //RootNode
+    100006: eda_03
+    100008: miki_03
     400000: eda_3
     400002: miki_3
     400004: //RootNode
+    400006: eda_03
+    400008: miki_03
     2300000: eda_3
     2300002: miki_3
+    2300004: eda_03
+    2300006: miki_03
     3300000: eda_3
     3300002: miki_3
+    3300004: eda_03
+    3300006: miki_03
     4300000: miki_3
     4300002: eda_3
+    4300004: eda_03
+    4300006: miki_03
     9500000: //RootNode
   materials:
     importMaterials: 1
