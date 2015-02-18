@@ -49,7 +49,7 @@ public class OneMoreFeverStarter : EventStarterBase
             IsAlreadyMaxScore = false;
 
             /// 生成する確率
-            const int MaxRange = 5;
+            const int MaxRange = 1;
             if (Random.Range(0, MaxRange) == 0)
             {
                 BeginEvent();

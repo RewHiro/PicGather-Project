@@ -21,6 +21,11 @@ public class OneMoreFever : EventBase
     private const int MaxInstantiate = 1;
 
     /// <summary>
+    /// 生成されたクローンの数
+    /// </summary>
+    private int InstantiatedNumber = 0;
+
+    /// <summary>
     /// 生成し続ける時間
     /// </summary>
     private const float SpawningTime = 5.0f;
@@ -29,7 +34,6 @@ public class OneMoreFever : EventBase
     /// 今生成されてから何秒経っているか
     /// </summary>
     private float NowLifeTime = 0.0f;
-
 
     /// <summary>
     /// 画面右端からさらに右への移動
@@ -51,7 +55,7 @@ public class OneMoreFever : EventBase
     {
         FeverMngr = GameObject.FindObjectOfType<FeverManager>();
         UIEnabled.Unavailable();
-
+        InstantiatedNumber = 0;
     }
 
     // Update is called once per frame
@@ -59,16 +63,35 @@ public class OneMoreFever : EventBase
     {
         NowLifeTime += Time.deltaTime;
 
-        /// イベント開始してからフィーバーゲージを増加させるタイミング（秒）
+        CheckBeginTiming();
+
+        CheckCreateCurtains();
+
+
+    }
+
+    /// <summary>
+    /// イベントが発生してからの時間を見てFeverゲージを増加する。
+    /// </summary>
+    private void CheckBeginTiming()
+    {
+
         var BeginAddScoreTime = 1.0f;
         if (NowLifeTime > BeginAddScoreTime)
         {
             FeverMngr.AddScore(FeverManager.MaxFeverScore);
         }
+    }
 
-        if(NowLifeTime < SpawningTime )
+    /// <summary>
+    /// カーテンを生成する
+    /// 条件は内部に内包している
+    /// </summary>
+    private void CheckCreateCurtains()
+    {
+        if (NowLifeTime < SpawningTime)
         {
-            if(IsCreateTiming)
+            if (IsCreateTiming)
             {
                 CreateCurtain();
                 IsCreateTiming = false;
@@ -82,8 +105,8 @@ public class OneMoreFever : EventBase
         {
             Finish();
         }
-
     }
+
 
     /// <summary>
     /// 終了時の処理
@@ -99,8 +122,9 @@ public class OneMoreFever : EventBase
         for (int i = 0; i < MaxInstantiate; i++)
         {
             Instantiate(CurtainPrefab,
-                        Camera.main.ScreenToWorldPoint(new Vector3(Screen.width + OffsetX, Random.Range(0, SegmentNumber) * Screen.height / SegmentNumber, 1.1f + (i * 0.01f))),
+                        Camera.main.ScreenToWorldPoint(new Vector3(Screen.width + OffsetX, Random.Range(0, SegmentNumber) * Screen.height / SegmentNumber, 1.0f + (++InstantiatedNumber * 0.001f))),
                         Quaternion.identity);
+
         }
     }
 
