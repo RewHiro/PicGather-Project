@@ -35,6 +35,12 @@ public class TreeChanger : MonoBehaviour
     [SerializeField]
     FeverManager Fever = null;
 
+    [SerializeField]
+    CameraMover CameraMain = null;
+
+    [SerializeField]
+    float BroadenValue = 1.0f;
+
     GameObject Tree = null;
 
     enum STATE
@@ -58,6 +64,7 @@ public class TreeChanger : MonoBehaviour
         StartChange();
         ChangeChildren();
         DestroyChildren();
+
 	}
 
     /// <summary>
@@ -66,6 +73,7 @@ public class TreeChanger : MonoBehaviour
     /// </summary>
     public void ChangeNormalState()
     {
+        CameraMain.BroadenMoveRadius(BroadenValue);
         State = STATE.Normal;
     }
 
@@ -77,6 +85,7 @@ public class TreeChanger : MonoBehaviour
         if (!ModeManager.IsFerverMode) return;
         if (State != STATE.Normal) return;
         if (CreateIndex >= TreeData.Count) return;
+
 
         ChangeJudgment();
     }
@@ -147,7 +156,8 @@ public class TreeChanger : MonoBehaviour
 
         Destroy(Tree);
 
-        State = STATE.Normal;
+        ChangeNormalState();
+
     }
 
 }
