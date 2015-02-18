@@ -10,6 +10,12 @@ public class CameraMover : MonoBehaviour
     [SerializeField]
     private Transform CenterObject = null;
 
+    [SerializeField]
+    private float IncreaseRadiusValue = 0.01f;
+
+    [SerializeField]
+    private float UpVelocity = 1.0f;
+
     /// <summary>
     /// カメラの円運動量
     /// </summary>
@@ -21,19 +27,44 @@ public class CameraMover : MonoBehaviour
     private float MoveRadius = 0.0f;
 
     /// <summary>
+    /// 半径を増加する
+    /// </summary>
+    private float IncreaseRadius = 0;
+    
+    /// <summary>
     /// カメラを動かすかどうか
     /// </summary>
     private bool CanMoveCamera = false;
 
+    private bool isNowBroaden = false;
 
     // Use this for initialization
     void Start()
     {
-
-        MoveRadius = transform.position.z;
+        MoveRadius = IncreaseRadius = transform.position.z;
 
         RotateCamera();
         
+    }
+
+    /// <summary>
+    /// 半径を広げていく
+    /// </summary>
+    /// <param name="addRadius"></param>
+    public void BroadenMoveRadius(float addRadius)
+    {
+        IncreaseRadius -= addRadius;
+    }
+
+    /// <summary>
+    /// 半径を増加する
+    /// </summary>
+    void IncreaseRadiusControl()
+    {
+        if (MoveRadius <= IncreaseRadius) return;
+
+        MoveRadius -= IncreaseRadiusValue;
+        transform.Translate(Vector3.up * UpVelocity * Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -42,6 +73,10 @@ public class CameraMover : MonoBehaviour
         if (ModeManager.IsDrawingMode) return;
 
         TurnCamera();
+
+        RotateCamera();
+
+        IncreaseRadiusControl();
     }
 
     /// <summary>
@@ -110,10 +145,8 @@ public class CameraMover : MonoBehaviour
         if (CanMoveCamera && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             AddAngle(Input.GetTouch(0).deltaPosition.x);
-
-            RotateCamera();
-
         }
+
     }
 
     /// <summary>
@@ -126,7 +159,7 @@ public class CameraMover : MonoBehaviour
             transform.position.y, 
             CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
 
-        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.2f,0));
+        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.5f,0));
     }
 
     /// <summary>

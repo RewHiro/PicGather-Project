@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// ---------------------------------------------------
+/// date ： 2015/02/17  
+/// brief ： 音符のScale処理
+/// author ： Yamada Masamistu
+/// ---------------------------------------------------
+/// 
+using UnityEngine;
 using System.Collections;
 
 public class NoteScaling : MonoBehaviour {
