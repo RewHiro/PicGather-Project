@@ -5,6 +5,9 @@ public class FeverManager : MonoBehaviour {
 
     FeverSoundController Sound = null;
 
+    [SerializeField]
+    float FeverTime = 30.0f;
+
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
@@ -21,7 +24,6 @@ public class FeverManager : MonoBehaviour {
     /// </summary>
     public int NumTimes { get; private set; }
 
-    const float FeverTime = 30.0f;
     float IncreaseScore = 0;
     bool IsIncrease = false;
 
@@ -104,7 +106,7 @@ public class FeverManager : MonoBehaviour {
     {
         if (!ModeManager.IsFerverMode) return;
 
-        FeverScore -= Time.deltaTime / 6;
+        FeverScore -= Time.deltaTime / 2;
         //FeverScore -= Time.deltaTime / 10;
     }
   
