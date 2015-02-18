@@ -15,6 +15,11 @@ public class FeverManager : MonoBehaviour {
     /// Feverゲージの量
     /// </summary>
     public float FeverScore { get; private set; }
+    
+    /// <summary>
+    /// 回数
+    /// </summary>
+    public int NumTimes { get; private set; }
 
     const float FeverTime = 30.0f;
     float IncreaseScore = 0;
@@ -81,6 +86,7 @@ public class FeverManager : MonoBehaviour {
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
+            NumTimes++;
         }
 
         if (FeverScore < MinFeverScore && ModeManager.IsFerverMode)

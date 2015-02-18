@@ -2,10 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TreeChanger : MonoBehaviour {
+public class TreeChanger : MonoBehaviour 
+{
+     
+    /// <summary>
+    /// 木を切り替えるデータ
+    /// </summary>
+    [System.Serializable]
+    public struct ChangeTreeData
+    {
+        public ChangeTreeData(GameObject prefab, int feverNumTimes)
+        {
+            Prefab = prefab;
+            FeverNumTimes = feverNumTimes;
+        }
+
+        public GameObject Prefab;
+        public int FeverNumTimes;
+    };
 
     [SerializeField]
-    List<GameObject> TreeObject = new List<GameObject>();
+    List<ChangeTreeData> TreeData = new List<ChangeTreeData>();
+
+    [SerializeField]
+    FeverManager Fever = null;
 
     GameObject Tree = null;
 
@@ -39,7 +59,7 @@ public class TreeChanger : MonoBehaviour {
     {
         if (!ModeManager.IsFerverMode) return;
         if (State != STATE.None) return;
-        if (CreateIndex >= TreeObject.Count) return;
+        if (CreateIndex >= TreeData.Count) return;
 
         State = STATE.Change;
         Tree = GameObject.Find("Tree");
@@ -53,8 +73,9 @@ public class TreeChanger : MonoBehaviour {
     {
         if (ModeManager.IsFerverMode ) return;
         if (State != STATE.Change) return;
+        if (TreeData[CreateIndex].FeverNumTimes != Fever.NumTimes) return;
 
-        var clone = (GameObject)Instantiate(TreeObject[CreateIndex]);
+        var clone = (GameObject)Instantiate(TreeData[CreateIndex].Prefab);
 
         clone.name = "Tree";
         clone.transform.parent = transform;
