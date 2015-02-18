@@ -19,11 +19,18 @@ public class EventBase : MonoBehaviour {
 
 	}
 
+
+    EventManager EventMngr;
+
     /// <summary>
     /// イベントの終了時の処理はここに記述してください
     /// </summary>
     protected virtual void Finish()
     {
+
+        EventMngr = FindObjectOfType<EventManager>();
+        EventMngr.EventInformation.NowPlaying = false;
+
         UIEnabled.Enabled();
         Destroy(this.gameObject);
     }
