@@ -36,7 +36,6 @@ public class FeverManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Increase();
-        Ferver();
         LimitCheck();
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -89,9 +88,11 @@ public class FeverManager : MonoBehaviour {
             Sound.Play();
             UIEnabled.Unavailable();
             NumTimes++;
+            Ferver();
+
         }
 
-        if (FeverScore < MinFeverScore && ModeManager.IsFerverMode)
+        if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)
         {
             FeverScore = MinFeverScore;
             ModeManager.ChangeGameMode();
@@ -104,10 +105,13 @@ public class FeverManager : MonoBehaviour {
 
     void Ferver()
     {
-        if (!ModeManager.IsFerverMode) return;
-
-        FeverScore -= Time.deltaTime / 2;
-        //FeverScore -= Time.deltaTime / 10;
+        iTween.ValueTo(gameObject, iTween.Hash("from", MaxFeverScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
     }
+
+    void UpdateHandler(float value)
+    {
+        FeverScore = value;
+    }
+ 
   
 }

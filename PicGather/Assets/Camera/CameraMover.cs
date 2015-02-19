@@ -36,8 +36,6 @@ public class CameraMover : MonoBehaviour
     /// </summary>
     private bool CanMoveCamera = false;
 
-    private bool isNowBroaden = false;
-
     // Use this for initialization
     void Start()
     {
