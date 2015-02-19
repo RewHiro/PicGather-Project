@@ -72,7 +72,6 @@ public class OpenOurEyesMover : MonoBehaviour {
 
     void HideMove()
     {
-        Debug.Log(RotationAngle);
         var pos = Camera.main.WorldToScreenPoint(transform.localPosition);
         jumpAnimation += 1;
         if (Screen.width / 2 - 0.01f > pos.x)
