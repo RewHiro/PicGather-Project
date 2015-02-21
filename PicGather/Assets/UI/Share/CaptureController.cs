@@ -10,19 +10,16 @@ using System.Collections;
 public class CaptureController : MonoBehaviour
 {
     public Texture2D Texture { get; private set; }
-    GameModeButtonSetting UIButton = null;
 
     void Start()
     {
-        UIButton = GetComponent<GameModeButtonSetting>();
-        UIButton.AddOnClick(TextureSave);
         Texture = null;
     }
 
     /// <summary>
     /// テクスチャを保存する。
     /// </summary>
-    void TextureSave()
+    public void TextureSave()
     {
         StartCoroutine("Capture");
         ModeManager.ChangeShareMode();
