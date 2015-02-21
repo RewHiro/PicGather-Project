@@ -44,6 +44,8 @@ public class MoonGreeting : EventBase
         moon = Instantiate(moonPrefab, pos, Quaternion.identity) as GameObject;
         moon.gameObject.transform.parent = transform;
         moon.name = moonPrefab.name;
+        moon.transform.LookAt(transform.position + Camera.main.transform.rotation * Vector3.back);
+        moon.transform.rotation *= Quaternion.Euler(0, 180, 0);
 
         state = State.ATTENSION;
 
