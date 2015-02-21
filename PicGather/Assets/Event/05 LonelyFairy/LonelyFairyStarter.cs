@@ -19,7 +19,7 @@ public class LonelyFairyStarter : EventStarterBase
     {
 
         /*イベントの開始条件*/
-         BeginEvent();
+        if (IsBeginTiming()) BeginEvent();
     }
 
     /// <summary>
