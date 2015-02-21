@@ -30,7 +30,7 @@ public class LonelyFairyCreator : MonoBehaviour {
 	void Update () {
         if(AlreadyInstantiated) return;
 
-        if (TouchManager.IsMouseButtonDown(gameObject))// || (TouchManager.IsTouching(this.gameObject) && TouchManager.IsPhaseTap))
+        if (TouchManager.IsMouseButtonDown(gameObject) || (TouchManager.IsTouching(this.gameObject) && TouchManager.IsPhaseTap));
         {
             Debug.Log("kt");
 
