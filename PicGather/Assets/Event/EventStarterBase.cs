@@ -7,6 +7,10 @@ using System.Collections;
 public class EventStarterBase : MonoBehaviour {
 
 
+    [SerializeField]
+    [Range(6, 20)]
+    protected int StartTime = 0;
+
     /// <summary>
     /// クラス固有のイベントを所持する
     /// </summary>

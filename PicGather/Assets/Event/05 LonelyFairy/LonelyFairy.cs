@@ -28,23 +28,33 @@ public class LonelyFairy : EventBase
     [SerializeField]
     private GameObject LonelyFruitPrefab = null;
 
+    /// <summary>
+    /// 現在の妖精の状態を得る
+    /// </summary>
+    private LonelyFairyMover ChildFairy = null;
+
     // Use this for initialization
     void Start()
     {
         //EventBeginSign();
         CreateLonelyFruit();
+        ChildFairy = GetComponentInChildren<LonelyFairyMover>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        var fairy = GetComponentInChildren<LonelyFairyMover>();
 
-        if (fairy && fairy.NowMoveMode == LonelyFairyMover.MoveMode.OutOfScreen)
+        if(!ChildFairy)
+        {
+            ChildFairy = GetComponentInChildren<LonelyFairyMover>();
+        }
+        else if (ChildFairy.NowMoveMode == LonelyFairyMover.MoveMode.OutOfScreen)
         {
             Finish();
         }
+
     }
 
     /// <summary>

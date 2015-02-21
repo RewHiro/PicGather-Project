@@ -21,7 +21,6 @@ public class CloudMover : MonoBehaviour {
     float StartCreateRainTime = 0;
     float RadiusMoveSpeed = 0;
     float RotationSpeed = 0;
-    float RotationRadius = 0;
     float AppearanceSpeed = 0;
     float StopAppearancePosY = 0;
     const float ArrivalTime = 5.0f;
@@ -48,7 +47,6 @@ public class CloudMover : MonoBehaviour {
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
         RotationSpeed = Random.Range(0.5f, 1.0f);
         StopAppearancePosY = Random.Range(Screen.height / 2, Screen.height / 2 + 200);
-        RotationRadius = Random.Range(5, 8);
         AppearanceSpeed = Random.Range(1, 3);
         RainCreate = GetComponent<RainCreator>();
         TreeObject = GameObject.Find("TreeManager");

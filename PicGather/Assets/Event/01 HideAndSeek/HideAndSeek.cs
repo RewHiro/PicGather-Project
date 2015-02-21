@@ -3,21 +3,26 @@ using System.Collections;
 
 public class HideAndSeek : EventBase
 {
+    [SerializeField]
+    GameObject openOurEyes;
+
+    OpenOurEyesMover eventObject;
+
+    FeverManager feverManager;
 
     // Use this for initialization
     void Start()
     {
-
+        Instantiate(openOurEyes);
+        eventObject = GameObject.Find("OpenOurEyes(Clone)").GetComponent<OpenOurEyesMover>();
+        feverManager = GameObject.Find("FeverGauge").GetComponent<FeverManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        var GameIsOver = false;
-        if (GameIsOver)
-        {
-            Finish();
-        }
+        if (eventObject.state != OpenOurEyesMover.State.FOUND) return;
+        Finish();
     }
 
     /// <summary>
@@ -25,10 +30,8 @@ public class HideAndSeek : EventBase
     /// </summary>
     protected override void Finish()
     {
+        feverManager.AddScore(FeverManager.MaxFeverScore);
         base.Finish();
-
-
-        Debug.Log("Game is Over");
 
     }
 }

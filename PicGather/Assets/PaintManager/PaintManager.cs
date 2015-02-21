@@ -216,4 +216,5 @@ public class PaintManager : MonoBehaviour {
             isOver = true;
         }
     }
+
 }

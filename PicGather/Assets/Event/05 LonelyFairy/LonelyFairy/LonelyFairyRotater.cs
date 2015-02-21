@@ -6,7 +6,7 @@ public class LonelyFairyRotater : MonoBehaviour {
     /// <summary>
     /// 振り向くのにかかる時間
     /// </summary>
-    const float ArrivalTime = 1.0f;
+    const float ArrivalTime = 0.1f;
 
 	// Use this for initialization
 	void Start () {

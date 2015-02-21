@@ -5,6 +5,9 @@ public class FeverManager : MonoBehaviour {
 
     FeverSoundController Sound = null;
 
+    [SerializeField]
+    float FeverTime = 30.0f;
+
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
@@ -15,8 +18,12 @@ public class FeverManager : MonoBehaviour {
     /// Feverゲージの量
     /// </summary>
     public float FeverScore { get; private set; }
+    
+    /// <summary>
+    /// 回数
+    /// </summary>
+    public int NumTimes { get; private set; }
 
-    const float FeverTime = 30.0f;
     float IncreaseScore = 0;
     bool IsIncrease = false;
 
@@ -29,7 +36,6 @@ public class FeverManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         Increase();
-        Ferver();
         LimitCheck();
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -81,9 +87,12 @@ public class FeverManager : MonoBehaviour {
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
+            NumTimes++;
+            Ferver();
+
         }
 
-        if (FeverScore < MinFeverScore && ModeManager.IsFerverMode)
+        if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)
         {
             FeverScore = MinFeverScore;
             ModeManager.ChangeGameMode();
@@ -96,10 +105,13 @@ public class FeverManager : MonoBehaviour {
 
     void Ferver()
     {
-        if (!ModeManager.IsFerverMode) return;
-
-        FeverScore -= Time.deltaTime / 6;
-        //FeverScore -= Time.deltaTime / 10;
+        iTween.ValueTo(gameObject, iTween.Hash("from", MaxFeverScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
     }
+
+    void UpdateHandler(float value)
+    {
+        FeverScore = value;
+    }
+ 
   
 }
