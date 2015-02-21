@@ -7,6 +7,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DrawingCanvasSlider : MonoBehaviour {
 
@@ -25,9 +26,11 @@ public class DrawingCanvasSlider : MonoBehaviour {
     [SerializeField]
     DrawingCampusBackGroundController CampusBackGround = null;
 
-    Animation MoveAnimation = null;
-    GameModeButtonSetting UIButton = null;
+    [SerializeField]
+    GameObject CelestialBody = null;
 
+    Animation MoveAnimation = null;
+    
     enum STATE
     {
         Stop,   /// 停止
@@ -42,8 +45,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
     void Start()
     {
         MoveAnimation = GetComponent<Animation>();
-        UIButton = GetComponent<GameModeButtonSetting>();
-        UIButton.AddOnClick(Open);
     }
 
     // Update is called once per frame
@@ -82,10 +83,11 @@ public class DrawingCanvasSlider : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         if (!MoveAnimation.isPlaying)
         {
-            State = STATE.Opend;
             ModeManager.ChangeDrawingMode();
+            State = STATE.Opend;
         }
     }
+
     /// <summary>
     /// 閉じたを押したかどうかの判定
     /// </summary>
@@ -109,25 +111,28 @@ public class DrawingCanvasSlider : MonoBehaviour {
     IEnumerator WaitClosed()
     {
         yield return new WaitForSeconds(1.0f);
-        CampusBackGround.Enabled();
 
+        CampusBackGround.Enabled();
         CampusTemplate.NonSelect();
         ModeManager.ChangeGameMode();
         CampusDes.Des();
         State = STATE.Stop;
+        CelestialBody.SetActive(true);
+
     }
 
     /// <summary>
     /// 開くアニメーションの処理
     /// </summary>
-    void Open()
+    public void Open()
     {
         if (State == STATE.Open) return;
         if (MoveAnimation.isPlaying) return;
 
         State = STATE.Open;
-
         MoveAnimation.PlayQueued(OpenAnimClip.name);
+
+        CelestialBody.SetActive(false);
 
     }
 
@@ -155,4 +160,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
     }
+
+
 }
