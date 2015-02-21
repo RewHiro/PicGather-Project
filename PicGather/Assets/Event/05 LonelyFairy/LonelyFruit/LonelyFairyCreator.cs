@@ -32,7 +32,6 @@ public class LonelyFairyCreator : MonoBehaviour {
 
         if (TouchManager.IsMouseButtonDown(gameObject) || (TouchManager.IsTouching(this.gameObject) && TouchManager.IsPhaseTap));
         {
-            Debug.Log("kt");
 
             CreateLonelyFairy();
             AlreadyInstantiated = true;
