@@ -11,6 +11,8 @@ public class EventStarterBase : MonoBehaviour {
     [Range(6, 20)]
     protected int StartTime = 0;
 
+    protected bool CanStart = true;
+
     /// <summary>
     /// クラス固有のイベントを所持する
     /// </summary>
@@ -23,13 +25,18 @@ public class EventStarterBase : MonoBehaviour {
     protected EventManager EventMngr = null;
 
     // Use this for initialization
-	void Start () {
+    protected void GetManager()
+    {
         EventMngr = GetComponent<EventManager>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-
+    protected void StartJudgmentUpdate()
+    {
+        if (DateTimeController.NowTime.Hour == StartTime + 1)
+        {
+            CanStart = true;
+        }
     }
 
   
@@ -38,5 +45,16 @@ public class EventStarterBase : MonoBehaviour {
     /// </summary>
     protected virtual void BeginEvent()
     {
+    }
+
+    /// <summary>
+    /// 開始できるかどうかの判定
+    /// </summary>
+    /// <returns></returns>
+    protected bool Judgment()
+    {
+        if (CanStart && DateTimeController.NowTime.Hour == StartTime) return true;
+
+        return false;
     }
 }

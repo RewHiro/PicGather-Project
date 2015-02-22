@@ -8,13 +8,17 @@ public class HideAndSeekStarter : EventStarterBase
     // Use this for initialization
     void Start()
     {
-        EventMngr = GetComponent<EventManager>();
+        GetManager();
         sun = GameObject.Find("FrotnSun").GetComponent<Sun>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        StartJudgmentUpdate();
+
+        if (!sun.isHit) return;
+        if (!Judgment()) return;
         BeginEvent();
     }
 
@@ -25,8 +29,7 @@ public class HideAndSeekStarter : EventStarterBase
     {
         base.BeginEvent();
 
-        ///イベントの発生条件を書く
-        if (!sun.isHit) return;
+        CanStart = false;
         EventMngr.BeginEvent(OriginEventPrefab);
     }
 }

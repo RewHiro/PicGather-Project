@@ -12,8 +12,8 @@ public class OneMoreFeverStarter : EventStarterBase
 
         DeltaFeverTime = AgainCoolTime;
 
-        EventMngr = GetComponent<EventManager>();
-
+        GetManager();
+        
         FeverMngr = GameObject.FindObjectOfType<FeverManager>();
 
     }

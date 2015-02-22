@@ -59,7 +59,7 @@ public class LonelyFairyMover : MonoBehaviour {
                 Greeting();
                 break;
             case MoveMode.ToSky:
-            MoveToSky();
+                MoveToSky();
                 break;
         }
 	}
@@ -142,7 +142,7 @@ public class LonelyFairyMover : MonoBehaviour {
         ShakeAngle += 1.5f * Time.deltaTime;
         Distance *= 0.995f;
 
-        if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 1.1f)
+        if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 1.3f)
         {
             NowMoveMode = MoveMode.OutOfScreen;
         }
