@@ -7,15 +7,17 @@ public class FlySwatterStarter : EventStarterBase
     // Use this for initialization
     void Start()
     {
-        EventMngr = GetComponent<EventManager>();
+        GetManager();
     }
 
     // Update is called once per frame
     void Update()
     {
+        StartJudgmentUpdate();
 
         /*イベントの開始条件*/
-        //      if()
+        if (!Judgment()) return;
+
         BeginEvent();
     }
 
@@ -26,8 +28,7 @@ public class FlySwatterStarter : EventStarterBase
     {
         base.BeginEvent();
 
-        ///イベントの発生条件を書く
-
+        CanStart = false;
         EventMngr.BeginEvent(OriginEventPrefab);
     }
 }

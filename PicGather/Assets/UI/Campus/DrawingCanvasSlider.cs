@@ -27,7 +27,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     DrawingCampusBackGroundController CampusBackGround = null;
 
     [SerializeField]
-    GameObject CelestialBody = null;
+    UIDrawingModeChanger UIModeChanger = null;
 
     Animation MoveAnimation = null;
     
@@ -117,7 +117,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         ModeManager.ChangeGameMode();
         CampusDes.Des();
         State = STATE.Stop;
-        CelestialBody.SetActive(true);
+        UIModeChanger.Enable(true);
 
     }
 
@@ -132,8 +132,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
 
-        CelestialBody.SetActive(false);
-
+        UIModeChanger.Enable(false);
     }
 
     /// <summary>

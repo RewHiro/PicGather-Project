@@ -49,12 +49,11 @@ public class MoonGreeting : EventBase
 
         state = State.ATTENSION;
 
-        CelestialBody = GameObject.Find("CelestialBodyUI");
+        CelestialBody = GameObject.Find("CelestialBody");
         CelestialBody.SetActive(false);
 
         cameraRotation = Camera.main.transform.rotation;
         Camera.main.GetComponent<CameraMover>().enabled = false;
-        Camera.main.GetComponent<CameraZoomUpper>().enabled = false;
     }
 
     // Update is called once per frame
@@ -150,7 +149,6 @@ public class MoonGreeting : EventBase
         if (Camera.main.transform.rotation != cameraRotation) return;
 
         Camera.main.GetComponent<CameraMover>().enabled = true;
-        Camera.main.GetComponent<CameraZoomUpper>().enabled = true;
 
         Destroy(moon);
 

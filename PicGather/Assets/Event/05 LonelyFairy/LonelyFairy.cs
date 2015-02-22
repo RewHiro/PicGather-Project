@@ -63,6 +63,7 @@ public class LonelyFairy : EventBase
     protected override void Finish()
     {
         base.Finish();
+        Camera.main.GetComponent<CameraMover>().enabled = true;
     }
 
     /// <summary>
