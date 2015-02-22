@@ -3,6 +3,10 @@ using System.Collections;
 
 public class LonelyFairyStarter : EventStarterBase
 {
+    /// <summary>
+    /// イベントを開始する時間（24時間表記）
+    /// </summary>
+    private int BeginTime = 8;
 
     // Use this for initialization
     void Start()
@@ -15,8 +19,7 @@ public class LonelyFairyStarter : EventStarterBase
     {
 
         /*イベントの開始条件*/
-        //      if()
-        BeginEvent();
+        if (IsBeginTiming()) BeginEvent();
     }
 
     /// <summary>
@@ -26,8 +29,18 @@ public class LonelyFairyStarter : EventStarterBase
     {
         base.BeginEvent();
 
-        ///イベントの発生条件を書く
-
         EventMngr.BeginEvent(OriginEventPrefab);
+    }
+
+
+    /// <summary>
+    /// イベント開始のタイミング（時間）かどうかを返す関数
+    /// </summary>
+    /// <returns>開始する...true 開始しない...false</returns>
+    private bool IsBeginTiming()
+    {
+        if (DateTimeController.NowTime.Hour == BeginTime) return true;
+
+        return false;
     }
 }
