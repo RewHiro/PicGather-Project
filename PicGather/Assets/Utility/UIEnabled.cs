@@ -21,7 +21,6 @@ public class UIEnabled : MonoBehaviour {
         foreach (var obj in objs)
         {
             var ui = obj.GetComponent<ChangeDrawUIController>();
-            if (!ui) continue;
             ui.Enabled();
         }
     }
@@ -33,7 +32,6 @@ public class UIEnabled : MonoBehaviour {
         foreach (var obj in objs)
         {
             var ui = obj.GetComponent<ChangeDrawUIController>();
-            if (!ui) continue;
             ui.Unavailable();
         }
     }
