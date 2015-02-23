@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// --------------------------------------------------------------------
+/// date ： 2015/02/23  
+/// brief ： 木のセーブデータを書き出す
+/// author ： Yamada Masamistu
+/// --------------------------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 
 #if UNITY_METRO && !UNITY_EDITOR

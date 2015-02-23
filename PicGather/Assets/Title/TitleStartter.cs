@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿/// --------------------------------------------------------------------
+/// date ： 2015/02/23  
+/// brief ： タイトルスターター
+/// author ： Yamada Masamistu
+/// --------------------------------------------------------------------
+
+using UnityEngine;
 using System.Collections;
 
 public class TitleStartter : MonoBehaviour {
@@ -14,11 +20,22 @@ public class TitleStartter : MonoBehaviour {
     [SerializeField]
     Texture2D BlackTexture;
 
-    bool IsStart = false;
-
+    public bool IsStart {get;private set;}
+    public float WindDirection { get; private set; }
 	// Use this for initialization
     void Awake()
     {
+        var value = Random.Range(0, 100);
+
+        if (value >= 50)
+        {
+            WindDirection = -20;
+        }
+        else
+        {
+            WindDirection = 20;
+        }
+
 	}
 
     void OnGUI()
