@@ -13,7 +13,7 @@ public class LeafEffecter : MonoBehaviour {
 
         Startter = GameObject.FindObjectOfType(typeof(TitleStartter)) as TitleStartter;
 
-        Velocity = new Vector3(Startter.WindDirection, 5, 0);
+        Velocity = new Vector3(Startter.WindDirection + Random.Range(0, 10), Random.Range(-5, 5), Random.Range(-5, 5));
 	}
 
     float Count = 0;
@@ -22,11 +22,10 @@ public class LeafEffecter : MonoBehaviour {
 	void Update () {
         if (!Startter.IsStart) return;
 
-
         transform.Translate(Velocity * Time.deltaTime);
 
-        Count+=0.1f;
-        Velocity.y -= Mathf.Sin(Count);
-        Velocity.x *= 0.99f;
+        Velocity *= 0.99f;
+
+        transform.Rotate(new Vector3(0, 0, Velocity.z * Time.deltaTime));
 	}
 }
