@@ -18,7 +18,7 @@ public class TreeSaveDataLoading : MonoBehaviour {
         var folderPath = "Database/";
         var filePath = folderPath + name + ".json";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new TreeData(0,Vector3.zero,Vector3.zero);
+        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new TreeData(-1,Vector3.zero,Vector3.zero);
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else

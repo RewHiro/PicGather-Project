@@ -61,8 +61,9 @@ public class TreeChanger : MonoBehaviour
 	void Start () {
         Writer = GetComponent<TreeSaveDataWriter>();
         var Loading = GetComponent<TreeSaveDataLoading>().GetLoadData();
-        if (Loading.ID < 0) return;
-        CreateIndex = Loading.ID - 1;
+
+        if (Loading.ID <= -1) return;
+        CreateIndex = Loading.ID;
         transform.lossyScale.Set(Loading.Scale.X, Loading.Scale.Y, Loading.Scale.Z);
         CreateChildren();
         BroadenValue *= CreateIndex;
@@ -91,7 +92,7 @@ public class TreeChanger : MonoBehaviour
     /// </summary>
     public void Save()
     {
-        Writer.Write(CreateIndex, LocalPos);
+        Writer.Write(CreateIndex - 1, LocalPos);
     }
 
     /// <summary>
@@ -150,7 +151,8 @@ public class TreeChanger : MonoBehaviour
         CreateIndex++;
 
         LocalPos = clone.transform.position;
-        Writer.Write(CreateIndex, LocalPos);
+        
+        Save();
 
         State = STATE.Destroy;
     }
