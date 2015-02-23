@@ -118,7 +118,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
         CampusDes.Des();
         State = STATE.Stop;
         UIModeChanger.Enable(true);
-
     }
 
     /// <summary>
@@ -131,7 +130,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
         State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
-
         UIModeChanger.Enable(false);
     }
 

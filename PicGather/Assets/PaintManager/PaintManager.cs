@@ -23,6 +23,8 @@ public class PaintManager : MonoBehaviour {
     GameObject campus = null;
 
     GameObject characterCanvas = null;
+    bool CanDrawing = false;
+
     public Vector2 campusSize;
 
     //　ペイントに必要な制御
@@ -58,6 +60,7 @@ public class PaintManager : MonoBehaviour {
     void Update()
     {
         if (!ModeManager.IsDrawingMode) return;
+        if (!CanDrawing) return;
 
         if (Input.touchCount == 0)
         {
@@ -68,6 +71,11 @@ public class PaintManager : MonoBehaviour {
             TouchEvent();
         }
 
+    }
+
+    public void CanDrawingEnable()
+    {
+        CanDrawing = true;
     }
 
     /// <summary>
@@ -160,6 +168,7 @@ public class PaintManager : MonoBehaviour {
         lineCount = 1;
         isOver = false;
         lineColor = Color.black;
+        CanDrawing = false;
     }
 
     public void ChangeColor(Material material)

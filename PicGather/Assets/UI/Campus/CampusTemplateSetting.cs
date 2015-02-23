@@ -11,6 +11,9 @@ using System.Collections;
 
 public class CampusTemplateSetting : MonoBehaviour {
 
+    [SerializeField]
+    Sprite NonSelectSprite = null;
+
     Image TemplateImage = null;
     public bool IsSelect { get; private set; }
 
@@ -35,7 +38,7 @@ public class CampusTemplateSetting : MonoBehaviour {
     /// </summary>
     public void NonSelect()
     {
-        TemplateImage.sprite = null;
+        TemplateImage.sprite = NonSelectSprite;
         IsSelect = false;
     }
 }
