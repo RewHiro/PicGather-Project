@@ -23,7 +23,6 @@ public class TreeScaling : MonoBehaviour {
 	void Start () {
         Scale = transform.lossyScale.x;
         Changer = GetComponent<TreeChanger>();
-
 	}
 	
     void Update()
@@ -36,5 +35,12 @@ public class TreeScaling : MonoBehaviour {
                         "time", ScaleToTime, "easetype", iTween.EaseType.easeInOutExpo));
 
         Changer.ChangeNormalState();
+    }
+
+    IEnumerator Save()
+    {
+        yield return new WaitForSeconds(ScaleToTime);
+
+        Changer.Save();
     }
 }

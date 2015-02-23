@@ -26,11 +26,18 @@ public class FeverManager : MonoBehaviour {
 
     float IncreaseScore = 0;
     bool IsIncrease = false;
+    FeverDataController Data = null;
 
 	// Use this for initialization
 	void Start () {
         FeverScore = MinFeverScore;
         Sound = GetComponent<FeverSoundController>();
+        Data = GetComponent<FeverDataController>();
+
+        if (Data.GetLoadData().Times < 0) return;
+
+        NumTimes = Data.GetLoadData().Times;
+        Debug.Log(NumTimes);
 	}
 	
 	// Update is called once per frame
@@ -89,7 +96,7 @@ public class FeverManager : MonoBehaviour {
             UIEnabled.Unavailable();
             NumTimes++;
             Ferver();
-
+            Data.Write(NumTimes);
         }
 
         if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)

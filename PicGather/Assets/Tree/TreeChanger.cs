@@ -42,6 +42,8 @@ public class TreeChanger : MonoBehaviour
     float BroadenValue = 1.0f;
 
     GameObject Tree = null;
+    TreeSaveDataWriter Writer = null;
+    Vector3 LocalPos = Vector3.zero;
 
     enum STATE
     {
@@ -57,6 +59,14 @@ public class TreeChanger : MonoBehaviour
 
     // Use this for initialization
 	void Start () {
+        Writer = GetComponent<TreeSaveDataWriter>();
+        var Loading = GetComponent<TreeSaveDataLoading>().GetLoadData();
+
+        if (Loading.ID <= -1) return;
+        CreateIndex = Loading.ID;
+        transform.lossyScale.Set(Loading.Scale.X, Loading.Scale.Y, Loading.Scale.Z);
+        CreateChildren();
+        BroadenValue *= CreateIndex;
 	}
     
 	// Update is called once per frame
@@ -64,7 +74,6 @@ public class TreeChanger : MonoBehaviour
         StartChange();
         ChangeChildren();
         DestroyChildren();
-
 	}
 
     /// <summary>
@@ -73,8 +82,17 @@ public class TreeChanger : MonoBehaviour
     /// </summary>
     public void ChangeNormalState()
     {
+        Save();
         CameraMain.BroadenMoveRadius(BroadenValue);
         State = STATE.Normal;
+    }
+
+    /// <summary>
+    /// セーブ
+    /// </summary>
+    public void Save()
+    {
+        Writer.Write(CreateIndex - 1, LocalPos);
     }
 
     /// <summary>
@@ -85,7 +103,6 @@ public class TreeChanger : MonoBehaviour
         if (!ModeManager.IsFerverMode) return;
         if (State != STATE.Normal) return;
         if (CreateIndex >= TreeData.Count) return;
-
 
         ChangeJudgment();
     }
@@ -132,6 +149,10 @@ public class TreeChanger : MonoBehaviour
         clone.transform.localScale = new Vector3(1, 1, 1);
 
         CreateIndex++;
+
+        LocalPos = clone.transform.position;
+        
+        Save();
 
         State = STATE.Destroy;
     }
