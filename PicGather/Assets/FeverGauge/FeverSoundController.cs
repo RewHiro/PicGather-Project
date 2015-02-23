@@ -33,7 +33,7 @@ public class FeverSoundController : MonoBehaviour {
     /// </summary>
     public void Play()
     {
-        var resName = ResNameData[Random.Range(0, ResNameData.Count)];
+        var resName = ResNameData[Random.Range(0, ResNameData.Count - 1)];
 
         Player.Play(resName,FadeTime);
     }

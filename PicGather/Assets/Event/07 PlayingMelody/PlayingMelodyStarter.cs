@@ -7,15 +7,19 @@ public class PlayingMelodyStarter : EventStarterBase
     void Start()
     {
         GetManager();
+
+        EventMngr = GetComponent<EventManager>();
+
     }
+
 
     // Update is called once per frame
     void Update()
     {
         StartJudgmentUpdate();
 
-        /*イベントの開始条件*/
-        if (!Judgment()) return;
+        if (!IsBeginTiming()) return;
+
 
         BeginEvent();
     }
@@ -27,7 +31,20 @@ public class PlayingMelodyStarter : EventStarterBase
     {
         base.BeginEvent();
 
+        ///イベントの発生条件を書く
+
         CanStart = false;
         EventMngr.BeginEvent(OriginEventPrefab);
+    }
+
+    /// <summary>
+    /// イベント開始のタイミング（時間）かどうかを返す関数
+    /// </summary>
+    /// <returns>開始する...true 開始しない...false</returns>
+    private bool IsBeginTiming()
+    {
+        if (Judgment()) return true;
+
+        return false;
     }
 }
