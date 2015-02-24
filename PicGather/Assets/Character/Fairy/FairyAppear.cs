@@ -3,6 +3,8 @@ using System.Collections;
 
 public class FairyAppear : MonoBehaviour {
 
+    FairyAnimator Anima = null;
+
     Vector3 ArrivalPos = Vector3.zero;
     
     public bool IsStop {get;private set;}
@@ -12,8 +14,9 @@ public class FairyAppear : MonoBehaviour {
 
 	void Start () 
     {
-        
+        Anima = GetComponent<FairyAnimator>();
         SetArrivalPos();
+        Anima.ChangeMoveAnima();
 	}
 
     /// <summary>
