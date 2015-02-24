@@ -68,7 +68,7 @@ public class StampListMover : MonoBehaviour {
         CloseAnimation();
     }
 
-    void CloseAnimation()
+    public void CloseAnimation()
     {
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class FairyEating : MonoBehaviour {
 
+
     [SerializeField]
     float MaxScale = 5.0f;
 
@@ -10,7 +11,7 @@ public class FairyEating : MonoBehaviour {
     float AddScale = 0.5f;
 
     FairyMover Move = null;
-
+ 
     float Scale = 0;
     float ScaleTime = 5.0f;
 
@@ -26,6 +27,7 @@ public class FairyEating : MonoBehaviour {
         {
             Move.SetStateAbsorption();
         }
+
 	}
 
     void OnCollisionStay(Collision collision)
@@ -34,6 +36,8 @@ public class FairyEating : MonoBehaviour {
 
         if (collision.gameObject.name == "Fruit")
         {
+            Move.ChangeMoveAnimation();
+
             Scale += AddScale;
             iTween.ScaleTo(gameObject,new Vector3(Scale, Scale, Scale),ScaleTime);
 

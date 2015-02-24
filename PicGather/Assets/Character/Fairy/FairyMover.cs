@@ -12,13 +12,15 @@ public class FairyMover : MonoBehaviour {
 
     GameObject FeverGauge = null;
     FairyAppear Appear = null;
+    FairyAnimator Anima = null;
+    Vector3 FruitPos = Vector3.zero;
 
     public bool IsMove { get { return (State == STATE.Move); } }
 
     float Count = 0;
 
     const float ArrivalTime = 3.0f;
-    const float StandbyTime = 5.0f;
+    const float StandbyTime = 6.0f;
 
     enum STATE
     {
@@ -33,6 +35,8 @@ public class FairyMover : MonoBehaviour {
 	void Start () {
         FeverGauge = GameObject.Find("FeverGauge");
         Appear = GetComponent<FairyAppear>();
+        Anima = GetComponent<FairyAnimator>();
+
 	}
 	
 	// Update is called once per frame
@@ -79,15 +83,14 @@ public class FairyMover : MonoBehaviour {
         if (fruits.Length == 0) return;
 
         var randomNum = Random.Range(0, fruits.Length);
-        var fruitsPos = fruits[randomNum].transform.position;
+        FruitPos = fruits[randomNum].transform.position;
 
-        iTween.MoveTo(gameObject, iTween.Hash("position", fruitsPos,
+        iTween.MoveTo(gameObject, iTween.Hash("position", FruitPos - new Vector3(0,0.8f,0),
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
-
-        iTween.LookTo(gameObject, fruitsPos, ArrivalTime);
 
         State = STATE.Move;
         Count = 0;
+        Anima.ChangeMoveAnima();
 
     }
 
@@ -98,7 +101,14 @@ public class FairyMover : MonoBehaviour {
     {
         if (State != STATE.Move) return;
 
+        iTween.LookTo(gameObject, FruitPos, ArrivalTime);
+
         Count += Time.deltaTime;
+        if (Count >= ArrivalTime / 4)
+        {
+            Anima.ChangeEatAnima();
+        }
+
         if(Count >= ArrivalTime)
         {
             Count = 0;
@@ -111,6 +121,7 @@ public class FairyMover : MonoBehaviour {
     /// </summary>
     public void SetStateAbsorption()
     {
+        Anima.ChangeMoveAnima();
         State = STATE.Absorption;
     }
 
@@ -155,4 +166,12 @@ public class FairyMover : MonoBehaviour {
         Manager.ChildrensDataSave();
 
     }
+
+    /// <summary>
+    /// 移動アニメーションに切り替える
+    /// </summary>
+    public void ChangeMoveAnimation()
+    {
+        Anima.ChangeMoveAnima();
+    }    
 }

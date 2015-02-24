@@ -27,6 +27,9 @@ public class DrawingCanvasSlider : MonoBehaviour {
     DrawingCampusBackGroundController CampusBackGround = null;
 
     [SerializeField]
+    StampListMover StampList = null;
+
+    [SerializeField]
     UIDrawingModeChanger UIModeChanger = null;
 
     Animation MoveAnimation = null;
@@ -131,6 +134,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
         UIModeChanger.Enable(false);
+        StampList.CloseAnimation();
     }
 
     /// <summary>
