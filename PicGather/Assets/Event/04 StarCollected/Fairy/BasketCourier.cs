@@ -71,10 +71,9 @@ public class BasketCourier : MonoBehaviour {
     void EndMove()
     {
         if (state != State.END) return;
-        Debug.Log("OK");
+
         if (transform.position.y > startPosY - 0.01f && transform.position.y < startPosY + 0.01f)
         {
-            Debug.Log("移動");
             iTween.MoveTo(gameObject, iTween.Hash(
               "time", 8.0f,
               "x", -20.0f,

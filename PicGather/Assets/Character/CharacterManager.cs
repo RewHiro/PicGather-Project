@@ -12,6 +12,7 @@ using System.Collections;
 using LegacySystem.IO;
 #else
 using System.IO;
+using System.Collections.Generic;
 #endif
 
 public class CharacterManager : MonoBehaviour
@@ -30,7 +31,7 @@ public class CharacterManager : MonoBehaviour
     Sprite TemplateSprite = null;
 
     [SerializeField]
-    GameObject ChildrenPrefab = null;
+    List<GameObject> ChildrenPrefabs = new List<GameObject>();
 
     protected CharacterDataWriting SaveData = null;
 
@@ -99,7 +100,8 @@ public class CharacterManager : MonoBehaviour
     {
         if (!chara.IsCreateLoad) return;
 
-        var clone = (GameObject)Instantiate(ChildrenPrefab, Vector3.zero, Quaternion.identity);
+        var index = Random.Range(0, ChildrenPrefabs.Count);
+        var clone = (GameObject)Instantiate(ChildrenPrefabs[index], Vector3.zero, Quaternion.identity);
         clone.name = chara.Name;
         clone.transform.parent = transform;
         clone.transform.position = new Vector3(chara.Pos.X, chara.Pos.Y, chara.Pos.Z);

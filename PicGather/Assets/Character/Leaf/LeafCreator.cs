@@ -7,12 +7,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LeafCreator : MonoBehaviour {
 
     [SerializeField]
-    GameObject LeafPrefab = null;
-
+    List<GameObject> LeafPrefabs = new List<GameObject>();
 
     [SerializeField]
     StampListMover StampList = null;
@@ -26,7 +26,7 @@ public class LeafCreator : MonoBehaviour {
 
     int TextureID = 0;
 
-    const float CanInstanceDistance = 0.5f;
+    const float CanInstanceDistance = 0.05f;
 
 	// Use this for initialization
 	void Start () {
@@ -66,10 +66,16 @@ public class LeafCreator : MonoBehaviour {
         var distance = Vector3.Distance(BeforeLeafObjectPos, TouchManager.TapPos);
         if (distance >= CanInstanceDistance)
         {
-            var leafClone = (GameObject)Instantiate(LeafPrefab, TouchManager.TapPos, Quaternion.identity);
-            leafClone.transform.parent = gameObject.transform;
-            leafClone.gameObject.name = LeafPrefab.gameObject.name;
-            leafClone.renderer.material.mainTexture = SelectTexture;
+            var index = Random.Range(0, LeafPrefabs.Count);
+            var leafClone = (GameObject)Instantiate(LeafPrefabs[index], TouchManager.TapPos, Quaternion.identity);
+            leafClone.transform.parent = transform;
+            leafClone.gameObject.name = LeafPrefabs[index].gameObject.name;
+
+            foreach (Transform child in leafClone.transform)
+            {
+                child.renderer.material.mainTexture = SelectTexture;
+            }
+            
             leafClone.GetComponent<CharacterDataSave>().SetSaveData(TextureID);
             
             Manager.CreateChildrenDataSave(leafClone, TextureID);

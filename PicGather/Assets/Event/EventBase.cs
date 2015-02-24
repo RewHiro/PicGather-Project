@@ -32,6 +32,7 @@ public class EventBase : MonoBehaviour {
         EventMngr.EventInformation.NowPlaying = false;
 
         UIEnabled.Enabled();
+        EventMngr.Finish();
         Destroy(this.gameObject);
     }
 }

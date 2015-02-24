@@ -37,11 +37,12 @@ public class FeverManager : MonoBehaviour {
         if (Data.GetLoadData().Times < 0) return;
 
         NumTimes = Data.GetLoadData().Times;
-        Debug.Log(NumTimes);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (ModeManager.IsEventMode) return;
+
         Increase();
         LimitCheck();
         if (Input.GetKeyDown(KeyCode.A))
