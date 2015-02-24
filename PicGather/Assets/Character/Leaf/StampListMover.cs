@@ -17,6 +17,9 @@ public class StampListMover : MonoBehaviour {
     [SerializeField]
     AnimationClip CloseAnimClip = null;
 
+    [SerializeField]
+    GameObject StampList = null;
+
     Animation MoveAnimation = null;
 
     public bool IsCreate { get { return (State == STATE.Stop); } }
@@ -30,6 +33,13 @@ public class StampListMover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (ModeManager.IsFerverMode || ModeManager.IsEventMode && State != STATE.Close)
+        {
+            CloseAnimation();
+            StampList.SetActive(false);
+
+        }
+
         if (State == STATE.Open)
         {
             if (!MoveAnimation.isPlaying)
@@ -46,12 +56,20 @@ public class StampListMover : MonoBehaviour {
 
         State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
+
+        if (StampList.activeSelf) return;
+        StampList.SetActive(true);
     }
 
     public void Close()
     {
         if (State != STATE.Stop) return;
 
+        CloseAnimation();
+    }
+
+    void CloseAnimation()
+    {
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
     }

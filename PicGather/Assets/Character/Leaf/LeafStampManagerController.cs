@@ -37,9 +37,7 @@ public class LeafStampManagerController : CharacterManager
     /// </summary>
     public override void ChildrensDataSave()
     {
-        var childrens = GameObject.FindGameObjectsWithTag(Name);
-
-        foreach (var children in childrens)
+        foreach (Transform children in transform)
         {
             var character = children.GetComponent<CharacterDataSave>();
             var leaf = children.GetComponent<LeafWitherController>();

@@ -30,6 +30,9 @@ public class EventManager : MonoBehaviour {
     /// </summary>
     public EventInfo EventInformation = new EventInfo();
 
+    [SerializeField]
+    List<GameObject> HideGameObjects = new List<GameObject>();
+
     void Start()
     {
         EventInformation.BeginEvent = false;
@@ -46,8 +49,29 @@ public class EventManager : MonoBehaviour {
             EventInformation.BeginEvent = false;
 
             UIEnabled.Unavailable();
+
+            foreach (var obj in HideGameObjects)
+            {
+                obj.SetActive(false);
+            }
+
+            ModeManager.ChangeEventMode();
         }
 	}
+
+    /// <summary>
+    /// 終了処理
+    /// </summary>
+    public void Finish()
+    {
+        foreach (var obj in HideGameObjects)
+        {
+            obj.SetActive(true);
+        }
+
+        ModeManager.ChangeGameMode();
+
+    }
 
     /// <summary>
     /// 外部からイベントを開始させる
