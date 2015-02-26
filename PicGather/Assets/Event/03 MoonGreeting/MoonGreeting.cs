@@ -6,8 +6,6 @@ public class MoonGreeting : EventBase
 {
     //　月の情報
     GameObject moon;
-    float rotate = 0;
-    float swingValue = 10;
     float animationCount = 0;
     readonly Vector3 STARTPOS = new Vector3(Screen.width - Screen.width * 0.1f, Screen.height - Screen.height * 0.165f, 22);
     const float fieldOfViewMax = 60;

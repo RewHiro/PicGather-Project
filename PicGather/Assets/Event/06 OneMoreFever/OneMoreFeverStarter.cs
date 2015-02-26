@@ -4,8 +4,6 @@ using System.Collections;
 public class OneMoreFeverStarter : EventStarterBase
 {
 
-    FeverManager FeverMngr = null;
-
     // Use this for initialization
     void Start()
     {
@@ -13,8 +11,6 @@ public class OneMoreFeverStarter : EventStarterBase
         DeltaFeverTime = AgainCoolTime;
 
         GetManager();
-        
-        FeverMngr = GameObject.FindObjectOfType<FeverManager>();
 
     }
 

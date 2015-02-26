@@ -16,8 +16,6 @@ public class LeafEffecter : MonoBehaviour {
         Velocity = new Vector3(Startter.WindDirection + Random.Range(0, 10), Random.Range(-5, 5), Random.Range(-5, 5));
 	}
 
-    float Count = 0;
-	
 	// Update is called once per frame
 	void Update () {
         if (!Startter.IsStart) return;

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class FairyTitleMover : MonoBehaviour {
 
-    [SerializeField]
-    float GoalTime = 3.0f;
 
     [SerializeField]
     GameObject ChangeFairy = null;

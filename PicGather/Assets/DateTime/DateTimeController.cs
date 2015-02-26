@@ -67,8 +67,8 @@ public class DateTimeController : MonoBehaviour {
         }
     }
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+        NowTime = DateTime.Now;
 	}
 	
 	// Update is called once per frame

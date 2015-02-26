@@ -7,12 +7,12 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 #if UNITY_METRO && !UNITY_EDITOR
 using LegacySystem.IO;
 #else
 using System.IO;
-using System.Collections.Generic;
 #endif
 
 public class CharacterManager : MonoBehaviour
@@ -52,7 +52,7 @@ public class CharacterManager : MonoBehaviour
         SaveData = GetComponent<CharacterDataWriting>();
         State = STATE.None;
         CampusTexture = null;
-        //ChildrensLoading();
+        ChildrensLoading();
     }
 
     /// <summary>
