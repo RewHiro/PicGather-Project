@@ -27,6 +27,17 @@ public class CelestialBodyChanger : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         RectTrans = transform as RectTransform;
+
+        if (DateTimeController.IsMorning || DateTimeController.IsNoon)
+        {
+            State = STATE.Sun;
+            RectTrans.localEulerAngles.Set(0, 0, 0);
+        }
+        if (DateTimeController.IsNight || DateTimeController.IsSleep)
+        {
+            State = STATE.Moon;
+            RectTrans.rotation = Quaternion.Euler(0, 0, ChangeRotation);
+        }
 	}
 	
 	// Update is called once per frame
@@ -39,16 +50,18 @@ public class CelestialBodyChanger : MonoBehaviour {
         else
         {
             StartChange(DateTimeController.IsMorning, STATE.Sun);
+            StartChange(DateTimeController.IsNoon, STATE.Sun);
             StartChange(DateTimeController.IsNight, STATE.Moon);
+            StartChange(DateTimeController.IsSleep, STATE.Moon);
         }
     }
-
+    
     /// <summary>
     /// 切り替える
     /// </summary>
-    void StartChange(bool IsTime,STATE state )
+    void StartChange(bool isTime,STATE state )
     {
-        if (IsTime && State != state)
+        if (isTime && State != state)
         {
             State = state;
             IsChange = true;

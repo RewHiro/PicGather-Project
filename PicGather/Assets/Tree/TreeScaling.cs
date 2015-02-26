@@ -10,6 +10,9 @@ using System.Collections;
 public class TreeScaling : MonoBehaviour {
 
     [SerializeField]
+    float MaxScale = 100.0f;
+
+    [SerializeField]
     float AddScale = 1.0f;
 
     [SerializeField]
@@ -29,6 +32,7 @@ public class TreeScaling : MonoBehaviour {
     {
         if (!Changer.IsScaling) return;
         if (ModeManager.IsFerverMode) return;
+        if (Scale >= MaxScale) return;
 
         Scale += AddScale;
         iTween.ScaleTo(gameObject, iTween.Hash("scale", new Vector3(Scale, Scale, Scale),

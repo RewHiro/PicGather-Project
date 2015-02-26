@@ -42,7 +42,7 @@ public class CloudMover : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
-        RotationPos.y = Random.Range(14.0f,17.0f);
+        RotationPos.y = Random.Range(16.0f,18.0f);
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
         RotationSpeed = Random.Range(0.5f, 1.0f);
