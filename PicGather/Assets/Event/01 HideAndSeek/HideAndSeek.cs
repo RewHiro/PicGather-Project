@@ -13,7 +13,7 @@ public class HideAndSeek : EventBase
     // Use this for initialization
     void Start()
     {
-        Instantiate(openOurEyes);
+        Instantiate(openOurEyes,new Vector3(8.98f,8.44f,-3.9f),Quaternion.identity);
         eventObject = GameObject.Find("OpenOurEyes(Clone)").GetComponent<OpenOurEyesMover>();
         feverManager = GameObject.Find("FeverGauge").GetComponent<FeverManager>();
     }

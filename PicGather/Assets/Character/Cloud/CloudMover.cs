@@ -39,6 +39,7 @@ public class CloudMover : MonoBehaviour {
     RainCreator RainCreate = null;
 
     public bool IsReturnlMove { get { return (State == STATE.ReturnNormal); } }
+    public bool IsRain { get { return (State == STATE.CreateRain); } }
 
     // Use this for initialization
 	void Start () {

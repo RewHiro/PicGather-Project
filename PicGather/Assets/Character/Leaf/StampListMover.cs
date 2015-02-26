@@ -23,6 +23,7 @@ public class StampListMover : MonoBehaviour {
     Animation MoveAnimation = null;
 
     public bool IsCreate { get { return (State == STATE.Stop); } }
+    public bool IsClosed { get { return (State == STATE.Close); } }
 
     STATE State = STATE.Close;
 

@@ -16,6 +16,7 @@ public class FairyMover : MonoBehaviour {
     Vector3 FruitPos = Vector3.zero;
 
     public bool IsMove { get { return (State == STATE.Move); } }
+    public bool IsAbsorption { get { return (State == STATE.Absorption); } }
 
     float Count = 0;
 

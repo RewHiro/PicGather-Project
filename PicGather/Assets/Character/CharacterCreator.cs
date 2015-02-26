@@ -15,8 +15,12 @@ public class CharacterCreator : MonoBehaviour {
     [SerializeField]
     CharacterManager Manager = null;
 
+    public bool appearanceSE { get; private set; }
+
     void Update()
     {
+        appearanceSE = false;
+
         if (!Manager.IsCreate) return;
 
         StartCoroutine("Create");
@@ -32,6 +36,8 @@ public class CharacterCreator : MonoBehaviour {
     IEnumerator Create()
     {
         yield return new WaitForSeconds(1.0f);
+
+        appearanceSE = true;
 
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(0, 100, 0), Prefab.transform.rotation);
         Clone.transform.parent = Manager.transform;
