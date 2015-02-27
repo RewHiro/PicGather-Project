@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +9,10 @@ public class OpenOurEyesMover : MonoBehaviour {
     GameObject GraphicEffectPrefab;
 
     [SerializeField]
-    List<Texture>textures; 
+    List<Texture>textures;
+
+    [SerializeField]
+    GameObject FoundSE;
 
     public enum State
     {
@@ -20,6 +24,7 @@ public class OpenOurEyesMover : MonoBehaviour {
     public State state { get; private set; }
     float RotationAngle = 0;
     float jumpAnimation = 0;
+    float count = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +44,7 @@ public class OpenOurEyesMover : MonoBehaviour {
 
         if (state != State.APPEARANCE) return;
         iTween.MoveTo(gameObject,
-            iTween.Hash("position", Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - Screen.height * 0.2f, 17)),
+            iTween.Hash("position", Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - Screen.height * 0.2f, 2 - Camera.main.GetComponent<CameraMover>().MoveRadius)),
             "time", 7.0f,
             "easetype", iTween.EaseType.easeOutQuad));
 
@@ -57,17 +62,20 @@ public class OpenOurEyesMover : MonoBehaviour {
 
     void AppearanceToHide()
     {
-        if (transform.localPosition.y > 0.5f) return;
+        count += Time.deltaTime;
+        if (count < 7.0f) return;
         state = State.HIDE;
         renderer.material.mainTexture = textures[1];
     }
 
     void OnMouseCollision()
     {
-        if (!TouchManager.IsMouseButtonDown(gameObject)) return;
+        if (!(TouchManager.IsMouseButtonDown(gameObject)|| TouchManager.IsTouching(gameObject))) return;
         state = State.FOUND;
         Instantiate(GraphicEffectPrefab, gameObject.transform.position, Quaternion.identity);
+        Instantiate(FoundSE);
         Destroy(gameObject);
+        GameObject.Find("SunCharacter").GetComponent<Image>().enabled = true;
     }
 
     void HideMove()

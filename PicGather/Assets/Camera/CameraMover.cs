@@ -24,7 +24,7 @@ public class CameraMover : MonoBehaviour
     /// <summary>
     /// カメラの円運動するときの中心からの距離
     /// </summary>
-    private float MoveRadius = 0.0f;
+    public float MoveRadius { get; private set; }
 
     /// <summary>
     /// 半径を増加する

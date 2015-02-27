@@ -13,7 +13,11 @@ public class Sun : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!TouchManager.IsMouseButtonDown(gameObject)) return;
-        isHit = true;
+        isHit = false;
 	}
+
+    public void Hit()
+    {
+        isHit = true;
+    }
 }

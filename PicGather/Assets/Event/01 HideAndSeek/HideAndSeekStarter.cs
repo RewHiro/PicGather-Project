@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HideAndSeekStarter : EventStarterBase
 {
-    Sun sun;
+
+    bool isStart = false;
 
     // Use this for initialization
     void Start()
     {
         GetManager();
-        sun = GameObject.Find("FrotnSun").GetComponent<Sun>();
     }
 
     // Update is called once per frame
@@ -17,7 +18,7 @@ public class HideAndSeekStarter : EventStarterBase
     {
         StartJudgmentUpdate();
 
-        if (!sun.isHit) return;
+        if (!isStart) return;
         if (!Judgment()) return;
         BeginEvent();
     }
@@ -31,5 +32,12 @@ public class HideAndSeekStarter : EventStarterBase
 
         CanStart = false;
         EventMngr.BeginEvent(OriginEventPrefab);
+        isStart = false;
+        GameObject.Find("SunCharacter").GetComponent<Image>().enabled = false;
+    }
+
+    public void OnSunButton()
+    {
+        isStart = true;
     }
 }
