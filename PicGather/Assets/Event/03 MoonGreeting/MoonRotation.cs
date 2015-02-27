@@ -6,6 +6,9 @@ public class MoonRotation : MonoBehaviour {
     [SerializeField]
     float rotationValue = 0.1f;
 
+    [SerializeField]
+    float Angle = 0;
+
     float rotate = 0;
     float swingValue = 0.5f;
 
@@ -22,8 +25,7 @@ public class MoonRotation : MonoBehaviour {
 
         rotate += rotationValue * Time.deltaTime;
         Speed += swingValue * Mathf.Sin(rotate);
-        RectTrans.localEulerAngles = new Vector3(0, 0, Speed + 160);
-
+        RectTrans.localEulerAngles = new Vector3(0, 0, Speed + Angle);
 	}
 
 }

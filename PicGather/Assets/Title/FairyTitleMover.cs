@@ -65,8 +65,8 @@ public class FairyTitleMover : MonoBehaviour {
         yield return new WaitForSeconds(FairyLookAtTime);
 
         Startter.StartMove();
-
     }
+
     /// <summary>
     /// スタートアニメーション
     /// </summary>

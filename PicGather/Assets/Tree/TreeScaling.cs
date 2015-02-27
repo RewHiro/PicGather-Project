@@ -39,7 +39,9 @@ public class TreeScaling : MonoBehaviour {
                         "time", ScaleToTime, "easetype", iTween.EaseType.easeInOutExpo));
 
         Changer.ChangeNormalState();
+        StartCoroutine("Save");
     }
+
 
     IEnumerator Save()
     {

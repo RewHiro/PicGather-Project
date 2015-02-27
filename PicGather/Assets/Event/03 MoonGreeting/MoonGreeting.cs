@@ -13,7 +13,7 @@ public class MoonGreeting : EventBase
     const float fieldOfViewAddValue = 0.2f;
 
     [SerializeField]
-    GameObject moonPrefab;
+    GameObject moonPrefab = null;
 
     [SerializeField]
     float greetTime = 5.0f;
