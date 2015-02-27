@@ -40,6 +40,9 @@ ModelImporter:
     100068: polySurface15
     100070: transform12
     100072: transform13
+    100074: fairy
+    100076: tsue
+    100078: tsue 1
     400000: //RootNode
     400002: arm_L_1
     400004: arm_L_2
@@ -77,12 +80,19 @@ ModelImporter:
     400068: polySurface15
     400070: transform12
     400072: transform13
+    400074: fairy
+    400076: tsue
+    400078: tsue 1
     4300000: polySurface13
     4300002: polySurface15
-    7400000: Take 001
+    4300004: fairy
+    4300006: tsue
+    7400000: Guide
     9500000: //RootNode
     13700000: polySurface13
     13700002: polySurface15
+    13700004: fairy
+    13700006: tsue
   materials:
     importMaterials: 1
     materialName: 0
@@ -100,7 +110,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: Take 001
+      name: Guide
       takeName: Take 001
       firstFrame: 1
       lastFrame: 120
