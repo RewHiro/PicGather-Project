@@ -17,7 +17,6 @@ using System.IO;
 
 public class CharacterManager : MonoBehaviour
 {
-
     public int ID { get; protected set; }
     public string Name { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
@@ -25,10 +24,10 @@ public class CharacterManager : MonoBehaviour
     public Texture2D CampusTexture { get; private set; }
 
     [SerializeField]
-    CampusTemplateSetting Template = null;
+    protected CampusTemplateSetting Template = null;
 
     [SerializeField]
-    Sprite TemplateSprite = null;
+    protected Sprite TemplateSprite = null;
 
     [SerializeField]
     List<GameObject> ChildrenPrefabs = new List<GameObject>();
@@ -129,7 +128,15 @@ public class CharacterManager : MonoBehaviour
 #endif
         var texture = new Texture2D(128, 128);
         texture.LoadImage(bytes);
-        clone.renderer.material.mainTexture = texture;
+
+        if (Name == "Fairy")
+        {
+            clone.transform.FindChild("fairy").renderer.material.mainTexture = texture;
+        }
+        else
+        {
+            clone.renderer.material.mainTexture = texture;
+        }
     }
 
     /// <summary>
@@ -148,7 +155,7 @@ public class CharacterManager : MonoBehaviour
     /// <summary>
     /// テンプレート(Sample)を設定する
     /// </summary>
-    public void SetTemplate()
+    public virtual void SetTemplate()
     {
         Template.SetSprite(TemplateSprite);
     }

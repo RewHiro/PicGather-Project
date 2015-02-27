@@ -6,13 +6,13 @@ using System.Collections.Generic;
 public class OpenOurEyesMover : MonoBehaviour {
 
     [SerializeField]
-    GameObject GraphicEffectPrefab;
+    GameObject GraphicEffectPrefab = null;
 
     [SerializeField]
-    List<Texture>textures;
+    List<Texture>textures = new List<Texture>();
 
     [SerializeField]
-    GameObject FoundSE;
+    GameObject FoundSE = null;
 
     public enum State
     {

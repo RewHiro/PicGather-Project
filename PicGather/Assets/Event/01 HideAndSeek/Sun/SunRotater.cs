@@ -4,8 +4,9 @@ using System.Collections;
 public class SunRotater : MonoBehaviour {
 
     [SerializeField]
-    float rotationValue;
-    float rotate;
+    float rotationValue = 0;
+
+    float rotate = 0;
 
 	// Use this for initialization
 	void Start () {

@@ -9,6 +9,9 @@ using System.Collections;
 
 public class FruitAppearance : MonoBehaviour {
 
+    const float Velocity = 1;
+    
+    bool IsStop = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,15 +19,16 @@ public class FruitAppearance : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (IsStop) return;
+
+        //transform.Translate(0, -Velocity * Time.deltaTime, 0);
 	}
 
-    void OnCollisionExit(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Branch")
         {
-            rigidbody.isKinematic = true;
-            rigidbody.useGravity = false;
+            IsStop = true;
         }
     }
 }

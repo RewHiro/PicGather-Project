@@ -4,11 +4,11 @@ using System.Collections;
 public class HideAndSeek : EventBase
 {
     [SerializeField]
-    GameObject openOurEyes;
+    GameObject openOurEyes = null;
 
-    OpenOurEyesMover eventObject;
+    OpenOurEyesMover eventObject = null;
 
-    FeverManager feverManager;
+    FeverManager feverManager = null;
 
     // Use this for initialization
     void Start()
