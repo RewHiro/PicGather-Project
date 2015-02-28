@@ -27,7 +27,8 @@ public class CampusCaptureController : MonoBehaviour
     Rect CaptureRect = new Rect(0, 0, 0, 0);
     
     Button ClickButton = null;
-    CharacterManager CharaManager = null;
+
+    public CharacterManager CharaManager {get;private set;}
 
     void Start()
     {
@@ -100,6 +101,7 @@ public class CampusCaptureController : MonoBehaviour
 
         CharaManager.Entry();
 
+        CharaManager = null;
     }
 
     /// <summary>

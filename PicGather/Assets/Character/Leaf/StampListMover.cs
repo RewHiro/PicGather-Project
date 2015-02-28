@@ -24,10 +24,11 @@ public class StampListMover : MonoBehaviour {
 
     public bool IsCreate { get { return (State == STATE.Stop); } }
 
-    STATE State = STATE.Close;
+    public STATE State {get;private set;}
 
     // Use this for initialization
 	void Start () {
+        State = STATE.Close;
         MoveAnimation = GetComponent<Animation>();
 	}
 	
