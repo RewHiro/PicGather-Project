@@ -79,7 +79,7 @@ public class OneMoreFever : EventBase
         var BeginAddScoreTime = 1.0f;
         if (NowLifeTime > BeginAddScoreTime)
         {
-            FeverMngr.AddScore(FeverManager.MaxFeverScore);
+            FeverMngr.AddScore(FeverMngr.MaxFeverScore);
         }
     }
 
