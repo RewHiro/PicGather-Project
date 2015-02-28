@@ -16,6 +16,7 @@ using System.IO;
 
 public class LeafStampManagerController : CharacterManager
 {
+
     const int MaxResroucesLeaf = 3;
 
     // Use this for initialization

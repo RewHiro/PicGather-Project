@@ -17,6 +17,9 @@ public class LeafCreator : MonoBehaviour {
     [SerializeField]
     StampListMover StampList = null;
 
+    [SerializeField]
+    StampSelecter Selecter = null;
+
     GameObject TreeBranch = null;
 
     LeafStampManagerController Manager = null;
@@ -99,5 +102,6 @@ public class LeafCreator : MonoBehaviour {
     {
         TextureID = button.GetComponent<LeafIDSetting>().ID;
         SelectTexture = button.GetComponent<Image>().mainTexture;
+        Selecter.SelectFrameMove(button);
     }
 }
