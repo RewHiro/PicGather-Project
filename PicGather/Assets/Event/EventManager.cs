@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -33,6 +34,11 @@ public class EventManager : MonoBehaviour {
     [SerializeField]
     List<GameObject> HideGameObjects = new List<GameObject>();
 
+    [SerializeField]
+    GameObject IconPrefab = null;
+
+    GameObject Icon = null;
+
     void Start()
     {
         EventInformation.BeginEvent = false;
@@ -58,6 +64,25 @@ public class EventManager : MonoBehaviour {
             ModeManager.ChangeEventMode();
         }
 	}
+
+    /// <summary>
+    /// アイコンを生成
+    /// </summary>
+    /// <param name="icon"></param>
+    public void IconInstantiate(Sprite icon)
+    {
+        Icon = (GameObject)Instantiate(IconPrefab, IconPrefab.transform.position, Quaternion.identity);
+        Icon.GetComponent<Image>().sprite = icon;
+        Icon.transform.parent = GameObject.Find("UIRoot").transform;
+    }
+
+    /// <summary>
+    /// アイコンを削除
+    /// </summary>
+    public void IconDestroy()
+    {
+        Destroy(Icon);
+    }
 
     /// <summary>
     /// 終了処理
