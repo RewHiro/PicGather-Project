@@ -10,8 +10,6 @@ public class EventIconController : MonoBehaviour {
     Image Icon = null;
     RectTransform rectTrans = null;
 
-    bool IsStart = false;
-
 	// Use this for initialization
 	void Start () {
 

@@ -18,7 +18,8 @@ public class NoteScaling : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        iTween.ScaleTo(gameObject, iTween.Hash("scale", new Vector3(MaxScale, MaxScale, MaxScale),
+        var maxScale = Random.Range(MaxScale/2, MaxScale);
+        iTween.ScaleTo(gameObject, iTween.Hash("scale", new Vector3(maxScale, maxScale, maxScale),
                         "time", MaxTime, "easetype", iTween.EaseType.easeInExpo));
     }
 	

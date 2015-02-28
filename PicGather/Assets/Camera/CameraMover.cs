@@ -152,12 +152,12 @@ public class CameraMover : MonoBehaviour
     /// </summary>
     private void RotateCamera()
     {
-        Camera.main.transform.position = new Vector3(
+        transform.position = new Vector3(
             CenterObject.position.x + Mathf.Sin(RotationAngle) * MoveRadius,
             transform.position.y, 
             CenterObject.position.x + Mathf.Cos(RotationAngle) * MoveRadius);
 
-        Camera.main.transform.LookAt(CenterObject.position + new Vector3(0,transform.position.y*1.5f,0));
+        transform.LookAt(new Vector3(0,transform.position.y - 2,0));
     }
 
     /// <summary>

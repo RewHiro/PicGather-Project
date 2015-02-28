@@ -23,7 +23,8 @@ public class DateTimeController : MonoBehaviour {
         {
             get
             {
-                if (NowTime.Hour >= StartTime && NowTime.Hour <= EndTime)
+                if (NowTime.Hour >= StartTime && NowTime.Hour <= EndTime ||
+                    NowTime.Hour >= EndTime && NowTime.Hour >= StartTime)
                 {
                     NowTimeZone = Name;
                     return true;
@@ -37,6 +38,7 @@ public class DateTimeController : MonoBehaviour {
     static TimeZoneData Noon = new TimeZoneData("Noon", 11, 15);
     static TimeZoneData Night = new TimeZoneData("Night", 16, 21);
     static TimeZoneData Sleep = new TimeZoneData("Sleep", 22, 5);
+
     static string NowTimeZone = string.Empty;
     static string OldTimeZone = string.Empty;
 
@@ -91,6 +93,5 @@ public class DateTimeController : MonoBehaviour {
             IsChanged = true;
         }
 	}
-
 
 }
