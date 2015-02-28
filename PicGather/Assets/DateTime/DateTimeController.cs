@@ -6,19 +6,48 @@ public class DateTimeController : MonoBehaviour {
 
     static public DateTime NowTime{get;private set;}
 
+    struct TimeZoneData
+    {
+        public TimeZoneData(string name,int startTime, int endTime):this()
+        {
+            Name = name;
+            StartTime = startTime;
+            EndTime = endTime;
+        }
+
+        public string Name { get; private set; }
+        int StartTime;
+        int EndTime;
+
+        public bool IsTime 
+        {
+            get
+            {
+                if (NowTime.Hour >= StartTime && NowTime.Hour <= EndTime)
+                {
+                    NowTimeZone = Name;
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+    static TimeZoneData Morning = new TimeZoneData("Morning",6, 10);
+    static TimeZoneData Noon = new TimeZoneData("Noon", 11, 15);
+    static TimeZoneData Night = new TimeZoneData("Night", 16, 21);
+    static TimeZoneData Sleep = new TimeZoneData("Sleep", 22, 5);
+    static string NowTimeZone = string.Empty;
+    static string OldTimeZone = string.Empty;
+
+    static public bool IsChanged { get; private set; }
+
     /// <summary>
     /// 朝
     /// </summary>
     static public bool IsMorning
     {
-        get 
-        {
-            if (NowTime.Hour >= 6 && NowTime.Hour <= 10)
-            {
-                return true;
-            }
-            return false;
-        }
+        get { return Morning.IsTime; }
     }
     
 
@@ -27,14 +56,7 @@ public class DateTimeController : MonoBehaviour {
     /// </summary>
     static public bool IsNoon
     {
-        get
-        {
-            if (NowTime.Hour >= 11 && NowTime.Hour <= 15)
-            {
-                return true;
-            }
-            return false;
-        }
+        get { return Noon.IsTime; }
     }
 
     /// <summary>
@@ -42,14 +64,7 @@ public class DateTimeController : MonoBehaviour {
     /// </summary>
     static public bool IsNight
     {
-        get
-        {
-            if (NowTime.Hour >= 16 && NowTime.Hour <= 21)
-            {
-                return true;
-            }
-            return false;
-        }
+        get { return Night.IsTime; }
     }
 
     /// <summary>
@@ -57,15 +72,9 @@ public class DateTimeController : MonoBehaviour {
     /// </summary>
     static public bool IsSleep
     {
-        get
-        {
-            if (NowTime.Hour >= 22 && NowTime.Hour <= 5)
-            {
-                return true;
-            }
-            return false;
-        }
+        get { return Sleep.IsTime; }
     }
+
 	// Use this for initialization
 	void Awake () {
         NowTime = DateTime.Now;
@@ -75,8 +84,13 @@ public class DateTimeController : MonoBehaviour {
 	void Update () {
         NowTime = DateTime.Now;
 
+        IsChanged = false;
+        if (NowTimeZone != OldTimeZone && !IsChanged)
+        {
+            OldTimeZone = NowTimeZone;
+            IsChanged = true;
+        }
 	}
-
 
 
 }

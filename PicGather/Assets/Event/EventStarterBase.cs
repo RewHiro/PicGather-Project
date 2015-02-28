@@ -11,13 +11,23 @@ public class EventStarterBase : MonoBehaviour {
     [Range(6, 20)]
     protected int StartTime = 0;
 
-    protected bool CanStart = true;
+    protected bool CanStart = false;
 
     /// <summary>
     /// クラス固有のイベントを所持する
     /// </summary>
     [SerializeField]
     protected GameObject OriginEventPrefab = null;
+
+    [SerializeField]
+    Sprite StartIcon = null;
+
+    [SerializeField]
+    bool IsIconNeed = false;
+
+    bool CanIcon = true;
+
+    const float IconDrawTime = 2.0f;
 
     /// <summary>
     /// EventManagerを得る
@@ -33,9 +43,12 @@ public class EventStarterBase : MonoBehaviour {
 	// Update is called once per frame
     protected void StartJudgmentUpdate()
     {
+        if (!CanStart) return;
+
         if (DateTimeController.NowTime.Hour == StartTime + 1)
         {
-            CanStart = true;
+            CanIcon = true;
+            CanStart = false;
         }
     }
 
@@ -53,8 +66,39 @@ public class EventStarterBase : MonoBehaviour {
     /// <returns></returns>
     protected bool Judgment()
     {
-        if (CanStart && DateTimeController.NowTime.Hour == StartTime) return true;
+        if (CanIcon && DateTimeController.NowTime.Hour == StartTime)
+        {
+            StartIconDrawTiming();
+            return false;
+        }
+        
+        if (CanStart) return true;
 
         return false;
+    }
+
+    /// <summary>
+    /// 始まりのアイコンを表示するタイミング
+    /// </summary>
+    private void StartIconDrawTiming()
+    {
+        if (!IsIconNeed) return;
+
+        CanIcon = false;
+        EventMngr.IconInstantiate(StartIcon);
+        StartCoroutine("StartIconDestroyTiming");
+    }
+
+
+    /// <summary>
+    /// 始まりのアイコンを削除するタイミング
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator StartIconDestroyTiming()
+    {
+        yield return new WaitForSeconds(IconDrawTime);
+
+        EventMngr.IconDestroy();
+        CanStart = true;
     }
 }

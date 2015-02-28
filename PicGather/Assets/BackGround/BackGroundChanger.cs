@@ -14,8 +14,6 @@ public class BackGroundChanger : MonoBehaviour
     [SerializeField]
     Texture NightTexture = null;
 
-    Texture OldTexture = null;
-
 
 	// Use this for initialization
 	void Start () {
@@ -36,10 +34,9 @@ public class BackGroundChanger : MonoBehaviour
     /// <param name="texture"></param>
     void ChangeTexture(bool IsTime,Texture texture)
     {
-        if (IsTime && OldTexture != texture)
+        if (IsTime && DateTimeController.IsChanged)
         {
             renderer.material.mainTexture = texture;
-            OldTexture = texture;
         }
     }
 }
