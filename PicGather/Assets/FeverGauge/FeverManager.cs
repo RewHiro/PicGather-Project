@@ -6,7 +6,13 @@ public class FeverManager : MonoBehaviour {
     FeverSoundController Sound = null;
 
     [SerializeField]
+    AllDataSave AllSave = null;
+
+    [SerializeField]
     float FeverTime = 30.0f;
+
+    [SerializeField]
+    float AddSpeed = 2.0f;
 
     /// <summary>
     /// Feverゲージの上限、下限
@@ -50,7 +56,7 @@ public class FeverManager : MonoBehaviour {
         LimitCheck();
         if (Input.GetKeyDown(KeyCode.A))
         {
-            AddScore(0.5f);
+            AddScore(3.0f);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -67,7 +73,7 @@ public class FeverManager : MonoBehaviour {
 
         if (IsIncrease)
         {
-            FeverScore += Time.deltaTime;
+            FeverScore += AddSpeed *Time.deltaTime;
             if (FeverScore > IncreaseScore)
             {
                 IsIncrease = false;
@@ -105,7 +111,6 @@ public class FeverManager : MonoBehaviour {
             UIEnabled.Unavailable();
             NumTimes++;
             Ferver();
-            Data.Write(NumTimes,MaxFeverScore);
         }
 
         if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)
@@ -114,7 +119,7 @@ public class FeverManager : MonoBehaviour {
             ModeManager.ChangeGameMode();
             Sound.Stop();
             UIEnabled.Enabled();
-
+            AllSave.AllSave();
         }
     }
 
@@ -128,6 +133,9 @@ public class FeverManager : MonoBehaviour {
     {
         FeverScore = value;
     }
- 
-  
+
+    public void Save()
+    {
+        Data.Write(NumTimes, MaxFeverScore);
+    }
 }
