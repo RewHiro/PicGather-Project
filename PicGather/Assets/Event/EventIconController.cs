@@ -10,8 +10,6 @@ public class EventIconController : MonoBehaviour {
     Image Icon = null;
     RectTransform rectTrans = null;
 
-    bool IsStart = false;
-
 	// Use this for initialization
 	void Start () {
 
@@ -23,6 +21,7 @@ public class EventIconController : MonoBehaviour {
         Icon = GetComponent<Image>();
 
         iTween.ValueTo(gameObject, iTween.Hash("from", 4, "to", 0, "time", AlphaTime, "onupdate", "UpdateHandler"));
+        iTween.LookTo(gameObject,Camera.main.transform.position,0);
 
 	}
     void UpdateHandler(float value)

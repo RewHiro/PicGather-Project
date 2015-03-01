@@ -29,8 +29,6 @@ public class TreeChanger : MonoBehaviour
 
     public bool IsScaling { get { return State == STATE.Scaling; } }
 
-    public bool isGrow { get; private set; }
-
     [SerializeField]
     List<ChangeTreeData> TreeData = new List<ChangeTreeData>();
 
@@ -43,6 +41,7 @@ public class TreeChanger : MonoBehaviour
     [SerializeField]
     float BroadenValue = 1.0f;
 
+    TreeSE SEPlayer = null;
     GameObject Tree = null;
     TreeSaveDataWriter Writer = null;
     Vector3 LocalPos = Vector3.zero;
@@ -61,10 +60,13 @@ public class TreeChanger : MonoBehaviour
 
     // Use this for initialization
 	void Start () {
+        SEPlayer = GetComponent<TreeSE>();
         Writer = GetComponent<TreeSaveDataWriter>();
         var Loading = GetComponent<TreeSaveDataLoading>().GetLoadData();
+        Tree = GameObject.Find("Tree");
 
         if (Loading.ID <= -1) return;
+
         CreateIndex = Loading.ID;
         transform.lossyScale.Set(Loading.Scale.X, Loading.Scale.Y, Loading.Scale.Z);
         CreateChildren();
@@ -87,6 +89,9 @@ public class TreeChanger : MonoBehaviour
         Save();
         CameraMain.BroadenMoveRadius(BroadenValue);
         State = STATE.Normal;
+
+        if (CreateIndex >= 0) return;
+        SEPlayer.Play();
     }
 
     /// <summary>
@@ -133,10 +138,7 @@ public class TreeChanger : MonoBehaviour
         if (ModeManager.IsFerverMode ) return;
         if (State != STATE.Change) return;
 
-        isGrow = true;
-
         CreateChildren();
-
     }
 
     /// <summary>
@@ -178,8 +180,6 @@ public class TreeChanger : MonoBehaviour
     IEnumerator WaitDestroyChildren()
     {
         yield return new WaitForEndOfFrame();
-
-        isGrow = false;
 
         Destroy(Tree);
 

@@ -62,7 +62,7 @@ public class StarCollected : EventBase
         var basketPos = GameObject.Find("Basket(Clone)").transform.position;
         Instantiate(GraphicEffectPrefab, basketPos, Quaternion.identity);
         Destroy(GameObject.Find("Basket(Clone)"));
-        feverManager.AddScore(FeverManager.MaxFeverScore);
+        feverManager.AddScore(feverManager.MaxFeverScore);
         base.Finish();
 
 

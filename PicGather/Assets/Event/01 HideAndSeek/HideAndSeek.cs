@@ -30,7 +30,7 @@ public class HideAndSeek : EventBase
     /// </summary>
     protected override void Finish()
     {
-        feverManager.AddScore(FeverManager.MaxFeverScore);
+        feverManager.AddScore(feverManager.MaxFeverScore);
         base.Finish();
 
     }

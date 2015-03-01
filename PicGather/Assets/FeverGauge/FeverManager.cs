@@ -11,7 +11,7 @@ public class FeverManager : MonoBehaviour {
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
-    public const float MaxFeverScore = 5;
+    public float MaxFeverScore {get;private set;}
     public const float MinFeverScore = 0;
 
     /// <summary>
@@ -30,6 +30,8 @@ public class FeverManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        MaxFeverScore = 5;
+
         FeverScore = MinFeverScore;
         Sound = GetComponent<FeverSoundController>();
         Data = GetComponent<FeverDataController>();
@@ -37,6 +39,7 @@ public class FeverManager : MonoBehaviour {
         if (Data.GetLoadData().Times < 0) return;
 
         NumTimes = Data.GetLoadData().Times;
+        MaxFeverScore = Data.GetLoadData().MaxScore;
 	}
 	
 	// Update is called once per frame
@@ -48,6 +51,10 @@ public class FeverManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.A))
         {
             AddScore(0.5f);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel("GameMain");
         }
     }
 
@@ -90,14 +97,15 @@ public class FeverManager : MonoBehaviour {
     {
         if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode)
         {
-            IncreaseScore = 0;
+            MaxFeverScore *= 3;
             FeverScore = MaxFeverScore;
+            IncreaseScore = 0;
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
             NumTimes++;
             Ferver();
-            Data.Write(NumTimes);
+            Data.Write(NumTimes,MaxFeverScore);
         }
 
         if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)
