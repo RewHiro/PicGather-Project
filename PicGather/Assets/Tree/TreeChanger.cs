@@ -39,6 +39,9 @@ public class TreeChanger : MonoBehaviour
     CameraMover CameraMain = null;
 
     [SerializeField]
+    AllDataSave DataSave = null;
+
+    [SerializeField]
     float BroadenValue = 1.0f;
 
     TreeSE SEPlayer = null;
@@ -57,21 +60,40 @@ public class TreeChanger : MonoBehaviour
     STATE State = STATE.Normal;
 
     int CreateIndex = 0;
+    bool IsStartFirst = true;
 
     // Use this for initialization
 	void Start () {
         SEPlayer = GetComponent<TreeSE>();
         Writer = GetComponent<TreeSaveDataWriter>();
-        var Loading = GetComponent<TreeSaveDataLoading>().GetLoadData();
         Tree = GameObject.Find("Tree");
 
-        if (Loading.ID <= -1) return;
+        if (CanLoading()) return;
 
-        CreateIndex = Loading.ID;
-        transform.lossyScale.Set(Loading.Scale.X, Loading.Scale.Y, Loading.Scale.Z);
-        CreateChildren();
-        BroadenValue *= CreateIndex;
+        IsStartFirst = false;
 	}
+
+
+    /// <summary>
+    /// 読み込めるかどうか
+    /// </summary>
+    /// <returns>true : 読み込み / false 不要</returns>
+    bool CanLoading()
+    {
+        var Loading = GetComponent<TreeSaveDataLoading>().GetLoadData();
+
+        if (Loading.ID >= 0)
+        {
+            CreateIndex = Loading.ID;
+            transform.lossyScale.Set(Loading.Scale.X, Loading.Scale.Y, Loading.Scale.Z);
+            CreateChildren();
+            BroadenValue *= CreateIndex;
+
+            return true ;
+        }
+
+        return false;
+    }
     
 	// Update is called once per frame
 	void Update () {
@@ -86,12 +108,31 @@ public class TreeChanger : MonoBehaviour
     /// </summary>
     public void ChangeNormalState()
     {
-        Save();
+        DataSave.AllSave();
         CameraMain.BroadenMoveRadius(BroadenValue);
         State = STATE.Normal;
 
-        if (CreateIndex >= 0) return;
-        SEPlayer.Play();
+        if (!IsStartFirst)
+        {
+            SEPlayer.Play();
+            FruitsFall();
+        }
+
+    }
+
+    /// <summary>
+    /// 木の実が落ちる処理
+    /// </summary>
+    void FruitsFall()
+    {
+        var fruits = GameObject.FindGameObjectsWithTag("Fruit");
+        if (fruits.Length == 0) return;
+
+        foreach (var fruit in fruits)
+        {
+            var falling = fruit.GetComponent<FruitFalling>();
+            falling.OnFall();
+        }
     }
 
     /// <summary>
@@ -146,7 +187,6 @@ public class TreeChanger : MonoBehaviour
     /// </summary>
     void CreateChildren()
     {
-
         var clone = (GameObject)Instantiate(TreeData[CreateIndex].Prefab);
 
         clone.name = "Tree";
@@ -158,8 +198,6 @@ public class TreeChanger : MonoBehaviour
 
         LocalPos = clone.transform.position;
         
-        Save();
-
         State = STATE.Destroy;
     }
 
@@ -170,21 +208,12 @@ public class TreeChanger : MonoBehaviour
     void DestroyChildren()
     {
         if (State != STATE.Destroy) return;
-    
-        StartCoroutine("WaitDestroyChildren");
-    }
-
-    /// <summary>
-    /// 1フレーム待ってから子オブジェクトを削除
-    /// </summary>
-    IEnumerator WaitDestroyChildren()
-    {
-        yield return new WaitForEndOfFrame();
 
         Destroy(Tree);
 
         ChangeNormalState();
 
+        IsStartFirst = false;
     }
 
 }

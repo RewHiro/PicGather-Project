@@ -31,7 +31,6 @@ public class FairyMover : MonoBehaviour {
     };
     STATE State = STATE.Stop;
 
-
 	// Use this for initialization
 	void Start () {
         FeverGauge = GameObject.Find("FeverGauge");
@@ -165,7 +164,6 @@ public class FairyMover : MonoBehaviour {
 
         var Manager = GameObject.FindObjectOfType<FairyManagerController>() as FairyManagerController;
         Manager.ChildrensDataSave();
-
     }
 
     /// <summary>
