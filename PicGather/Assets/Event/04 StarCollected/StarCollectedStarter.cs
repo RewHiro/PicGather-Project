@@ -5,7 +5,7 @@ using System;
 public class StarCollectedStarter : EventStarterBase
 {
     [SerializeField]
-    GameObject brightStarPrefab;
+    GameObject brightStarPrefab = null;
 
     GameObject brightStar = null;
 

@@ -39,10 +39,12 @@ public class CloudMover : MonoBehaviour {
     RainCreator RainCreate = null;
 
     public bool IsReturnlMove { get { return (State == STATE.ReturnNormal); } }
+    public bool IsRain { get { return (State == STATE.CreateRain); } }
 
     // Use this for initialization
 	void Start () {
-        RotationPos.y = Random.Range(16.0f,18.0f);
+        var wroldPos = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z));
+        RotationPos.y = wroldPos.y + Random.Range(2.0f,3.0f);
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
         RotationSpeed = Random.Range(0.5f, 1.0f);
@@ -84,7 +86,7 @@ public class CloudMover : MonoBehaviour {
     {
         if (State != STATE.Appearance) return;
 
-        transform.position = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
+        transform.position = RotationPos;
         RotationPos.y -= Time.deltaTime * AppearanceSpeed;
 
         var screenPos = Camera.main.WorldToScreenPoint(transform.position);
@@ -105,7 +107,7 @@ public class CloudMover : MonoBehaviour {
     {
         if (State != STATE.TreeTop) return;
 
-        CreateRainPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
+        CreateRainPos = RotationPos;
         transform.position = CreateRainPos;
         RotationPos.y += Time.deltaTime;
 
@@ -145,7 +147,7 @@ public class CloudMover : MonoBehaviour {
     {
         if (State != STATE.ReturnNormal) return;
 
-        var NormalPos = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
+        var NormalPos = RotationPos;
         transform.position = NormalPos;
         RotationPos.y -= Time.deltaTime * AppearanceSpeed;
 
@@ -167,7 +169,7 @@ public class CloudMover : MonoBehaviour {
     {
         if (State != STATE.Normal) return;
 
-        transform.position = new Vector3(RotationPos.x, TreePos.y + RotationPos.y, RotationPos.z);
+        transform.position = RotationPos;
     }
 
     /// <summary>
@@ -181,16 +183,29 @@ public class CloudMover : MonoBehaviour {
         if (Count <= StartCreateRainTime) return;
 
         Count = 0;
-
-        if (ModeManager.IsGameMode)
-        {
-            var Leafs = GameObject.FindGameObjectsWithTag("Leaf");
-            if (Leafs.Length == 0) return;
-        }
+        
+        if (!IsCheckLeafLive()) return;
 
         State = STATE.TreeTop;
     }
 
+    /// <summary>
+    /// 葉っぱが存在するかどうか
+    /// </summary>
+    /// <returns></returns>
+    bool IsCheckLeafLive()
+    {
+        if (!ModeManager.IsGameMode) return false;
+
+        var Leafs = GameObject.FindGameObjectsWithTag("Leaf");
+        if (Leafs.Length == 0)
+        {
+            return false;
+        }
+
+        return true;
+
+    }
 
     /// <summary>
     /// 半径を制御

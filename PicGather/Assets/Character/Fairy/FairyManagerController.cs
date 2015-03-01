@@ -10,7 +10,6 @@ using System.Collections;
 public class FairyManagerController : CharacterManager
 {
 
-
 	// Use this for initialization
 	void Awake () {
 
@@ -23,4 +22,11 @@ public class FairyManagerController : CharacterManager
 	    
 	}
 
+    /// <summary>
+    /// テンプレート(Sample)を設定する
+    /// </summary>
+    public override void SetTemplate()
+    {
+        Template.SetDoubleSprite(TemplateSprite);
+    }
 }

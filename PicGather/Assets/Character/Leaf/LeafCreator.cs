@@ -17,6 +17,9 @@ public class LeafCreator : MonoBehaviour {
     [SerializeField]
     StampListMover StampList = null;
 
+    [SerializeField]
+    StampSelecter Selecter = null;
+
     GameObject TreeBranch = null;
 
     LeafStampManagerController Manager = null;
@@ -28,15 +31,19 @@ public class LeafCreator : MonoBehaviour {
 
     const float CanInstanceDistance = 0.05f;
 
+    public bool isCreated { get; private set; }
+
 	// Use this for initialization
 	void Start () {
         SelectTexture = renderer.material.mainTexture;
         Manager = GetComponent<LeafStampManagerController>();
         ChangeTreeBranch();
+        isCreated = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        isCreated = false;
         if (!ModeManager.IsGameMode) return;
         if (!StampList.IsCreate) return;
 
@@ -45,6 +52,7 @@ public class LeafCreator : MonoBehaviour {
         if (TouchManager.IsTouching(TreeBranch) || TouchManager.IsMouseButton(TreeBranch))
         {
             CreatePrefab();
+            isCreated = true;
         }
 	}
 
@@ -94,5 +102,6 @@ public class LeafCreator : MonoBehaviour {
     {
         TextureID = button.GetComponent<LeafIDSetting>().ID;
         SelectTexture = button.GetComponent<Image>().mainTexture;
+        Selecter.SelectFrameMove(button);
     }
 }

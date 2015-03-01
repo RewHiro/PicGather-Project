@@ -15,8 +15,15 @@ public class CharacterCreator : MonoBehaviour {
     [SerializeField]
     CharacterManager Manager = null;
 
+    [SerializeField]
+    bool IsFairy = false;
+
+    public bool appearanceSE { get; private set; }
+
     void Update()
     {
+        appearanceSE = false;
+
         if (!Manager.IsCreate) return;
 
         StartCoroutine("Create");
@@ -33,11 +40,19 @@ public class CharacterCreator : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
 
+        appearanceSE = true;
+
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(0, 100, 0), Prefab.transform.rotation);
         Clone.transform.parent = Manager.transform;
         Clone.name = Prefab.name;
-        Clone.renderer.material.mainTexture = Manager.CampusTexture;
-
+        if (IsFairy)
+        {
+            Clone.transform.FindChild("fairy").renderer.material.mainTexture = Manager.CampusTexture;
+        }
+        else
+        {
+            Clone.renderer.material.mainTexture = Manager.CampusTexture;
+        }
         Manager.CreateChildrenDataSave(Clone);
         Manager.ChildrensDataSave();
         Manager.NoneState();

@@ -7,7 +7,7 @@ public class SceneChangedController : MonoBehaviour {
     float FadeInTime = 2.0f;
 
     [SerializeField]
-    Texture2D BlackTexture;
+    Texture2D BlackTexture = null;
 
     float Alpha = 1.0f;
 

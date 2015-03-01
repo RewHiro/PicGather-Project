@@ -29,6 +29,8 @@ public class TreeChanger : MonoBehaviour
 
     public bool IsScaling { get { return State == STATE.Scaling; } }
 
+    public bool isGrow { get; private set; }
+
     [SerializeField]
     List<ChangeTreeData> TreeData = new List<ChangeTreeData>();
 
@@ -131,6 +133,8 @@ public class TreeChanger : MonoBehaviour
         if (ModeManager.IsFerverMode ) return;
         if (State != STATE.Change) return;
 
+        isGrow = true;
+
         CreateChildren();
 
     }
@@ -174,6 +178,8 @@ public class TreeChanger : MonoBehaviour
     IEnumerator WaitDestroyChildren()
     {
         yield return new WaitForEndOfFrame();
+
+        isGrow = false;
 
         Destroy(Tree);
 

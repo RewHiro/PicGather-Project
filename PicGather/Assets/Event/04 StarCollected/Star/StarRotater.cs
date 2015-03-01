@@ -9,7 +9,7 @@ public class StarRotater : MonoBehaviour {
 
     float rotate = 0;
     float rotateValue = 0.02f;
-    Light light = null;
+    Light light = new Light();
     float intensityValue = 3;
 
 	// Use this for initialization

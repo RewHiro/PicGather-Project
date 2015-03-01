@@ -14,7 +14,7 @@ public class FeverSoundController : MonoBehaviour {
     List<string> ResNameData = new List<string>();
 
     [SerializeField]
-    FadeTimeData FadeTime;
+    FadeTimeData FadeTime = new FadeTimeData();
 
     [SerializeField]
     BGMPlayer Player = null;

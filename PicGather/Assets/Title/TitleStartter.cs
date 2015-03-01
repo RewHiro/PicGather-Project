@@ -18,7 +18,7 @@ public class TitleStartter : MonoBehaviour {
     float Alpha = 0.0f;
 
     [SerializeField]
-    Texture2D BlackTexture;
+    Texture2D BlackTexture = null;
 
     [SerializeField]
     FairyTitleMover FairyMover = null;
@@ -26,6 +26,9 @@ public class TitleStartter : MonoBehaviour {
     public float GetGoalTime { get { return GoalTime; } }
     public bool IsStart {get;private set;}
     public float WindDirection { get; private set; }
+
+    bool IsScreenTap = false;
+
 	// Use this for initialization
     void Awake()
     {
@@ -55,10 +58,12 @@ public class TitleStartter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (TouchManager.IsPhaseTap || Input.GetMouseButtonDown(0))
+        if (TouchManager.IsPhaseTap || Input.GetMouseButtonDown(0) && !IsScreenTap)
         {
+            IsScreenTap = true;
             FairyMover.StartAnimation();
         }
+
         if (Alpha >= 1)
         {
             Application.LoadLevel("GameMain");

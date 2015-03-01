@@ -9,13 +9,13 @@ public class StarCollected : EventBase
     List<GameObject> stars = new List<GameObject>();
 
     [SerializeField]
-    GameObject basket;
+    GameObject basket = null;
 
     [SerializeField]
-    GameObject fairy;
+    GameObject fairy = null;
 
     [SerializeField]
-    GameObject GraphicEffectPrefab;
+    GameObject GraphicEffectPrefab = null;
 
     FeverManager feverManager;
 
