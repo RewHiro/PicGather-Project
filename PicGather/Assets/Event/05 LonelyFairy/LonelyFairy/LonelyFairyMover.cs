@@ -9,6 +9,8 @@ public class LonelyFairyMover : MonoBehaviour {
     [SerializeField]
     private ParticleSystem ParticlePrefab = null;
 
+    private Animator Anima = null;
+
     /// <summary>
     /// 距離を測定する
     /// </summary>
@@ -24,6 +26,9 @@ public class LonelyFairyMover : MonoBehaviour {
     /// </summary>
     private float ShakeAngle = 0.0f;
 
+    private float AnimaDuration = 0;
+    private float GreetingCount = 0;
+    private float UpPos = 0;
 
     /// <summary>
     /// 妖精の行動パターン
@@ -44,6 +49,7 @@ public class LonelyFairyMover : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         NowMoveMode = MoveMode.ToCamera;
+        Anima = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -55,7 +61,6 @@ public class LonelyFairyMover : MonoBehaviour {
                 MoveToCamera();
                 break;
             case MoveMode.Animation:
-                // Do Animation
                 Greeting();
                 break;
             case MoveMode.ToSky:
@@ -69,7 +74,14 @@ public class LonelyFairyMover : MonoBehaviour {
     /// </summary>
     private void Greeting()
     {
-        /// 追記してください
+        GreetingCount += Time.deltaTime;
+        if (GreetingCount >= AnimaDuration)
+        {
+            Anima.SetTrigger("OnMoveTrigger");
+            ChangeToSky();
+            GreetingCount = 0;
+            UpPos = transform.position.y;
+        }
     }
 
     /// <summary>
@@ -78,14 +90,15 @@ public class LonelyFairyMover : MonoBehaviour {
     private void TargetShake()
     {
         var CanShakeDistance = 1.1f;
+        var posY = Screen.height / 2 - transform.lossyScale.y * 100;
         if (Distance > CanShakeDistance)
         {
             ShakeAngle += 0.1f;
-            TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 + Distance * (Mathf.Sin(ShakeAngle) * Screen.width / 3), Screen.height / 2, 1.0f));
+            TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2 + Distance * (Mathf.Sin(ShakeAngle) * Screen.width / 3), posY, 1.0f));
         }
         else
         {
-            TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 1.0f));
+            TargetPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, posY, 1.0f));
         }
     }
 
@@ -99,16 +112,20 @@ public class LonelyFairyMover : MonoBehaviour {
 
         TargetShake();
 
-        var CanMoveDistance = 0.01f;
+        var CanMoveDistance = 0.1f;
 
-        var MoveVelocity = (TargetPosition - transform.position).normalized * 1.5f;
+        var MoveVelocity = (TargetPosition - transform.position).normalized;
 
-        transform.position += MoveVelocity * Distance/2 * Time.deltaTime;
+        var Soeed = 1.0f;
+
+        transform.position += MoveVelocity * Distance / 2 * Soeed * Time.deltaTime;
 
         if (Distance < CanMoveDistance)
         {
-            /// アニメーションに置き換える事
-            ChangeToSky();
+            NowMoveMode = MoveMode.Animation;
+            Anima.SetTrigger("OnGreetingTrigger");
+            var currentState = Anima.GetCurrentAnimatorStateInfo(0);
+            AnimaDuration = currentState.length + 5;
         }
 
     }
@@ -137,10 +154,11 @@ public class LonelyFairyMover : MonoBehaviour {
     private void MoveToSky()
     {
         transform.position = new Vector3(Distance * Mathf.Cos(ShakeAngle),
-                                            transform.position.y * 1.0025f,
-                                            Distance * Mathf.Sin(ShakeAngle));
+                                            UpPos, Distance * Mathf.Sin(ShakeAngle));
+
         ShakeAngle += 1.5f * Time.deltaTime;
-        Distance *= 0.995f;
+        UpPos += 0.5f * Time.deltaTime;
+        Distance *= 0.99f;
 
         if (Camera.main.WorldToScreenPoint(transform.position).y > Screen.height * 1.3f)
         {
@@ -153,8 +171,8 @@ public class LonelyFairyMover : MonoBehaviour {
     /// </summary>
     private void ParticleInstantiate()
     {
-        var clone = (ParticleSystem)Instantiate(ParticlePrefab,transform.position,Quaternion.identity);
-        
+        var clone = (ParticleSystem)Instantiate(ParticlePrefab, transform.position, Quaternion.identity);
+
         clone.transform.parent = transform;
         clone.Play();
     }
