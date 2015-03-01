@@ -23,11 +23,21 @@ public class DateTimeController : MonoBehaviour {
         {
             get
             {
-                if (NowTime.Hour >= StartTime && NowTime.Hour <= EndTime ||
-                    NowTime.Hour >= EndTime && NowTime.Hour >= StartTime)
+                if ("Sleep" == Name)
                 {
-                    NowTimeZone = Name;
-                    return true;
+                    if (NowTime.Hour <= EndTime || NowTime.Hour >= StartTime)
+                    {
+                        NowTimeZone = Name;
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (NowTime.Hour >= StartTime && NowTime.Hour <= EndTime)
+                    {
+                        NowTimeZone = Name;
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -81,10 +91,14 @@ public class DateTimeController : MonoBehaviour {
 	void Awake () {
         NowTime = DateTime.Now;
 	}
+
+    void Start()
+    {
+        OldTimeZone = NowTimeZone;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        NowTime = DateTime.Now;
 
         IsChanged = false;
         if (NowTimeZone != OldTimeZone && !IsChanged)
