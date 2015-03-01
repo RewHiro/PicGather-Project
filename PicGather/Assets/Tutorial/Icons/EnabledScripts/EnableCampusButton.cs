@@ -6,6 +6,7 @@ public class EnableCampusButton : MonoBehaviour
 {
     private TutorialManager TutorialMngr = null;
     private Image ThisImage = null;
+
     // Use this for initialization
     void Start()
     {
@@ -24,6 +25,10 @@ public class EnableCampusButton : MonoBehaviour
 
     }
     
+    /// <summary>
+    /// 描画する条件が満たされているか
+    /// </summary>
+    /// <returns>満たしている...true 満たしていない...false</returns>
     private bool EnableImage()
     {
         if (TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawLeaf] &&

@@ -4,9 +4,15 @@ using System.Collections;
 public class IconScaling : MonoBehaviour
 {
 
+    /// <summary>
+    /// 最大scale
+    /// </summary>
     [SerializeField]
     private float MaxScale = 0.0016f;
 
+    /// <summary>
+    /// 何秒かけて変化するか
+    /// </summary>
     private const float ChangingTime = 1.0f;
 
 	// Use this for initialization
@@ -17,9 +23,5 @@ public class IconScaling : MonoBehaviour
         iTween.ScaleTo(gameObject, iTween.Hash("x", MaxScale, "y", MaxScale, "z", MaxScale, "time", ChangingTime, "easetype", iTween.EaseType.easeOutExpo, "looptype", iTween.LoopType.loop));
         iTween.FadeTo(gameObject, iTween.Hash("alpha", 0, "time", ChangingTime, "easetype", iTween.EaseType.easeInExpo, "looptype", iTween.LoopType.loop));
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

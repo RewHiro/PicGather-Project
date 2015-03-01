@@ -3,8 +3,15 @@ using System.Collections;
 
 public class IconPositioning : MonoBehaviour {
 
+    /// <summary>
+    /// 親の情報
+    /// </summary>
     private RectTransform ParentPosition = null;
 
+
+    /// <summary>
+    /// スクリーン座標
+    /// </summary>
     private Vector3 PositionInScreen = Vector3.zero;
 
 	// Use this for initialization

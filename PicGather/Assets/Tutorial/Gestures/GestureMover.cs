@@ -4,19 +4,39 @@ using System.Collections;
 
 public class GestureMover : MonoBehaviour {
 
-
+    /// <summary>
+    /// ジェスチャーの1ループにかかる時間
+    /// </summary>
     private const float LoopTime = 2.5f;
 
+    /// <summary>
+    /// ジェスチャー開始からの時間を計るの変数
+    /// </summary>
     private float NowAnimetionTime = 0.0f;
 
+    /// <summary>
+    /// ジェスチャーのスクリーン座標
+    /// </summary>
     private Vector3 PositionInScreen = Vector3.zero;
 
+    /// <summary>
+    /// ジェスチャーの開始位置
+    /// </summary>
     private Vector3 StartScreenPosition = Vector3.zero;
 
+    /// <summary>
+    /// ジェスチャーの移動量
+    /// </summary>
     private Vector3 Velocity = Vector3.zero;
 
+    /// <summary>
+    /// 絵を描く範囲
+    /// </summary>
     private RectTransform rect = null;
 
+    /// <summary>
+    /// このGameObjectの持つImage
+    /// </summary>
     private Image ThisImage = null;
 
 	// Use this for initialization
@@ -24,7 +44,7 @@ public class GestureMover : MonoBehaviour {
         ThisImage = GetComponent<Image>();
         rect = transform as RectTransform;
         StartScreenPosition = PositionInScreen = Camera.main.WorldToScreenPoint(transform.position);
-        ResetVelocity();
+        InitializeVelocity();
 
     }
 	
@@ -37,25 +57,38 @@ public class GestureMover : MonoBehaviour {
         }
         else
         {
-            NowAnimetionTime = 0.0f;
-            PositionInScreen = StartScreenPosition;
-            ResetVelocity();
+            InitializeIcons();
+
         }
 	}
 
-    private void ResetVelocity()
+    /// <summary>
+    /// 移動量を初期値にする
+    /// </summary>
+    private void InitializeVelocity()
     {
         Velocity.x = Screen.width / 5 * 2;
         Velocity.y = Screen.height / LoopTime * 2;
     }
 
+    /// <summary>
+    /// アイコンの位置、移動量、時間の初期化
+    /// </summary>
+    private void InitializeIcons()
+    {
+        NowAnimetionTime = 0.0f;
+        PositionInScreen = StartScreenPosition;
+        InitializeVelocity();
+    }
+
+    /// <summary>
+    /// アイコンの移動
+    /// </summary>
     private void Move()
     {
         if (NowAnimetionTime >= LoopTime)
         {
-            NowAnimetionTime = 0.0f;
-            PositionInScreen = StartScreenPosition;
-            ResetVelocity();
+            InitializeIcons();
         }
 
         NowAnimetionTime += Time.deltaTime;
@@ -67,6 +100,10 @@ public class GestureMover : MonoBehaviour {
         transform.position = Camera.main.ScreenToWorldPoint(PositionInScreen);
     }
 
+
+    /// <summary>
+    /// 範囲内で動くように調節する
+    /// </summary>
     private void Bounding()
     {
         var TopLimit = Screen.height * 3 / 5;

@@ -28,6 +28,10 @@ public class EnableFairyButton : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 描画する条件が満たされているか
+    /// </summary>
+    /// <returns>満たしている...true 満たしていない...false</returns>
     private bool EnableImage()
     {
         if (TutorialMngr.IsCampusMode &&

@@ -4,8 +4,14 @@ using System.Collections;
 
 public class IconEnable : MonoBehaviour {
 
+    /// <summary>
+    /// 親のImage
+    /// </summary>
     private Image ParentImage = null;
 
+    /// <summary>
+    /// gameObjectのImage
+    /// </summary>
     private Image ThisImage = null;
 
     void Start()
