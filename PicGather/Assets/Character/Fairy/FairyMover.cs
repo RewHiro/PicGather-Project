@@ -10,6 +10,9 @@ using System.Collections.Generic;
 
 public class FairyMover : MonoBehaviour {
 
+    [SerializeField]
+    string FeverGaugeHitResName = string.Empty;
+
     GameObject FeverGauge = null;
     FairyAppear Appear = null;
     FairyAnimator Anima = null;
@@ -164,6 +167,9 @@ public class FairyMover : MonoBehaviour {
 
         var Manager = GameObject.FindObjectOfType<FairyManagerController>() as FairyManagerController;
         Manager.ChildrensDataSave();
+
+        var SEPlayer = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
+        SEPlayer.Play(FeverGaugeHitResName);
     }
 
     /// <summary>

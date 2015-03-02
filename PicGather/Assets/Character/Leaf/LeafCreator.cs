@@ -20,6 +20,12 @@ public class LeafCreator : MonoBehaviour {
     [SerializeField]
     StampSelecter Selecter = null;
 
+    [SerializeField]
+    SoundEffectPlayer SEPlayer = null;
+
+    [SerializeField]
+    string CreateSoundResName = string.Empty;
+
     GameObject TreeBranch = null;
 
     LeafStampManagerController Manager = null;
@@ -31,19 +37,15 @@ public class LeafCreator : MonoBehaviour {
 
     const float CanInstanceDistance = 0.05f;
 
-    public bool isCreated { get; private set; }
-
 	// Use this for initialization
 	void Start () {
         SelectTexture = renderer.material.mainTexture;
         Manager = GetComponent<LeafStampManagerController>();
         ChangeTreeBranch();
-        isCreated = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        isCreated = false;
         if (!ModeManager.IsGameMode) return;
         if (!StampList.IsCreate) return;
 
@@ -52,7 +54,7 @@ public class LeafCreator : MonoBehaviour {
         if (TouchManager.IsTouching(TreeBranch) || TouchManager.IsMouseButton(TreeBranch))
         {
             CreatePrefab();
-            isCreated = true;
+            SEPlayer.Play(CreateSoundResName);
         }
 	}
 
