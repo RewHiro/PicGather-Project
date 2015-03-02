@@ -13,7 +13,8 @@ public class HideAndSeek : EventBase
     // Use this for initialization
     void Start()
     {
-        Instantiate(openOurEyes,new Vector3(8.98f,8.44f,-3.9f),Quaternion.identity);
+        var cameraPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - Screen.width * 0.1f, Screen.height - Screen.height * 0.15f, 15));
+        Instantiate(openOurEyes, cameraPos, Quaternion.identity);
         eventObject = GameObject.Find("OpenOurEyes(Clone)").GetComponent<OpenOurEyesMover>();
         feverManager = GameObject.Find("FeverGauge").GetComponent<FeverManager>();
     }

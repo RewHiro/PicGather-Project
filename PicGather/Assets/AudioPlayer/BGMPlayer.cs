@@ -45,7 +45,9 @@ public class BGMPlayer : MonoBehaviour
     Dictionary<string, Data> AudioMap = new Dictionary<string, Data>();
     FadeTimeData FadeTime;
 
-    void Start()
+    public bool IsPlaying { get { return Source.isPlaying; } }
+
+    void Awake()
     {
         Source = GetComponent<AudioSource>();
     }
