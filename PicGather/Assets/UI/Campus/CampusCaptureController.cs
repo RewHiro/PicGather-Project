@@ -24,10 +24,11 @@ public class CampusCaptureController : MonoBehaviour
     [SerializeField]
     GameObject CampusFrame = null;
 
-    Rect CaptureRect = new Rect(0, 0, 0, 0);
+    public Rect CaptureRect {get;private set;}
     
     Button ClickButton = null;
-    CharacterManager CharaManager = null;
+
+    public CharacterManager CharaManager {get;private set;}
 
     void Start()
     {
@@ -100,6 +101,7 @@ public class CampusCaptureController : MonoBehaviour
 
         CharaManager.Entry();
 
+        CharaManager = null;
     }
 
     /// <summary>
@@ -132,6 +134,14 @@ public class CampusCaptureController : MonoBehaviour
     public void ChangeSaveCharacter(CharacterManager character)
     {
         CharaManager = character;
+    }
+
+    /// <summary>
+    /// 保存するキャラクターデータをNullにする
+    /// </summary>
+    public void NullSaveCharacter()
+    {
+        CharaManager = null;
     }
 
 }
