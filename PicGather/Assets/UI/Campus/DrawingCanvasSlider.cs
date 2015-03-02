@@ -35,6 +35,18 @@ public class DrawingCanvasSlider : MonoBehaviour {
     [SerializeField]
     BGMManager BGM = null;
 
+    [SerializeField]
+    SoundEffectPlayer SEPlayer = null;
+
+    [SerializeField]
+    string OpenSoundResName = string.Empty;
+
+    [SerializeField]
+    string CloseSoundResName = string.Empty;
+
+    [SerializeField]
+    string SaveSoundResName = string.Empty;
+
     Animation MoveAnimation = null;
     
     enum STATE
@@ -139,6 +151,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         UIModeChanger.Enable(false);
         StampList.CloseAnimation();
         BGM.Stop();
+        SEPlayer.Play(OpenSoundResName);
     }
 
     /// <summary>
@@ -146,12 +159,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     /// </summary>
     public void Close()
     {
-        if (State == STATE.Close) return;
-        if (MoveAnimation.isPlaying) return;
-
-        State = STATE.Close;
-        MoveAnimation.PlayQueued(CloseAnimClip.name);
-        BGM.Stop();
+        CloseAnimation(CloseSoundResName);
     }
 
     /// <summary>
@@ -159,13 +167,22 @@ public class DrawingCanvasSlider : MonoBehaviour {
     /// </summary>
     public void SaveClose()
     {
+        if (!CampusTemplate.IsSelect) return;
+
+        CloseAnimation(SaveSoundResName);
+
+    }
+
+    void CloseAnimation(string resName)
+    {
+
         if (State == STATE.Close) return;
         if (MoveAnimation.isPlaying) return;
-        if (!CampusTemplate.IsSelect) return;
 
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
+        BGM.Stop();
+        SEPlayer.Play(resName);
     }
-
 
 }

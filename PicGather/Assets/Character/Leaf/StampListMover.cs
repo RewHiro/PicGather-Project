@@ -20,6 +20,15 @@ public class StampListMover : MonoBehaviour {
     [SerializeField]
     GameObject StampList = null;
 
+    [SerializeField]
+    SoundEffectPlayer SEPlayer = null;
+
+    [SerializeField]
+    string OpenSoundResName = string.Empty;
+
+    [SerializeField]
+    string CloseSoundResName = string.Empty;
+
     Animation MoveAnimation = null;
 
     public bool IsCreate { get { return (State == STATE.Stop); } }
@@ -58,6 +67,7 @@ public class StampListMover : MonoBehaviour {
 
         State = STATE.Open;
         MoveAnimation.PlayQueued(OpenAnimClip.name);
+        SEPlayer.Play(OpenSoundResName);
 
         if (StampList.activeSelf) return;
         StampList.SetActive(true);
@@ -68,6 +78,8 @@ public class StampListMover : MonoBehaviour {
         if (State != STATE.Stop) return;
 
         CloseAnimation();
+        SEPlayer.Play(CloseSoundResName);
+
     }
 
     public void CloseAnimation()
