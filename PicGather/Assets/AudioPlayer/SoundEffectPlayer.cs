@@ -25,11 +25,13 @@ public class SoundEffectPlayer : MonoBehaviour {
 
     Dictionary<string, Data> AudioMap = new Dictionary<string, Data>();
 
+    const float MaxVolume = 0.1f;
+
     /// <summary>
     /// 再生
     /// </summary>
     /// <param name="resName">Resource名</param>
-    public void Play(string resName)
+    public void Play(string resName,float pitch = 1.0f)
     {
         if (!AudioMap.ContainsKey(resName))
         {
@@ -39,8 +41,12 @@ public class SoundEffectPlayer : MonoBehaviour {
         Sources.Add(gameObject.AddComponent<AudioSource>());
         var index = Sources.Count - 1;
         Sources[index].clip = AudioMap[resName].Clip;
+        Sources[index].pitch = pitch;
+        Sources[index].volume = MaxVolume;
         Sources[index].Play();
+
     }
+
 
     void Update()
     {
@@ -54,5 +60,23 @@ public class SoundEffectPlayer : MonoBehaviour {
             }
         }
 
+    }
+
+    /// <summary>
+    /// 再生中かどうか
+    /// </summary>
+    /// <param name="resName">Resource名</param>
+    /// <returns></returns>
+    public bool IsPlaying(string resName)
+    {
+        foreach (var source in Sources)
+        {
+            if (source.isPlaying && source.clip.name == resName)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

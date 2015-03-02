@@ -13,6 +13,12 @@ public class ChangeLeafStampShowList : MonoBehaviour
     [SerializeField]
     LeafStampManagerController GraphicsPath = null;
 
+    [SerializeField]
+    SoundEffectPlayer Player = null;
+
+    [SerializeField]
+    string ChangeSoundResName = string.Empty;
+
     /// <summary>
     /// 表示しているスタンプの最大数
     /// </summary>
@@ -153,6 +159,8 @@ public class ChangeLeafStampShowList : MonoBehaviour
         ScrollValue -= (ScrollValue > 0) ? 1 : 0;
 
         IconsInitialize();
+
+        Player.Play(ChangeSoundResName);
     }
 
 
@@ -164,6 +172,8 @@ public class ChangeLeafStampShowList : MonoBehaviour
         ScrollValue += (GraphicsPath.ID > ScrollValue + MaxStampIconNumber) ? 1 : 0;
 
         IconsInitialize();
+
+        Player.Play(ChangeSoundResName);
 
     }
 

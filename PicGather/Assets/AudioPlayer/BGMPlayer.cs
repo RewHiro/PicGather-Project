@@ -37,8 +37,8 @@ public class BGMPlayer : MonoBehaviour
     }
 
     const float MinVolume = 0;
-    const float MaxVolume = 1;
-    const float StartFadeInVolume = 0.1f;
+    const float MaxVolume = 0.1f;
+    const float StartFadeInVolume = 0.005f;
 
     AudioSource Source = null;
 

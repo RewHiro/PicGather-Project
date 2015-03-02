@@ -18,13 +18,39 @@ public class BGMManager : MonoBehaviour {
     [SerializeField]
     string nightResName = string.Empty;
 
-    readonly FadeTimeData fadeTime = new FadeTimeData(5.0f, 5.0f);
+    [SerializeField]
+    string drawingResName = string.Empty;
 
 
-    /// <summary>
+    readonly FadeTimeData fadeTime = new FadeTimeData(1.0f, 1.0f);
+
+    /// <summary
     /// BGMを切り替える
     /// </summary>
     void SelectPlay()
+    {
+        if (ModeManager.IsDrawingMode)
+        {
+            Drawing();
+        }
+        else if (ModeManager.IsGameMode)
+        {
+            TimeZone();
+        }
+    }
+
+    /// <summary>
+    /// お絵かきモード
+    /// </summary>
+    void Drawing()
+    {
+        player.Play(drawingResName, fadeTime);
+    }
+
+    /// <summary>
+    /// 時間帯の再生
+    /// </summary>
+    void TimeZone()
     {
         if (DateTimeController.IsMorning)
         {
@@ -49,9 +75,18 @@ public class BGMManager : MonoBehaviour {
     /// <summary>
     /// BGMを止める
     /// </summary>
-    void Stop()
+    void TimeZoneStop()
     {
         if (!DateTimeController.IsChanged) return;
+        
+        Stop();
+    }
+
+    /// <summary>
+    /// 停止
+    /// </summary>
+    public void Stop()
+    {
         player.Stop();
     }
 
@@ -68,7 +103,7 @@ public class BGMManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Stop();
+        TimeZoneStop();
         Play();
 
     }

@@ -11,6 +11,6 @@ public class TreeSE : MonoBehaviour
 
     public void Play()
     {
-        Player.Play(ResName);
+        Player.Play(ResName,3.0f);
     }
 }

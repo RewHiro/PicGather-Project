@@ -6,6 +6,13 @@ public class StampSelecter : MonoBehaviour {
     [SerializeField]
     GameObject Frame = null;
 
+    [SerializeField]
+    SoundEffectPlayer Player = null;
+
+    [SerializeField]
+    string ChangeSoundResName = string.Empty;
+
+
 	// Use this for initialization
 	void Start () {
 	
@@ -25,5 +32,6 @@ public class StampSelecter : MonoBehaviour {
         var rectTrans = Frame.GetComponent<RectTransform>();
         rectTrans.anchoredPosition3D = buttonRectTrans.anchoredPosition3D;
 
+        Player.Play(ChangeSoundResName);
     }
 }
