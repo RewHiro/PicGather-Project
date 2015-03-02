@@ -3,6 +3,30 @@ using System.Collections;
 
 public class AllTutorialDestroyer : MonoBehaviour {
 
+    private TutorialManager TutorialMngr = null;
+
+    void Start()
+    {
+        TutorialMngr = FindObjectOfType<TutorialManager>();
+
+    }
+
+    void Update()
+    {
+        AlreadyAllTutorialEnded();   
+    }
+
+    private void AlreadyAllTutorialEnded()
+    {
+
+        foreach(var flag in TutorialMngr.AlreadyEndedList)
+        {
+            if (!flag) return;
+        }
+
+        DestroyAllTutorial();
+    }
+
     public void DestroyAllTutorial()
     {
         var Tutorials = GameObject.FindGameObjectsWithTag("Tutorial");

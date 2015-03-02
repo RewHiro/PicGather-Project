@@ -30,7 +30,7 @@ public class FeverDataController : MonoBehaviour {
         var folderPath = "Database/";
         var filePath = folderPath + name + ".json";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new FeverData(-1);
+        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new FeverData(-1,-1);
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else

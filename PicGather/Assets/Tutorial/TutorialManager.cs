@@ -10,8 +10,8 @@ public class TutorialManager : MonoBehaviour {
     public enum TutorialList
     {
         NULL = -1,
-        SelectCampus ,
         SelectStampList,
+        PutStamp,
         DrawLeaf,
         DrawFairy,
         DrawCloud,
@@ -40,14 +40,6 @@ public class TutorialManager : MonoBehaviour {
         {
             AlreadyEndedList[i] = false;
         }
-    }
-
-    /// <summary>
-    /// 全てのキャンパスが描かれた
-    /// </summary>
-    public void AlreadyDrawAllCampus()
-    {
-        AlreadyEndedList[(int)TutorialList.SelectCampus] = true;  
     }
 
     /// <summary>
@@ -119,6 +111,8 @@ public class TutorialManager : MonoBehaviour {
     public void ChangeCampusMode(bool _changed)
     {
         var TutorialMngr = FindObjectOfType<TutorialManager>();
+
+        if (TutorialMngr == null) return;
 
         TutorialMngr.IsCampusMode = _changed;
     }

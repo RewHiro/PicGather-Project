@@ -4,11 +4,13 @@ using System.Collections;
 
 public class EnableSaveButton : MonoBehaviour
 {
+    private TutorialManager TutorialMngr = null;
     private CampusCaptureController CCController = null;
     private Image ThisImage = null;
     // Use this for initialization
     void Start()
     {
+        TutorialMngr = FindObjectOfType<TutorialManager>();
         CCController = FindObjectOfType<CampusCaptureController>();
         ThisImage = GetComponent<Image>();
     }
@@ -19,6 +21,16 @@ public class EnableSaveButton : MonoBehaviour
     {
         ThisImage.enabled = EnableImage();
 
+        CanDestroy();
+
+    }
+
+    private void CanDestroy()
+    {
+        if (TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
+           TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawFairy] &&
+           TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawLeaf])
+            Destroy(transform.parent.gameObject);
     }
 
     /// <summary>

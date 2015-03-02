@@ -5,12 +5,14 @@ using System.Collections;
 public class EnableStampGesture : MonoBehaviour {
 
     private StampGestureManager StampGestureMngr = null;
+    private TutorialManager TutorialMngr = null;
 
     private Image ThisImage = null;
     
     // Use this for initialization
 	void Start () {
         StampGestureMngr = FindObjectOfType<StampGestureManager>();
+        TutorialMngr = FindObjectOfType<TutorialManager>();
         ThisImage = GetComponent<Image>();
 	}
 	
@@ -18,8 +20,9 @@ public class EnableStampGesture : MonoBehaviour {
 	void Update () {
         ThisImage.enabled = StampGestureMngr.EnableImage;
 
-        if(CanDestroy())
+        if(StampGestureMngr.LeafNumber >= 0 && CanDestroy())
         {
+            TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.PutStamp] = true;
             Destroy(transform.parent.gameObject);
         }
 	}
@@ -30,9 +33,9 @@ public class EnableStampGesture : MonoBehaviour {
     /// <returns>破壊する...true 破壊しない...false</returns>
     private bool CanDestroy()
     {
-        if (StampGestureMngr.LeafNumber <= 0) return false;
 
         var nowLeafNumber = GameObject.FindGameObjectsWithTag("Leaf").Length;
+
         if (StampGestureMngr.LeafNumber < nowLeafNumber)
         {
             return true;

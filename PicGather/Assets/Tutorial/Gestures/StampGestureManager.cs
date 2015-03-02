@@ -16,6 +16,7 @@ public class StampGestureManager : MonoBehaviour {
 
     void Start()
     {
+        LeafNumber = -1;
         EnableImage = false;
     }
 
@@ -24,7 +25,11 @@ public class StampGestureManager : MonoBehaviour {
     /// </summary>
     public void SetLeafNumber()
     {
-        FindObjectOfType<StampGestureManager>().LeafNumber = GameObject.FindGameObjectsWithTag("Leaf").Length;
+        var StampGestureMngr = FindObjectOfType<StampGestureManager>();
+        
+        if (StampGestureMngr == null) return;
+
+        StampGestureMngr.LeafNumber = GameObject.FindGameObjectsWithTag("Leaf").Length;
     }
 
     /// <summary>
@@ -33,6 +38,10 @@ public class StampGestureManager : MonoBehaviour {
     /// <param name="isStampMode">スタンプを押す状態...true 押す状態じゃない...false</param>
     public void ChangeStampState(bool isStampMode)
     {
-        FindObjectOfType<StampGestureManager>().EnableImage = isStampMode;
+        var StampGestureMngr = FindObjectOfType<StampGestureManager>();
+
+        if (StampGestureMngr == null) return;
+
+        StampGestureMngr.EnableImage = isStampMode;
     }
 }
