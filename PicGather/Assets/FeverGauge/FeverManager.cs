@@ -46,6 +46,7 @@ public class FeverManager : MonoBehaviour {
 
         NumTimes = Data.GetLoadData().Times;
         MaxFeverScore = Data.GetLoadData().MaxScore;
+        FeverScore = Data.GetLoadData().NowScore;
 	}
 	
 	// Update is called once per frame
@@ -77,6 +78,7 @@ public class FeverManager : MonoBehaviour {
             if (FeverScore > IncreaseScore)
             {
                 IsIncrease = false;
+                AllSave.AllSave();
             }
         }
 
@@ -136,6 +138,6 @@ public class FeverManager : MonoBehaviour {
 
     public void Save()
     {
-        Data.Write(NumTimes, MaxFeverScore);
+        Data.Write(new FeverData(NumTimes, FeverScore,MaxFeverScore));
     }
 }

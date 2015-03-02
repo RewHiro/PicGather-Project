@@ -32,6 +32,9 @@ public class DrawingCanvasSlider : MonoBehaviour {
     [SerializeField]
     UIDrawingModeChanger UIModeChanger = null;
 
+    [SerializeField]
+    BGMManager BGM = null;
+
     Animation MoveAnimation = null;
     
     enum STATE
@@ -135,6 +138,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         MoveAnimation.PlayQueued(OpenAnimClip.name);
         UIModeChanger.Enable(false);
         StampList.CloseAnimation();
+        BGM.Stop();
     }
 
     /// <summary>
@@ -147,6 +151,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
+        BGM.Stop();
     }
 
     /// <summary>

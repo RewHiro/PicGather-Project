@@ -35,6 +35,7 @@ public class PlayingMelody : EventBase
     /// </summary>
     private const int MaxSoundNumber = 5;
 
+    private const float MaxVolume = 0.1f;
 
     /// <summary>
     /// 音楽データをまとめて格納するリスト
@@ -72,7 +73,7 @@ public class PlayingMelody : EventBase
         if (!audio.isPlaying && CanPlaySoundNumber > PlayingSoundNumber)
         {
             audio.clip = SoundsList[PlayingSoundNumber++];
-
+            audio.volume = MaxVolume;
             audio.Play();
         }
 

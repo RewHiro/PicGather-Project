@@ -9,15 +9,17 @@ using System.IO;
 
 public struct FeverData
 {
-    public FeverData(int times, float maxScore)
+    public FeverData(int times,float nowScore, float maxScore)
         : this()
     {
         Times = times;
         MaxScore = maxScore;
+        NowScore = nowScore;
     }
 
     public int Times { get; set; }
     public float MaxScore { get; set; }
+    public float NowScore { get; set; }
 }
 
 public class FeverDataController : MonoBehaviour {
@@ -37,7 +39,7 @@ public class FeverDataController : MonoBehaviour {
         var folderpath = Application.persistentDataPath + "/Database/";
         var filePath = folderpath + name + ".json";
 
-        if (!File.Exists(filePath)) return new FeverData(-1, -1); ;
+        if (!File.Exists(filePath)) return new FeverData(-1, -1, -1); ;
 
         var jsonText = File.ReadAllText(filePath);
 #endif
@@ -50,9 +52,9 @@ public class FeverDataController : MonoBehaviour {
     /// 書き込み
     /// </summary>
     /// <param name="times"></param>
-    public void Write(int times,float maxScore)
+    public void Write(FeverData data)
     {
-        Data = new FeverData(times, maxScore);
+        Data = data;
         FileWrite();
     }
 

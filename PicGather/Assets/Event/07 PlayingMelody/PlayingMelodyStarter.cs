@@ -3,6 +3,9 @@ using System.Collections;
 
 public class PlayingMelodyStarter : EventStarterBase
 {
+    [SerializeField]
+    BGMManager BGM = null;
+
     // Use this for initialization
     void Start()
     {
@@ -35,6 +38,7 @@ public class PlayingMelodyStarter : EventStarterBase
 
         CanStart = false;
         EventMngr.BeginEvent(OriginEventPrefab);
+        BGM.Stop();
     }
 
     /// <summary>
