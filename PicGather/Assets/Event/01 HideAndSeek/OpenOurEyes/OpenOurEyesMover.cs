@@ -23,13 +23,16 @@ public class OpenOurEyesMover : MonoBehaviour {
 
     public State state { get; private set; }
     float RotationAngle = 0;
-    float jumpAnimation = 0;
-    float count = 0;
+    float goalPosY;
 
 	// Use this for initialization
 	void Start () {
         state = State.APPEARANCE;
         renderer.material.mainTexture = textures[0];
+        renderer.sortingLayerName = "OpenOurEyes";
+        var worldPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - Screen.height * 0.2f, 2 - Camera.main.GetComponent<CameraMover>().MoveRadius));
+        goalPosY = worldPos.y;
+
 	}
 	
 	// Update is called once per frame
@@ -62,10 +65,11 @@ public class OpenOurEyesMover : MonoBehaviour {
 
     void AppearanceToHide()
     {
-        count += Time.deltaTime;
-        if (count < 7.0f) return;
+        if (goalPosY + 0.01f < transform.position.y) return;
         state = State.HIDE;
         renderer.material.mainTexture = textures[1];
+        RotationAngle = Mathf.Atan2(transform.position.x, transform.position.z);
+
     }
 
     void OnMouseCollision()
@@ -81,7 +85,6 @@ public class OpenOurEyesMover : MonoBehaviour {
     void HideMove()
     {
         var pos = Camera.main.WorldToScreenPoint(transform.localPosition);
-        jumpAnimation += 1;
         if (Screen.width / 2 - 0.01f > pos.x)
         {
             RotationAngle += 0.01f;
@@ -93,7 +96,7 @@ public class OpenOurEyesMover : MonoBehaviour {
         }
         transform.localPosition = new Vector3(
             Mathf.Sin(RotationAngle) * 2,
-            transform.localPosition.y + Mathf.Sin(jumpAnimation) * 0.05f,
+            transform.localPosition.y,
             Mathf.Cos(RotationAngle) * 2);
     }
 }
