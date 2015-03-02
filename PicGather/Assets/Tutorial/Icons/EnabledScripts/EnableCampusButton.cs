@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 public class EnableCampusButton : MonoBehaviour
 {
     private TutorialManager TutorialMngr = null;
-    private Image ThisImage = null;
 
     // Use this for initialization
     void Start()
     {
         TutorialMngr = FindObjectOfType<TutorialManager>();
-        ThisImage = GetComponent<Image>();
     }
 
 

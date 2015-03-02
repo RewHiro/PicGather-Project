@@ -7,7 +7,8 @@ public class GestureMover : MonoBehaviour {
     /// <summary>
     /// ジェスチャーの1ループにかかる時間
     /// </summary>
-    private const float LoopTime = 2.5f;
+    [SerializeField]
+    private float LoopTime = 2.5f;
 
     /// <summary>
     /// ジェスチャー開始からの時間を計るの変数
@@ -30,11 +31,6 @@ public class GestureMover : MonoBehaviour {
     private Vector3 Velocity = Vector3.zero;
 
     /// <summary>
-    /// 絵を描く範囲
-    /// </summary>
-    private RectTransform rect = null;
-
-    /// <summary>
     /// このGameObjectの持つImage
     /// </summary>
     private Image ThisImage = null;
@@ -42,7 +38,6 @@ public class GestureMover : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ThisImage = GetComponent<Image>();
-        rect = transform as RectTransform;
         StartScreenPosition = PositionInScreen = Camera.main.WorldToScreenPoint(transform.position);
         InitializeVelocity();
 

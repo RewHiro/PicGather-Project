@@ -5,7 +5,6 @@ using System.Collections;
 public class EnableStampList : MonoBehaviour {
 
     private TutorialManager TutorialMngr = null;
-    private CampusCaptureController CCController = null;
     private Image ThisImage = null;
 
     private StampListMover SLMover = null;
@@ -13,7 +12,6 @@ public class EnableStampList : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        CCController = FindObjectOfType<CampusCaptureController>();
         TutorialMngr = FindObjectOfType<TutorialManager>();
         ThisImage = GetComponent<Image>();
         SLMover = FindObjectOfType<StampListMover>();
