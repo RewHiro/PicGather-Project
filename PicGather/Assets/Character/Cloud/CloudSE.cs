@@ -5,8 +5,15 @@ public class CloudSE : MonoBehaviour {
 
     CloudMover mover = null;
 
+    [SerializeField]
+    SoundEffectPlayer Player = null;
+
+    [SerializeField]
+    string RainResName = null;
+
 	// Use this for initialization
 	void Start () {
+        Player = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
         mover = GetComponent<CloudMover>();
 	}
 	
@@ -14,12 +21,9 @@ public class CloudSE : MonoBehaviour {
 	void Update () {
         if (mover.IsRain)
         {
-            if (audio.isPlaying) return;
-            audio.Play();
-        }
-        else
-        {
-            audio.Stop();
+            if (Player.IsPlaying(RainResName)) return;
+
+            Player.Play(RainResName);
         }
 	}
 }

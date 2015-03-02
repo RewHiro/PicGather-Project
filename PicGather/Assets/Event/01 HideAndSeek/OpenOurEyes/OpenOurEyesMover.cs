@@ -48,7 +48,7 @@ public class OpenOurEyesMover : MonoBehaviour {
         if (state != State.APPEARANCE) return;
         iTween.MoveTo(gameObject,
             iTween.Hash("position", Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2 - Screen.height * 0.2f, 2 - Camera.main.GetComponent<CameraMover>().MoveRadius)),
-            "time", 7.0f,
+            "time", 3.0f,
             "easetype", iTween.EaseType.easeOutQuad));
 
 
@@ -75,8 +75,13 @@ public class OpenOurEyesMover : MonoBehaviour {
     void OnMouseCollision()
     {
         if (!(TouchManager.IsMouseButtonDown(gameObject)|| TouchManager.IsTouching(gameObject))) return;
+        
         state = State.FOUND;
-        Instantiate(GraphicEffectPrefab, gameObject.transform.position, Quaternion.identity);
+        
+        var effect = (GameObject)Instantiate(GraphicEffectPrefab, gameObject.transform.position, Quaternion.identity);
+        const float ScaleTime = 1.0f;
+        iTween.ScaleTo(effect, new Vector3(3, 3, 3), ScaleTime);
+        
         Instantiate(FoundSE);
         Destroy(gameObject);
         GameObject.Find("SunCharacter").GetComponent<Image>().enabled = true;

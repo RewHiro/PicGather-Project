@@ -10,33 +10,23 @@ using System.Collections.Generic;
 
 public class SoundEffectController : MonoBehaviour {
 
+    SoundEffectPlayer Player = null;
+
     [SerializeField]
-    List<AudioClip> AudioEffectClip = new List<AudioClip>();
-
-
-    AudioSource AudioSource;
+    List<string> ResNameData = new List<string>(); 
 
 	void Start () {
+        Player = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
         AudioPlay();
+        Destroy(gameObject);
 	}
 	
     //  オーディオを再生
     //  ランダムで再生するクリップ指定し、再生
     void AudioPlay()
     {
-        AudioSource = GetComponent<AudioSource>();
-
-        var randomIndex = Random.Range(0, AudioEffectClip.Count);
-        AudioSource.clip = AudioEffectClip[randomIndex];
-
-        AudioSource.Play();
+        var index = Random.Range(0, ResNameData.Count);
+        Player.Play(ResNameData[index]);
     }
 
-
-	void Update () {
-        if(!AudioSource.isPlaying)
-        {
-            Destroy(gameObject);
-        }
-	}
 }
