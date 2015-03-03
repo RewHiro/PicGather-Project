@@ -214,6 +214,6 @@ public class BabbleMover : MonoBehaviour {
     private void InitializePosition()
     {
         PositionInScreen.x = Screen.width;
-        PositionInScreen.y = Screen.height;
+        PositionInScreen.y = 0;
     }
 }
