@@ -1,0 +1,93 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+public class StampListMover : MonoBehaviour {
+
+    public enum STATE
+    {
+        Open,
+        Stop,
+        Close,
+    };
+
+    [SerializeField]
+    AnimationClip OpenAnimClip = null;
+
+    [SerializeField]
+    AnimationClip CloseAnimClip = null;
+
+    [SerializeField]
+    GameObject StampList = null;
+
+    [SerializeField]
+    SoundEffectPlayer SEPlayer = null;
+
+    [SerializeField]
+    string OpenSoundResName = string.Empty;
+
+    [SerializeField]
+    string CloseSoundResName = string.Empty;
+
+    Animation MoveAnimation = null;
+
+    public bool IsCreate { get { return (State == STATE.Stop); } }
+    public bool IsClosed { get { return (State == STATE.Close); } }
+
+    public STATE State {get;private set;}
+
+    // Use this for initialization
+	void Start () {
+        State = STATE.Close;
+        MoveAnimation = GetComponent<Animation>();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        if (ModeManager.IsFerverMode || ModeManager.IsEventMode && State != STATE.Close)
+        {
+            CloseAnimation();
+            StampList.SetActive(false);
+
+        }
+
+        if (State == STATE.Open)
+        {
+            if (!MoveAnimation.isPlaying)
+            {
+                State = STATE.Stop;
+            }
+        }
+
+	}
+
+    public void Open()
+    {
+        if (State != STATE.Close) return;
+
+        State = STATE.Open;
+        MoveAnimation.PlayQueued(OpenAnimClip.name);
+        SEPlayer.Play(OpenSoundResName);
+
+        if (StampList.activeSelf) return;
+        StampList.SetActive(true);
+    }
+
+    public void Close()
+    {
+        if (State != STATE.Stop) return;
+
+        CloseAnimation();
+        SEPlayer.Play(CloseSoundResName);
+
+    }
+
+    public void CloseAnimation()
+    {
+        if (State != STATE.Stop) return;
+
+        State = STATE.Close;
+        MoveAnimation.PlayQueued(CloseAnimClip.name);
+    }
+
+}
