@@ -114,7 +114,7 @@ public class LibForWinRT
     public static async void WriteSharePicture(string folderPath, string fileName, byte[] body)
     {
         // ローミングフォルダ
-        var folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(ParentFolder + folderPath, CreationCollisionOption.OpenIfExists);
+        var folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
 
         // ファイル（存在すれば上書き）
         var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);

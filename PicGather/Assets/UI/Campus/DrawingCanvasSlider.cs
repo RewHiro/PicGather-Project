@@ -128,7 +128,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
     IEnumerator WaitClosed()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(1.0f);
 
         CampusBackGround.Enabled();
         CampusTemplate.NonSelect();
