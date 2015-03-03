@@ -10,13 +10,16 @@ public class MoonGreeting : EventBase
     readonly Vector3 STARTPOS = new Vector3(Screen.width - Screen.width * 0.1f, Screen.height - Screen.height * 0.165f, 22);
     const float fieldOfViewMax = 60;
     const float fieldOfViewMin = 24;
-    const float fieldOfViewAddValue = 0.2f;
+    const float fieldOfViewAddValue = 1.0f;
 
     [SerializeField]
     GameObject moonPrefab = null;
 
     [SerializeField]
     float greetTime = 5.0f;
+
+    [SerializeField]
+    float lookTime = 2.0f;
 
     GameObject CelestialBody = null;
 
@@ -73,7 +76,7 @@ public class MoonGreeting : EventBase
         if (state != State.ATTENSION) return;
 
         var targetRotation = Quaternion.LookRotation(moon.transform.position - Camera.main.transform.position);
-        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, Time.deltaTime);
+        Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, targetRotation, lookTime * Time.deltaTime);
         if (Camera.main.transform.rotation == targetRotation)
         {
             state = State.ZOOMUP;
@@ -101,7 +104,6 @@ public class MoonGreeting : EventBase
     /// <summary>
     /// 挨拶
     /// </summary>
-    /// HACK:スプライトの配列がマジックナンバーになっており、画像を4枚いれないとちゃんと動かない
     void Greet()
     {
         if (state != State.GREET) return;
