@@ -44,6 +44,10 @@ public class TreeChanger : MonoBehaviour
     [SerializeField]
     float BroadenValue = 1.0f;
 
+    [SerializeField]
+    GameObject GrowthEffect = null;
+
+
     TreeSE SEPlayer = null;
     GameObject Tree = null;
     TreeSaveDataWriter Writer = null;
@@ -116,6 +120,8 @@ public class TreeChanger : MonoBehaviour
         {
             SEPlayer.Play();
             FruitsFall();
+            var clone = (GameObject)Instantiate(GrowthEffect, GrowthEffect.transform.position, Quaternion.identity);
+            clone.transform.parent = transform;
         }
 
     }
