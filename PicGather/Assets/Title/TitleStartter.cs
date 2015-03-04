@@ -76,7 +76,7 @@ public class TitleStartter : MonoBehaviour {
 
         if (Alpha >= 1)
         {
-            Application.LoadLevel("GameMain");
+            Application.LoadLevel("Story");
         }
 	}
 
