@@ -23,7 +23,8 @@ public class EnableStampList : MonoBehaviour {
     {
         ThisImage.enabled = EnableImage();
 
-        if(TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.SelectStampList])
+        if (TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.PutStamp] &&
+            SLMover.State == StampListMover.STATE.Close)
         {
             Destroy(transform.parent.gameObject);
         }
@@ -39,6 +40,12 @@ public class EnableStampList : MonoBehaviour {
         if (TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawLeaf] &&
             !TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.SelectStampList] &&
             SLMover.State == StampListMover.STATE.Close)
+        {
+            return true;
+        }
+
+        if(TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.PutStamp] &&
+            SLMover.State == StampListMover.STATE.Stop)
         {
             return true;
         }
