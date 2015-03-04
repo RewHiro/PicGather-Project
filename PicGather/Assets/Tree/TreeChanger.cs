@@ -52,6 +52,7 @@ public class TreeChanger : MonoBehaviour
     GameObject Tree = null;
     TreeSaveDataWriter Writer = null;
     Vector3 LocalPos = Vector3.zero;
+    TreeScaling Scaling = null;
 
     enum STATE
     {
@@ -68,6 +69,7 @@ public class TreeChanger : MonoBehaviour
 
     // Use this for initialization
 	void Start () {
+        Scaling = GetComponent<TreeScaling>();
         SEPlayer = GetComponent<TreeSE>();
         Writer = GetComponent<TreeSaveDataWriter>();
         Tree = GameObject.Find("Tree");
@@ -120,6 +122,7 @@ public class TreeChanger : MonoBehaviour
         {
             SEPlayer.Play();
             FruitsFall();
+            LeafsFall();
             var clone = (GameObject)Instantiate(GrowthEffect, GrowthEffect.transform.position, Quaternion.identity);
             clone.transform.parent = transform;
         }
@@ -139,6 +142,36 @@ public class TreeChanger : MonoBehaviour
             var falling = fruit.GetComponent<FruitFalling>();
             falling.OnFall();
         }
+    }
+
+    /// <summary>
+    /// 葉っぱが落ちる処理
+    /// </summary>
+    void LeafsFall()
+    {
+        var leafs = GameObject.FindGameObjectsWithTag("Leaf");
+        if (leafs.Length == 0) return;
+
+        foreach (var leaf in leafs)
+        {
+            var falling = leaf.GetComponent<LeafFalling>();
+            falling.OnFall();
+        }
+    }
+    /// <summary>
+    /// 次の木へ切り替える
+    /// </summary>
+    public void NextChange()
+    {
+        if (TreeData[CreateIndex].FeverNumTimes != Fever.NumTimes)
+        {
+            Scaling.NextScale();
+        }
+        else if (CreateIndex <= TreeData.Count)
+        {
+            CreateIndex++;
+        }
+        Save();
     }
 
     /// <summary>

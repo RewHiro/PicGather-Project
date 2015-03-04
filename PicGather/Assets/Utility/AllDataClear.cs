@@ -19,9 +19,8 @@ public class AllDataClear : MonoBehaviour {
         LibForWinRT.FolderDelete();
 #else
         
-        if (!Directory.Exists(Application.persistentDataPath)) return;
-        Directory.Delete(Application.persistentDataPath, true);
-
+        if (!Directory.Exists(Application.persistentDataPath + "/../")) return;
+        Directory.Delete(Application.persistentDataPath + "/../", true);
 #endif
     }
 }

@@ -14,9 +14,6 @@ public class StarCollectedStarter : EventStarterBase
     {
         GetManager();
 
-        //if (!DateTimeController.IsNight) return;
-        brightStar = Instantiate(brightStarPrefab) as GameObject;
-        
     }
 
     // Update is called once per frame
@@ -33,11 +30,12 @@ public class StarCollectedStarter : EventStarterBase
 
     void CrateBrightStar()
     {
-        if (!Judgment()) return;
         if (brightStar) return;
+        if (!Judgment()) return;
 
         brightStar = Instantiate(brightStarPrefab) as GameObject;
     }
+
     /// <summary>
     /// イベント開始条件
     /// </summary>

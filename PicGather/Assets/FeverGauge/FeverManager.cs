@@ -14,6 +14,14 @@ public class FeverManager : MonoBehaviour {
     [SerializeField]
     float AddSpeed = 2.0f;
 
+    [SerializeField]
+    FeverGaugeParticle Particle = null;
+
+    [SerializeField]
+    TreeChanger TreeChange = null;
+
+    float Count = 0;
+
     /// <summary>
     /// Feverゲージの上限、下限
     /// </summary>
@@ -46,15 +54,20 @@ public class FeverManager : MonoBehaviour {
 
         NumTimes = Data.GetLoadData().Times;
         MaxFeverScore = Data.GetLoadData().MaxScore;
-        FeverScore = Data.GetLoadData().NowScore;
+        IncreaseScore = Data.GetLoadData().NowScore;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (ModeManager.IsResetMode) return;
 
         Increase();
         LimitCheck();
 
+        if (ModeManager.IsFerverMode)
+        {
+            IsIncrease = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -67,15 +80,14 @@ public class FeverManager : MonoBehaviour {
     /// </summary>
     void Increase()
     {
-
         if (IsIncrease)
         {
-            FeverScore += AddSpeed *Time.deltaTime;
+            FeverScore += AddSpeed * Time.deltaTime;
             if (FeverScore >= IncreaseScore)
             {
+                Particle.Stop();
                 IsIncrease = false;
                 AllSave.AllSave();
-                Ferver(IncreaseScore);
             }
         }
 
@@ -89,11 +101,7 @@ public class FeverManager : MonoBehaviour {
     {
         IncreaseScore += addValue;
         IsIncrease = true;
-
-        if (!ModeManager.IsGameMode)
-        {
-            IsIncrease = false;
-        }
+        Particle.Play();
     }
     
     /// <summary>
@@ -103,32 +111,39 @@ public class FeverManager : MonoBehaviour {
     {
         if (FeverScore > MaxFeverScore && ModeManager.IsGameMode)
         {
+            Data.Write(new FeverData(NumTimes, 0, MaxFeverScore));
+            TreeChange.NextChange();
+
             MaxFeverScore *= 3;
             FeverScore = MaxFeverScore;
             IncreaseScore = 0;
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
-            Ferver(MaxFeverScore);
+            Ferver();
             NumTimes++;
+            Particle.Stop();
         }
 
-        if (FeverScore <= MinFeverScore )
+        if (ModeManager.IsFerverMode)
         {
-            if (ModeManager.IsFerverMode || ModeManager.IsResetMode || ModeManager.IsShareMode)
+            Count += Time.deltaTime;
+            if (FeverScore <= MinFeverScore || Count >= FeverTime)
             {
+                Count = 0;
                 FeverScore = MinFeverScore;
                 ModeManager.ChangeGameMode();
                 Sound.Stop();
                 UIEnabled.Enabled();
                 AllSave.AllSave();
             }
+
         }
     }
 
-    void Ferver(float maxScore)
+    void Ferver()
     {
-        iTween.ValueTo(gameObject, iTween.Hash("from", maxScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
+        iTween.ValueTo(gameObject, iTween.Hash("from", MaxFeverScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
     }
 
     void UpdateHandler(float value)

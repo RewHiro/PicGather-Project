@@ -16,14 +16,12 @@ public class ResetBoxActive : MonoBehaviour {
 
     void Update()
     {
-        if (ModeManager.IsResetMode) return;
+        if (UISelectManager.IsNoneMode) return;
         if (ModeManager.IsGameMode) return;
-        if (ModeManager.IsShareMode) return;
 
         SelectBox.SetActive(false);
-        ModeManager.ChangeGameMode();
         ResetButton.enabled = true;
-
+        UISelectManager.ChangeNoneMode();
     }
 
     /// <summary>
@@ -31,11 +29,10 @@ public class ResetBoxActive : MonoBehaviour {
     /// </summary>
     public void SetActiveSelectBox()
     {
-        if (ModeManager.IsShareMode) return;
-        if (ModeManager.IsResetMode) return;
+        if (!UISelectManager.IsNoneMode) return;
 
         SelectBox.SetActive(true);
-        ModeManager.ChangeResetMode();
+        UISelectManager.ChangeResetMode();
         ResetButton.enabled = false;
     }
 

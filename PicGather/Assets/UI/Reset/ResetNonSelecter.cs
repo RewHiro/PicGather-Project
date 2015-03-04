@@ -17,7 +17,7 @@ public class ResetNonSelecter : MonoBehaviour {
     public void NonActiveSelectBox()
     {
         SelectBox.SetActive(false);
-        ModeManager.ChangeGameMode();
+        UISelectManager.ChangeNoneMode();
         ResetButton.enabled = true;
     }
 }

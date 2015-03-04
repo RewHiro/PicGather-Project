@@ -11,7 +11,7 @@ public class HideAndSeekStarter : EventStarterBase
     /// 太陽を強調するアイコン
     /// </summary>
     [SerializeField]
-    private GameObject AnnouncePrefab;
+    private GameObject AnnouncePrefab = null;
 
     /// <summary>
     /// すでにアイコンを表示したかどうか

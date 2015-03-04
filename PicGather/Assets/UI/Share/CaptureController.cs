@@ -9,12 +9,17 @@ using UnityEngine.UI;
 using System.Collections;
 public class CaptureController : MonoBehaviour
 {
+    [SerializeField]
+    GameObject CaptureMenu = null;
+
+    CaptureLocalSaveController CaptureLocalSave = null;
     public Texture2D Texture { get; private set; }
 
     Button CaptureButton = null;
 
     void Start()
     {
+        CaptureLocalSave = GetComponent<CaptureLocalSaveController>();
         Texture = null;
         CaptureButton = GetComponent<Button>();
     }
@@ -24,13 +29,13 @@ public class CaptureController : MonoBehaviour
     /// </summary>
     public void TextureSave()
     {
-        if (ModeManager.IsResetMode) return;
-        if (ModeManager.IsShareMode) return;
+        if (!UISelectManager.IsNoneMode) return;
 
+        CaptureMenu.SetActive(true);
+        CaptureButton.enabled = false;
+        CaptureLocalSave.Save(this);
+        UISelectManager.ChangeShareMode();
         StartCoroutine("Capture");
-        ModeManager.ChangeShareMode();
-        CaptureButton.enabled = false; 
-
     }
 
     /// <summary>
@@ -38,7 +43,8 @@ public class CaptureController : MonoBehaviour
     /// </summary>
     public void ButtonEnable()
     {
-        CaptureButton.enabled = true; 
+        CaptureButton.enabled = true;
+        CaptureMenu.SetActive(false);
     }
 
     /// <summary>

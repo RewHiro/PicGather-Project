@@ -8,15 +8,15 @@ public class ModeManager : MonoBehaviour {
         Game,
         Drawing,
         Ferver,
-        Share,
-        Reset,
         Event,
+        Reset,
     };
 
     static STATE State = STATE.Game;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 	}
 	
 	// Update is called once per frame
@@ -43,15 +43,6 @@ public class ModeManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 今フィーバーモードなのかどうか
-    /// </summary>
-    /// <returns></returns>
-    public static bool IsFerverMode
-    {
-        get { return (State == STATE.Ferver); }
-    }
-
-    /// <summary>
     /// 今リセットなのかどうか
     /// </summary>
     /// <returns></returns>
@@ -60,15 +51,15 @@ public class ModeManager : MonoBehaviour {
         get { return (State == STATE.Reset); }
     }
 
+
     /// <summary>
-    /// 今シェア機能なのかどうか
+    /// 今フィーバーモードなのかどうか
     /// </summary>
     /// <returns></returns>
-    public static bool IsShareMode
+    public static bool IsFerverMode
     {
-        get { return (State == STATE.Share); }
+        get { return (State == STATE.Ferver); }
     }
-
 
     /// <summary>
     /// 今イベントなのかどうか
@@ -108,6 +99,15 @@ public class ModeManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// イベントに切り替える
+    /// </summary>
+    /// <returns></returns>
+    public static void ChangeEventMode()
+    {
+        State = STATE.Event;
+    }
+
+    /// <summary>
     /// リセットに切り替える
     /// </summary>
     /// <returns></returns>
@@ -116,21 +116,4 @@ public class ModeManager : MonoBehaviour {
         State = STATE.Reset;
     }
 
-    /// <summary>
-    /// シェアに切り替える
-    /// </summary>
-    /// <returns></returns>
-    public static void ChangeShareMode()
-    {
-        State = STATE.Share;
-    }
-
-    /// <summary>
-    /// イベントに切り替える
-    /// </summary>
-    /// <returns></returns>
-    public static void ChangeEventMode()
-    {
-        State = STATE.Event;
-    }
 }

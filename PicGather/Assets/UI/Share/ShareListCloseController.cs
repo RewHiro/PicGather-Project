@@ -4,14 +4,16 @@ using System.Collections;
 
 public class ShareListCloseController : MonoBehaviour {
 
+    [SerializeField]
     GameObject ShareList = null;
-    Button CloseButton = null;
+
+    [SerializeField]
     CaptureController Capture = null;
+
+    Button CloseButton = null;
 
 	// Use this for initialization
 	void Start () {
-        ShareList = GameObject.Find("PictureSaveUI");
-        Capture = GameObject.FindObjectOfType(typeof(CaptureController)) as CaptureController;
         CloseButton = GetComponent<Button>();
         CloseButton.onClick.AddListener(None);
 	}
@@ -24,7 +26,6 @@ public class ShareListCloseController : MonoBehaviour {
     void None()
     {
         Capture.ButtonEnable();
-        ModeManager.ChangeGameMode();
-        Destroy(ShareList);
+        UISelectManager.ChangeNoneMode();
     }
 }

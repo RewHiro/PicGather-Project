@@ -41,6 +41,15 @@ public class TreeScaling : MonoBehaviour {
         Finish();
     }
 
+    /// <summary>
+    /// 次のスケールにする
+    /// </summary>
+    public void NextScale()
+    {
+        Scale += AddScale;
+        transform.lossyScale.Scale(new Vector3(Scale, Scale, Scale));
+    }
+
     void ScaleTo()
     {
         if (!Changer.IsScaling) return;

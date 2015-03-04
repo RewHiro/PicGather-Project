@@ -51,6 +51,8 @@ public class ResetDirector : MonoBehaviour {
 
         if (alpha >= 1)
         {
+            ModeManager.ChangeGameMode();
+            UISelectManager.ChangeNoneMode();
             Application.LoadLevel("GameMain");
         }
 

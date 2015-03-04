@@ -53,9 +53,11 @@ public class CharacterCreator : MonoBehaviour {
         {
             Clone.renderer.material.mainTexture = Manager.CampusTexture;
         }
+
         Manager.CreateChildrenDataSave(Clone);
         Manager.ChildrensDataSave();
         Manager.NoneState();
+
         SEPlayer.Play(AppearanceSoundResName);
     }
 

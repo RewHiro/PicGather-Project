@@ -21,7 +21,7 @@ public class ShareSE : MonoBehaviour {
 
     public void SE()
     {
-        if (ModeManager.IsResetMode) return;
+        if (UISelectManager.IsResetMode) return;
         if (Player.IsPlaying(shareSEResName)) return;
 
         Player.Play(shareSEResName);

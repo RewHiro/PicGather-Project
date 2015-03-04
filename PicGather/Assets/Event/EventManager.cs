@@ -51,16 +51,9 @@ public class EventManager : MonoBehaviour {
         {
             Instantiate(EventInformation.PlayingEventPrefab);
             EventInformation.NowPlaying = true;
-
             EventInformation.BeginEvent = false;
-
-            UIEnabled.Unavailable();
-
-            foreach (var obj in HideGameObjects)
-            {
-                obj.SetActive(false);
-            }
-
+            
+            HideUI();
             ModeManager.ChangeEventMode();
         }
 	}
@@ -77,6 +70,19 @@ public class EventManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// UIを隠す
+    /// </summary>
+    void HideUI()
+    {
+        UIEnabled.Unavailable();
+        foreach (var obj in HideGameObjects)
+        {
+            obj.SetActive(false);
+        }
+
+    }
+
+    /// <summary>
     /// アイコンを削除
     /// </summary>
     public void IconDestroy()
@@ -89,6 +95,8 @@ public class EventManager : MonoBehaviour {
     /// </summary>
     public void Finish()
     {
+        UIEnabled.Enabled();
+
         foreach (var obj in HideGameObjects)
         {
             obj.SetActive(true);

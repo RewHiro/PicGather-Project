@@ -21,7 +21,7 @@ public class ResetButtonSoundEffecter : MonoBehaviour {
     /// </summary>
     public void ButtonPlay()
     {
-        if (!ModeManager.IsGameMode) return;
+        if (UISelectManager.IsNoneMode) return;
         if (SEPlayer.IsPlaying(ButtonResName)) return;
 
         SEPlayer.Play(ButtonResName);

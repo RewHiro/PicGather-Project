@@ -33,6 +33,8 @@ public class Resetter : MonoBehaviour {
         NonActive(shareButton);
 
         DataClear.Delete();
+
+        ModeManager.ChangeResetMode();
     }
 
     /// <summary>

@@ -21,18 +21,10 @@ public class CaptureLocalSaveController : MonoBehaviour {
 
     CaptureController Capture = null;
 
-    Button ClickButton = null;
-
     int ID = 0;
 
 	// Use this for initialization
 	void Start () {
-        if (!ClickButton)
-        {
-            ClickButton = GetComponent<Button>();
-            ClickButton.onClick.AddListener(Save);
-        }
-            
 	}
 
 	// Update is called once per frame
@@ -40,13 +32,11 @@ public class CaptureLocalSaveController : MonoBehaviour {
 	
 	}
 
-    void Save()
+    public void Save(CaptureController capture)
     {
-        if (ModeManager.IsResetMode) return;
-
         if (!Capture)
         {
-            Capture = GetComponent<CaptureController>();
+            Capture = capture;
         }
 
         StartCoroutine("WaitSave");
