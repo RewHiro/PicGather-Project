@@ -6,11 +6,13 @@ public class EnableLeafButton : MonoBehaviour
 {
     private TutorialManager TutorialMngr = null;
     private CampusCaptureController CCController = null;
+    private CampusTemplateSetting CampusTemplate = null;
     private Image ThisImage = null;
     // Use this for initialization
     void Start()
     {
         CCController = FindObjectOfType<CampusCaptureController>();
+        CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
         TutorialMngr = FindObjectOfType<TutorialManager>();
         ThisImage = GetComponent<Image>();
     }
@@ -37,7 +39,7 @@ public class EnableLeafButton : MonoBehaviour
             !TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawLeaf] &&
             TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
             TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawFairy] &&
-            (CCController.CharaManager == null || CCController.CharaManager.Name != "Leaf"))
+            (CampusTemplate.IsSelect == false || CCController.CharaManager.Name != "Leaf"))
         {
             return true;
         }
