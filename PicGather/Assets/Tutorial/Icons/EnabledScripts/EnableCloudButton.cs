@@ -6,11 +6,13 @@ public class EnableCloudButton : MonoBehaviour
 {
     private TutorialManager TutorialMngr = null;
     private CampusCaptureController CCController = null;
+    private CampusTemplateSetting CampusTemplate = null;
     private Image ThisImage = null;
     // Use this for initialization
     void Start()
     {
         CCController = FindObjectOfType<CampusCaptureController>();
+        CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
         TutorialMngr = FindObjectOfType<TutorialManager>();
         ThisImage = GetComponent<Image>();
     }
@@ -36,7 +38,7 @@ public class EnableCloudButton : MonoBehaviour
     {
         if (TutorialMngr.IsCampusMode &&
             !TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
-            (CCController.CharaManager == null || CCController.CharaManager.Name != "Cloud"))
+            (CampusTemplate.IsSelect == false || CCController.CharaManager.Name != "Cloud"))
         {
             return true;
         }

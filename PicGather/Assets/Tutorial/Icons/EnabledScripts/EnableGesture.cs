@@ -7,6 +7,7 @@ public class EnableGesture : MonoBehaviour
 
     private TutorialManager TutorialMngr = null;
     private CampusCaptureController CCController = null;
+    private CampusTemplateSetting CampusTemplate = null;
     private Image ThisImage = null;
 
     /// <summary>
@@ -29,6 +30,7 @@ public class EnableGesture : MonoBehaviour
     void Start()
     {
         CCController = FindObjectOfType<CampusCaptureController>();
+        CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
         TutorialMngr = FindObjectOfType<TutorialManager>();
         ThisImage = GetComponent<Image>();
         for(int i = 0;i < (int)CampusType.GUARD;i++)
@@ -60,7 +62,7 @@ public class EnableGesture : MonoBehaviour
     {
         if (!TutorialMngr.IsCampusMode) return false;
 
-        if (CCController.CharaManager != null)
+        if (CampusTemplate.IsSelect)
         {
             if (!TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
                 CCController.CharaManager.Name == "Cloud" && !AlreadyDrawn[(int)CampusType.Cloud])
@@ -89,7 +91,8 @@ public class EnableGesture : MonoBehaviour
     /// </summary>
     private void AlreadyDrawnCheck()
     {
-        if (CCController.CharaManager == null) return;
+        if (CampusTemplate.IsSelect == false) return;
+
         if (Input.touchCount > 0)
         {
             foreach (var touch in Input.touches)
