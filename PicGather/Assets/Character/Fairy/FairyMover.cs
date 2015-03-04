@@ -47,6 +47,8 @@ public class FairyMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
+        if (!ModeManager.IsGameMode) return;
+
         StartMove();
         Arrival();
         MoveToFerveGauge();

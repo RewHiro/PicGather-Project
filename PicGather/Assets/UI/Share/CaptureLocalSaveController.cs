@@ -33,7 +33,6 @@ public class CaptureLocalSaveController : MonoBehaviour {
             ClickButton.onClick.AddListener(Save);
         }
             
-
 	}
 
 	// Update is called once per frame
@@ -43,6 +42,8 @@ public class CaptureLocalSaveController : MonoBehaviour {
 
     void Save()
     {
+        if (ModeManager.IsResetMode) return;
+
         if (!Capture)
         {
             Capture = GetComponent<CaptureController>();

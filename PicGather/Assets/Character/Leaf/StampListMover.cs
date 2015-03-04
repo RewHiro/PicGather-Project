@@ -63,6 +63,7 @@ public class StampListMover : MonoBehaviour {
 
     public void Open()
     {
+        if (!ModeManager.IsGameMode) return;
         if (State != STATE.Close) return;
 
         State = STATE.Open;

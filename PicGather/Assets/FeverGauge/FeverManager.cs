@@ -51,10 +51,11 @@ public class FeverManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (ModeManager.IsEventMode || ModeManager.IsDrawingMode) return;
 
         Increase();
         LimitCheck();
+
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             AddScore(3.0f);
@@ -66,15 +67,15 @@ public class FeverManager : MonoBehaviour {
     /// </summary>
     void Increase()
     {
-        if (ModeManager.IsFerverMode) return;
 
         if (IsIncrease)
         {
             FeverScore += AddSpeed *Time.deltaTime;
-            if (FeverScore > IncreaseScore)
+            if (FeverScore >= IncreaseScore)
             {
                 IsIncrease = false;
                 AllSave.AllSave();
+                Ferver(IncreaseScore);
             }
         }
 
@@ -86,20 +87,21 @@ public class FeverManager : MonoBehaviour {
     /// <param name="addValue"></param>
     public void AddScore(float addValue)
     {
-        if (ModeManager.IsFerverMode) return;
-
         IncreaseScore += addValue;
         IsIncrease = true;
 
+        if (!ModeManager.IsGameMode)
+        {
+            IsIncrease = false;
+        }
     }
-
     
     /// <summary>
     /// もし上限を超えていたり、下限を下回っていたら直す
     /// </summary>
     void LimitCheck()
     {
-        if (FeverScore > MaxFeverScore && !ModeManager.IsFerverMode)
+        if (FeverScore > MaxFeverScore && ModeManager.IsGameMode)
         {
             MaxFeverScore *= 3;
             FeverScore = MaxFeverScore;
@@ -107,24 +109,26 @@ public class FeverManager : MonoBehaviour {
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
+            Ferver(MaxFeverScore);
             NumTimes++;
-            Ferver();
         }
 
-        if (FeverScore <= MinFeverScore && ModeManager.IsFerverMode)
+        if (FeverScore <= MinFeverScore )
         {
-            FeverScore = MinFeverScore;
-            ModeManager.ChangeGameMode();
-            Sound.Stop();
-            UIEnabled.Enabled();
-            AllSave.AllSave();
+            if (ModeManager.IsFerverMode || ModeManager.IsResetMode || ModeManager.IsShareMode)
+            {
+                FeverScore = MinFeverScore;
+                ModeManager.ChangeGameMode();
+                Sound.Stop();
+                UIEnabled.Enabled();
+                AllSave.AllSave();
+            }
         }
     }
 
-
-    void Ferver()
+    void Ferver(float maxScore)
     {
-        iTween.ValueTo(gameObject, iTween.Hash("from", MaxFeverScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
+        iTween.ValueTo(gameObject, iTween.Hash("from", maxScore, "to", MinFeverScore, "time", FeverTime, "onupdate", "UpdateHandler"));
     }
 
     void UpdateHandler(float value)

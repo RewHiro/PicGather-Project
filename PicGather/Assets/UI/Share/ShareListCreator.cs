@@ -30,6 +30,7 @@ public class ShareListCreator : MonoBehaviour {
 
     void Create()
     {
+        if (ModeManager.IsResetMode) return;
         if (ShareList) return;
 
         StartCoroutine("WaitCreate");

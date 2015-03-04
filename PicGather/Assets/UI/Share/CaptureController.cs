@@ -11,9 +11,12 @@ public class CaptureController : MonoBehaviour
 {
     public Texture2D Texture { get; private set; }
 
+    Button CaptureButton = null;
+
     void Start()
     {
         Texture = null;
+        CaptureButton = GetComponent<Button>();
     }
 
     /// <summary>
@@ -21,8 +24,21 @@ public class CaptureController : MonoBehaviour
     /// </summary>
     public void TextureSave()
     {
+        if (ModeManager.IsResetMode) return;
+        if (ModeManager.IsShareMode) return;
+
         StartCoroutine("Capture");
         ModeManager.ChangeShareMode();
+        CaptureButton.enabled = false; 
+
+    }
+
+    /// <summary>
+    /// ボタンを利用可能にする
+    /// </summary>
+    public void ButtonEnable()
+    {
+        CaptureButton.enabled = true; 
     }
 
     /// <summary>
