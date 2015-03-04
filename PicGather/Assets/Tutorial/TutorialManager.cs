@@ -84,7 +84,8 @@ public class TutorialManager : MonoBehaviour {
     {
         var CCController = FindObjectOfType<CampusCaptureController>();
 
-        if (CCController.CharaManager == null) return;
+        var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
+        if (CampusTemplate == null || CampusTemplate.IsSelect == false) return;
 
         switch(CCController.CharaManager.Name)
         {
@@ -125,9 +126,9 @@ public class TutorialManager : MonoBehaviour {
     {
         var TutorialMngr = FindObjectOfType<TutorialManager>();
 
-        var CCController = FindObjectOfType<CampusCaptureController>();
+        var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
 
-        if (CCController.CharaManager == null) return;
+        if (CampusTemplate == null || CampusTemplate.IsSelect == false) return;
 
         TutorialMngr.IsCampusMode = _changed;
     }

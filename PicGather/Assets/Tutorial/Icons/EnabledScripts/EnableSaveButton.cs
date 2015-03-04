@@ -6,12 +6,14 @@ public class EnableSaveButton : MonoBehaviour
 {
     private TutorialManager TutorialMngr = null;
     private CampusCaptureController CCController = null;
+    private CampusTemplateSetting CampusTemplate = null;
     private Image ThisImage = null;
     // Use this for initialization
     void Start()
     {
         TutorialMngr = FindObjectOfType<TutorialManager>();
         CCController = FindObjectOfType<CampusCaptureController>();
+        CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
         ThisImage = GetComponent<Image>();
     }
 
@@ -39,7 +41,7 @@ public class EnableSaveButton : MonoBehaviour
     /// <returns>満たしている...true 満たしていない...false</returns>
     private bool EnableImage()
     {
-        if (CCController.CharaManager != null)
+        if (CampusTemplate.IsSelect)
         if (CCController.CharaManager.Name == "Leaf" || CCController.CharaManager.Name == "Fairy" || CCController.CharaManager.Name == "Cloud")
         {
             return true;
