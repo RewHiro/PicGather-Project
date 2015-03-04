@@ -68,7 +68,11 @@ public class LeafStampManagerController : CharacterManager
             texture.LoadImage(bytes);
         }
 
-        clone.renderer.material.mainTexture = texture;
+        foreach (Transform child in clone.transform)
+        {
+            child.renderer.material.mainTexture = texture;
+        }
+            
     }
 
 }

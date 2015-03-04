@@ -36,6 +36,8 @@ public class TreeSaveDataLoading : MonoBehaviour {
 
         var jsonText = File.ReadAllText(filePath);
 #endif
+        if (jsonText.Length == 0) return new TreeData(-1, Vector3.zero, Vector3.zero);
+
         var json = LitJson.JsonMapper.ToObject<TreeData>(jsonText);
 
         return json;

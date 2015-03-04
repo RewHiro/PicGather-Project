@@ -48,6 +48,13 @@ public class CharacterDataWriting : MonoBehaviour
         DataList.Add(saveCharacterData);
     }
 
+    /// <summary>
+    /// データを全削除する
+    /// </summary>
+    public void Clear()
+    {
+        DataList.Clear();
+    }
 
     /// <summary>
     /// ファイルに書き出す

@@ -9,6 +9,7 @@ public class ModeManager : MonoBehaviour {
         Drawing,
         Ferver,
         Share,
+        Reset,
         Event,
     };
 
@@ -51,6 +52,15 @@ public class ModeManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// 今リセットなのかどうか
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsResetMode
+    {
+        get { return (State == STATE.Reset); }
+    }
+
+    /// <summary>
     /// 今シェア機能なのかどうか
     /// </summary>
     /// <returns></returns>
@@ -58,6 +68,7 @@ public class ModeManager : MonoBehaviour {
     {
         get { return (State == STATE.Share); }
     }
+
 
     /// <summary>
     /// 今イベントなのかどうか
@@ -97,7 +108,16 @@ public class ModeManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// シェア機能に切り替える
+    /// リセットに切り替える
+    /// </summary>
+    /// <returns></returns>
+    public static void ChangeResetMode()
+    {
+        State = STATE.Reset;
+    }
+
+    /// <summary>
+    /// シェアに切り替える
     /// </summary>
     /// <returns></returns>
     public static void ChangeShareMode()

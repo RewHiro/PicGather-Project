@@ -144,6 +144,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
     public void Open()
     {
         if (State == STATE.Open) return;
+        if (!ModeManager.IsGameMode) return;
         if (MoveAnimation.isPlaying) return;
 
         State = STATE.Open;
@@ -175,7 +176,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
     void CloseAnimation(string resName)
     {
-
         if (State == STATE.Close) return;
         if (MoveAnimation.isPlaying) return;
 

@@ -43,6 +43,7 @@ public class FeverDataController : MonoBehaviour {
 
         var jsonText = File.ReadAllText(filePath);
 #endif
+        if (jsonText.Length == 0) return new FeverData(-1,-1,-1);
         var json = LitJson.JsonMapper.ToObject<FeverData>(jsonText);
 
         return json;

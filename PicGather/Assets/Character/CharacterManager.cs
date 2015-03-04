@@ -75,6 +75,7 @@ public class CharacterManager : MonoBehaviour
 
         var jsonText = File.ReadAllText(filePath);
 #endif
+        if (jsonText.Length == 0) return;
         var json = LitJson.JsonMapper.ToObject<CharacterData[]>(jsonText);
 
         foreach(var chara in json)
@@ -220,6 +221,15 @@ public class CharacterManager : MonoBehaviour
                             character.transform.position, character.transform.lossyScale));
         }
 
+        SaveData.FileWrite(Name);
+    }
+
+    /// <summary>
+    /// データをクリアする
+    /// </summary>
+    public void DataClear()
+    {
+        SaveData.Clear();
         SaveData.FileWrite(Name);
     }
 }

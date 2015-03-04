@@ -19,8 +19,15 @@ public class TreeScaling : MonoBehaviour {
     float ScaleToTime = 3.0f;
 
     float Scale = 0;
-
+    float Count = 0;
     TreeChanger Changer = null;
+
+    enum STATE
+    {
+        None,
+        End,
+    };
+    STATE State = STATE.None;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +36,12 @@ public class TreeScaling : MonoBehaviour {
 	}
 	
     void Update()
+    {
+        ScaleTo();
+        Finish();
+    }
+
+    void ScaleTo()
     {
         if (!Changer.IsScaling) return;
         if (ModeManager.IsFerverMode) return;
@@ -39,14 +52,19 @@ public class TreeScaling : MonoBehaviour {
                         "time", ScaleToTime, "easetype", iTween.EaseType.easeInOutExpo));
 
         Changer.ChangeNormalState();
-        StartCoroutine("Save");
+        State = STATE.End;
     }
 
-
-    IEnumerator Save()
+    void Finish()
     {
-        yield return new WaitForSeconds(ScaleToTime);
+        if (State != STATE.End) return;
 
-        Changer.Save();
+        Count += Time.deltaTime;
+        if (Count >= ScaleToTime * 2)
+        {
+            State = STATE.None;
+            Count = 0;
+            Changer.Save();
+        }
     }
 }
