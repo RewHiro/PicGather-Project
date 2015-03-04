@@ -33,8 +33,7 @@ public class CaptureController : MonoBehaviour
     {
         yield return new WaitForEndOfFrame();
         
-        const float Space = 150;
-        var CaptureRect = new Rect(Space, 0, Screen.width - Space, Screen.height);
+        var CaptureRect = new Rect(0, 0, Screen.width, Screen.height);
         Texture = new Texture2D((int)CaptureRect.width, (int)CaptureRect.height, TextureFormat.ARGB32, false);
 
         Texture.ReadPixels(CaptureRect, 0, 0);
