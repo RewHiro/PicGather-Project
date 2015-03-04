@@ -22,6 +22,7 @@ public class StampSelecter : MonoBehaviour {
 	void Update () {
 	
 	}
+    
     /// <summary>
     /// スタンプが選択されたところに移動
     /// </summary>

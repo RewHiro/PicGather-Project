@@ -35,7 +35,7 @@ public class LeafCreator : MonoBehaviour {
 
     int TextureID = 0;
 
-    const float CanInstanceDistance = 0.05f;
+    const float CanInstanceDistance = 0.03f;
 
 	// Use this for initialization
 	void Start () {

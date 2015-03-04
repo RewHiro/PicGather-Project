@@ -25,14 +25,14 @@ public class FruitFalling : MonoBehaviour {
         if (transform.position.y < screenDown)
         {
             Destroy(gameObject);
-
-            var Manager = GameObject.FindObjectOfType<FruitManagerController>() as FruitManagerController;
-            Manager.ChildrensDataSave();
         }
 	}
 
     public void OnFall()
     {
         IsFall = true;
+
+        var Manager = GameObject.FindObjectOfType<FruitManagerController>() as FruitManagerController;
+        Manager.DataClear();
     }
 }
