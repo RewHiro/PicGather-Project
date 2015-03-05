@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FairyAppear : MonoBehaviour {
 
@@ -14,9 +15,11 @@ public class FairyAppear : MonoBehaviour {
 
 	void Start () 
     {
+
         Anima = GetComponent<FairyAnimator>();
         SetArrivalPos();
         Anima.ChangeMoveAnima();
+
 	}
 
     /// <summary>
@@ -40,24 +43,34 @@ public class FairyAppear : MonoBehaviour {
         transform.LookAt(treePos);
 
         ArrivalPos = treePos + new Vector3(0, Random.Range(scale.y / 10, scale.y / 6),0);
+
     }
 
 
 	// Update is called once per frame
-	void Update () {
+    void Update()
+    {
+        Move();
+    }
+
+    /// <summary>
+    /// 移動
+    /// </summary>
+    void Move()
+    {
         if (IsStop) return;
 
         iTween.MoveUpdate(gameObject, iTween.Hash("position", ArrivalPos,
                         "time", ArrivalTime, "easetype", iTween.EaseType.easeInOutExpo));
 
-	}
-
+    }
     void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Tree")
         {
             IsStop = true;
             enabled = false;
+
         }
     }
 }

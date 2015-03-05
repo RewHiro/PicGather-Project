@@ -6,6 +6,8 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Text;
+using System.Collections.Generic;
 
 public class CloudMover : MonoBehaviour {
 
@@ -43,6 +45,7 @@ public class CloudMover : MonoBehaviour {
 
     // Use this for initialization
 	void Start () {
+
         var wroldPos = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height, -Camera.main.transform.position.z));
         RotationPos.y = wroldPos.y + Random.Range(2.0f,3.0f);
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
@@ -52,6 +55,7 @@ public class CloudMover : MonoBehaviour {
         AppearanceSpeed = Random.Range(1, 3);
         RainCreate = GetComponent<RainCreator>();
         TreeObject = GameObject.Find("TreeManager");
+
 	}
 	
 	void Update () 
@@ -63,6 +67,7 @@ public class CloudMover : MonoBehaviour {
         TreeTopMove();
         CreateRainMove();
         ReturnNormalPosition();
+
     }
 
     /// <summary>
@@ -70,12 +75,12 @@ public class CloudMover : MonoBehaviour {
     /// </summary>
     void CircleRotation()
     {
+
         TreePos = TreeObject.transform.position;
         RotationPos.x = TreePos.x + Mathf.Cos(RotationAngle) * Radius;
         RotationPos.z = TreePos.z + Mathf.Sin(RotationAngle) * Radius;
 
         RotationAngle += RotationSpeed * Time.deltaTime;
-
     }
 
 
@@ -97,6 +102,7 @@ public class CloudMover : MonoBehaviour {
         {
             State = STATE.Normal;
         }
+
     }
 
 
@@ -118,6 +124,7 @@ public class CloudMover : MonoBehaviour {
             State = STATE.CreateRain;
             RainCreate.StartCreate();
         }
+
     }
 
     /// <summary>
@@ -138,6 +145,7 @@ public class CloudMover : MonoBehaviour {
             RotationAngle = 0;
             State = STATE.ReturnNormal;
         }
+
     }
 
     /// <summary>
@@ -159,6 +167,7 @@ public class CloudMover : MonoBehaviour {
         {
             State = STATE.Normal;
         }
+
     }
 
 
@@ -170,6 +179,7 @@ public class CloudMover : MonoBehaviour {
         if (State != STATE.Normal) return;
 
         transform.position = RotationPos;
+
     }
 
     /// <summary>
@@ -187,6 +197,7 @@ public class CloudMover : MonoBehaviour {
         if (!IsCheckLeafLive()) return;
 
         State = STATE.TreeTop;
+
     }
 
     /// <summary>
@@ -201,6 +212,7 @@ public class CloudMover : MonoBehaviour {
         if (Leafs.Length == 0)
         {
             return false;
+
         }
 
         return true;
@@ -219,7 +231,6 @@ public class CloudMover : MonoBehaviour {
         {
             State = STATE.Normal;
         }
-
 
     }
 }

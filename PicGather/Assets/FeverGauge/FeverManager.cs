@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
+using System.Collections.Generic;
 
 public class FeverManager : MonoBehaviour {
 
@@ -59,6 +61,7 @@ public class FeverManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if (ModeManager.IsResetMode) return;
 
         Increase();
@@ -67,12 +70,13 @@ public class FeverManager : MonoBehaviour {
         if (ModeManager.IsFerverMode)
         {
             IsIncrease = false;
+            Particle.Stop();
         }
-
         if (Input.GetKeyDown(KeyCode.A))
         {
             AddScore(3.0f);
         }
+
     }
 
     /// <summary>
@@ -89,6 +93,7 @@ public class FeverManager : MonoBehaviour {
                 IsIncrease = false;
                 AllSave.AllSave();
             }
+
         }
 
     }
@@ -102,6 +107,7 @@ public class FeverManager : MonoBehaviour {
         IncreaseScore += addValue;
         IsIncrease = true;
         Particle.Play();
+
     }
     
     /// <summary>
@@ -111,18 +117,19 @@ public class FeverManager : MonoBehaviour {
     {
         if (FeverScore > MaxFeverScore && ModeManager.IsGameMode)
         {
+            NumTimes++;
+            MaxFeverScore *= 3;
+            FeverScore = MaxFeverScore;
+
             Data.Write(new FeverData(NumTimes, 0, MaxFeverScore));
             TreeChange.NextChange();
 
-            MaxFeverScore *= 3;
-            FeverScore = MaxFeverScore;
             IncreaseScore = 0;
             ModeManager.ChangeFerverMode();
             Sound.Play();
             UIEnabled.Unavailable();
             Ferver();
-            NumTimes++;
-            Particle.Stop();
+
         }
 
         if (ModeManager.IsFerverMode)
@@ -130,12 +137,16 @@ public class FeverManager : MonoBehaviour {
             Count += Time.deltaTime;
             if (FeverScore <= MinFeverScore || Count >= FeverTime)
             {
+                iTween.Stop(gameObject);
+
                 Count = 0;
                 FeverScore = MinFeverScore;
                 ModeManager.ChangeGameMode();
                 Sound.Stop();
                 UIEnabled.Enabled();
-                AllSave.AllSave();
+
+                //AllSave.AllSave();
+
             }
 
         }

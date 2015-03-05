@@ -40,7 +40,7 @@ public class CharacterCreator : MonoBehaviour {
     /// <returns></returns>
     IEnumerator Create()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
 
         var Clone = (GameObject)Instantiate(Prefab, new Vector3(0, 100, 0), Prefab.transform.rotation);
         Clone.transform.parent = Manager.transform;
