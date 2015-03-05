@@ -41,9 +41,12 @@ public class LeafStampManagerController : CharacterManager
         foreach (Transform children in transform)
         {
             var character = children.GetComponent<CharacterDataSave>();
-            var leaf = children.GetComponent<LeafWitherController>();
+            var leafWither = children.GetComponent<LeafWitherController>();
+            var leafFall = children.GetComponent<LeafFalling>();
+            var isDead = leafWither.IsDead || leafFall.IsFall ? true : false;
+            
             SaveData.Write(new CharacterData(character.Data.ID, Name,
-                            character.transform.position, character.transform.lossyScale, !leaf.IsDead));
+                            character.transform.position, character.transform.lossyScale, !isDead));
         }
 
         SaveData.FileWrite(Name);

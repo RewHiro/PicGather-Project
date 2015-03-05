@@ -6,7 +6,7 @@ public class FruitFalling : MonoBehaviour {
     [SerializeField]
     float FallSpeed = 1;
 
-    bool IsFall = false;
+    public bool IsFall{get; private set;}
 
 
 	// Use this for initialization
@@ -32,7 +32,7 @@ public class FruitFalling : MonoBehaviour {
     {
         IsFall = true;
 
-        var Manager = GameObject.FindObjectOfType<FruitManagerController>() as FruitManagerController;
+        var Manager = GameObject.FindObjectOfType(typeof(FruitManagerController)) as FruitManagerController;
         Manager.DataClear();
     }
 }

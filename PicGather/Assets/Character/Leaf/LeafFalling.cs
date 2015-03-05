@@ -6,7 +6,7 @@ public class LeafFalling : MonoBehaviour {
     [SerializeField]
     float FallSpeed = 1;
 
-    bool IsFall = false;
+    public bool IsFall {get;private set;}
 
 
     // Use this for initialization
@@ -34,7 +34,7 @@ public class LeafFalling : MonoBehaviour {
     {
         IsFall = true;
 
-        var Manager = GameObject.FindObjectOfType<LeafStampManagerController>() as LeafStampManagerController;
+        var Manager = GameObject.FindObjectOfType(typeof(LeafStampManagerController)) as LeafStampManagerController;
         Manager.DataClear();
     }
 }

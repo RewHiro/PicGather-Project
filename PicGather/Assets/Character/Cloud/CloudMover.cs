@@ -47,7 +47,7 @@ public class CloudMover : MonoBehaviour {
         RotationPos.y = wroldPos.y + Random.Range(2.0f,3.0f);
         StartCreateRainTime = Random.Range(2.0f, 4.0f);
         RadiusMoveSpeed = Random.Range(0.5f, 0.7f);
-        RotationSpeed = Random.Range(0.5f, 1.0f);
+        RotationSpeed = Random.Range(0.5f, 0.7f);
         StopAppearancePosY = Random.Range(Screen.height / 2, Screen.height / 2 + 200);
         AppearanceSpeed = Random.Range(1, 3);
         RainCreate = GetComponent<RainCreator>();

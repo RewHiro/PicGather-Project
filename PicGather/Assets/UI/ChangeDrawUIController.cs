@@ -40,8 +40,6 @@ public class ChangeDrawUIController : MonoBehaviour {
     /// </summary>
     public void Enabled()
     {
-        Debug.Log("Enable kita");
-
         ButtonObject.enabled = true;
         ImageObject.enabled = true;
     }

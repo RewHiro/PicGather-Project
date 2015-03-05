@@ -33,6 +33,9 @@ public class DrawingCanvasSlider : MonoBehaviour {
     UIDrawingModeChanger UIModeChanger = null;
 
     [SerializeField]
+    ChangeCameraPositionController CameraPosChange = null;
+
+    [SerializeField]
     BGMManager BGM = null;
 
     [SerializeField]
@@ -53,7 +56,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
     {
         Stop,   /// 停止
         Open,   /// 開く
-        Opend, /// 開いた
         Close,  /// 閉じる
     };
 
@@ -75,21 +77,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
         Closed();
     }
 
-    /// <summary>
-    /// 開いたかどうかの判定
-    /// </summary>
-    /// <returns></returns>
-    public bool IsOpend()
-    {
-        if (State == STATE.Opend)
-        {
-            CampusBackGround.Unavailable();
-            State = STATE.Stop;
-            return true;
-        }
-        return false;
-    }
-
     void Opening()
     {
         if (State != STATE.Open) return;
@@ -101,8 +88,10 @@ public class DrawingCanvasSlider : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
         if (!MoveAnimation.isPlaying)
         {
+            State = STATE.Stop;
+            CameraPosChange.ChangeDrawingCampus();
+            CampusBackGround.Unavailable();
             ModeManager.ChangeDrawingMode();
-            State = STATE.Opend;
         }
     }
 
@@ -124,21 +113,22 @@ public class DrawingCanvasSlider : MonoBehaviour {
     {
         if (State != STATE.Close) return;
         StartCoroutine("WaitClosed");
+        State = STATE.Stop;
     }
 
     IEnumerator WaitClosed()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(1.4f);
 
+        CameraPosChange.ChangeGameMain();
         CampusBackGround.Enabled();
         CampusTemplate.NonSelect();
         ModeManager.ChangeGameMode();
         CampusDes.Des();
-        State = STATE.Stop;
         UIModeChanger.Enable(true);
     }
 
-    /// <summary>
+    /// <summary
     /// 開くアニメーションの処理
     /// </summary>
     public void Open()
