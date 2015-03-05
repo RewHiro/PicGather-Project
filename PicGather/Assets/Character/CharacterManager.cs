@@ -63,7 +63,6 @@ public class CharacterManager : MonoBehaviour
         var folderPath = "Database/";
         var filePath = folderPath + Name + ".json";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return;
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else
@@ -75,7 +74,7 @@ public class CharacterManager : MonoBehaviour
 
         var jsonText = File.ReadAllText(filePath);
 #endif
-        if (jsonText.Length == 0) return;
+        if (string.IsNullOrEmpty(jsonText)) return;
         var json = LitJson.JsonMapper.ToObject<CharacterData[]>(jsonText);
 
         foreach(var chara in json)
@@ -117,8 +116,6 @@ public class CharacterManager : MonoBehaviour
         
         var filePath = chara.Name + "/" + (chara.ID - 1) + ".png";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return;
-
         var bytes = LibForWinRT.ReadFileBytes(filePath).Result;
 #else
         var filePath = Application.persistentDataPath + "/" + chara.Name + "/" + (chara.ID - 1) + ".png";
@@ -127,6 +124,8 @@ public class CharacterManager : MonoBehaviour
         var bytes = File.ReadAllBytes(filePath);
 
 #endif
+        if (bytes == null) return;
+
         var texture = new Texture2D(128, 128);
         texture.LoadImage(bytes);
 

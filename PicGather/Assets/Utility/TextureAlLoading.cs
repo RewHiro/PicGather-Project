@@ -145,8 +145,6 @@ public class TextureAlLoading : MonoBehaviour {
     static byte[] GetFileBytes(string filePath)
     {
 #if UNITY_METRO && !UNITY_EDITOR
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return null;
-    
         return LibForWinRT.ReadFileBytes(filePath).Result;
 #else
         if (!File.Exists(filePath)) return null;

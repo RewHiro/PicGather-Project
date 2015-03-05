@@ -24,7 +24,6 @@ public class TreeSaveDataLoading : MonoBehaviour {
         var folderPath = "Database/";
         var filePath = folderPath + name + ".json";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new TreeData(-1,Vector3.zero,Vector3.zero);
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else
@@ -36,7 +35,7 @@ public class TreeSaveDataLoading : MonoBehaviour {
 
         var jsonText = File.ReadAllText(filePath);
 #endif
-        if (jsonText.Length == 0) return new TreeData(-1, Vector3.zero, Vector3.zero);
+        if (string.IsNullOrEmpty(jsonText)) return new TreeData(-1, Vector3.zero, Vector3.zero);
 
         var json = LitJson.JsonMapper.ToObject<TreeData>(jsonText);
 

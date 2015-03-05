@@ -41,8 +41,6 @@ public class TitleStartter : MonoBehaviour {
 	// Use this for initialization
     void Awake()
     {
-        Application.LoadLevel("GameMain");
-
         var value = Random.Range(0, 100);
 
         if (value >= 50)

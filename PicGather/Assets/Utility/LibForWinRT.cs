@@ -28,37 +28,23 @@ public class LibForWinRT
     const string ParentFolder = "PicGather/";
 
     /// <summary>
-    /// ファイルパスがあるかどうかを調べる。
-    /// </summary>
-    /// <param name="filePath"></param>
-    /// <returns></returns>
-    public static async Task<bool> IsFileExistAsync(string filePath)
-    {
-        try
-        {
-            var url = "ms-appdata:///roaming/" + ParentFolder + filePath;
-            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
-
-            return true; 
-        }
-        catch
-        {
-            return false; 
-        }
-    }
-
-    /// <summary>
     /// ファイルを読み込む
     /// </summary>
     /// <param name="fileName">ファイルパス</param>
     /// <returns>ファイルのbyte型の配列が戻り値</returns>
     public static async Task<string> ReadFileText(string filePath)
     {
-        var url = "ms-appdata:///roaming/" + ParentFolder + filePath;
-        var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
-        var text = await FileIO.ReadTextAsync(file);
-        return text;
-
+        try
+        {
+            var url = "ms-appdata:///roaming/" + ParentFolder + filePath;
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
+            var text = await FileIO.ReadTextAsync(file);
+            return text;
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 
     /// <summary>
@@ -68,14 +54,20 @@ public class LibForWinRT
     /// <returns>ファイルのbyte型の配列が戻り値</returns>
     public static async Task<byte[]> ReadFileBytes(string filePath)
     {
-        var url = "ms-appdata:///roaming/" + ParentFolder + filePath;
-        var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
-        var buf = await FileIO.ReadBufferAsync(file);
-        var bytes = new byte[buf.Length];
-        var dr = DataReader.FromBuffer(buf);
-        dr.ReadBytes(bytes);
-        return bytes;
-
+        try
+        {
+            var url = "ms-appdata:///roaming/" + ParentFolder + filePath;
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(url));
+            var buf = await FileIO.ReadBufferAsync(file);
+            var bytes = new byte[buf.Length];
+            var dr = DataReader.FromBuffer(buf);
+            dr.ReadBytes(bytes);
+            return bytes;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     /// <summary>
@@ -86,21 +78,29 @@ public class LibForWinRT
     /// <param name="body">byte配列のデータ</param>
     public static async void WriteFile(string folderPath,string fileName, byte[] body)
     {
-        // ローミングフォルダ
-        var parentFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(ParentFolder, CreationCollisionOption.OpenIfExists);
-        var folder = await parentFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
-
-        // ファイル（存在すれば上書き）
-        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-
-        // 書き込み
-        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (var oStream = rStream.GetOutputStreamAt(0))
+        try
         {
-            var writer = new DataWriter(oStream);
-            writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-            writer.WriteBytes(body);
-            await writer.StoreAsync();
+            // ローミングフォルダ
+            var parentFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(ParentFolder, CreationCollisionOption.OpenIfExists);
+            var folder = await parentFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
+
+            // ファイル（存在すれば上書き）
+            var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            // 書き込み
+            using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            using (var oStream = rStream.GetOutputStreamAt(0))
+            {
+                var writer = new DataWriter(oStream);
+                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                writer.WriteBytes(body);
+                await writer.StoreAsync();
+
+            }
+        }
+        catch 
+        {
+        
         }
 
     }
@@ -113,20 +113,28 @@ public class LibForWinRT
     /// <param name="body">byte配列のデータ</param>
     public static async void WriteSharePicture(string folderPath, string fileName, byte[] body)
     {
-        // ローミングフォルダ
-        var folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
-
-        // ファイル（存在すれば上書き）
-        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-
-        // 書き込み
-        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (var oStream = rStream.GetOutputStreamAt(0))
+        try
         {
-            var writer = new DataWriter(oStream);
-            writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-            writer.WriteBytes(body);
-            await writer.StoreAsync();
+            // ローミングフォルダ
+            var folder = await KnownFolders.PicturesLibrary.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
+
+            // ファイル（存在すれば上書き）
+            var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            // 書き込み
+            using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            using (var oStream = rStream.GetOutputStreamAt(0))
+            {
+                var writer = new DataWriter(oStream);
+                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                writer.WriteBytes(body);
+                await writer.StoreAsync();
+
+            }
+        }
+        catch
+        { 
+        
         }
 
     }
@@ -139,23 +147,29 @@ public class LibForWinRT
     /// <param name="body">stringの文字データ</param>
     public static async void WriteFileText(string folderPath, string fileName, string body)
     {
-        // ローミングフォルダ
-        var parentFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(ParentFolder, CreationCollisionOption.OpenIfExists);
-        var folder = await parentFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
-
-        // ファイル（存在すれば上書き）
-        var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-
-        // 書き込み
-        using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
-        using (var oStream = rStream.GetOutputStreamAt(0))
+        try
         {
-            var writer = new DataWriter(oStream);
-            writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
-            writer.WriteString(body);
-            await writer.StoreAsync();
-        }
+            // ローミングフォルダ
+            var parentFolder = await ApplicationData.Current.RoamingFolder.CreateFolderAsync(ParentFolder, CreationCollisionOption.OpenIfExists);
+            var folder = await parentFolder.CreateFolderAsync(folderPath, CreationCollisionOption.OpenIfExists);
 
+            // ファイル（存在すれば上書き）
+            var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            // 書き込み
+            using (var rStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+            using (var oStream = rStream.GetOutputStreamAt(0))
+            {
+                var writer = new DataWriter(oStream);
+                writer.UnicodeEncoding = Windows.Storage.Streams.UnicodeEncoding.Utf8;
+                writer.WriteString(body);
+                await writer.StoreAsync();
+            }
+        }
+        catch
+        { 
+            
+        }
     }
 
 
@@ -165,10 +179,15 @@ public class LibForWinRT
     /// <param name="folderPath">Folderパス</param>
     public static async void FolderDelete()
     {
-        // ローミングフォルダ
-        var folder = await ApplicationData.Current.RoamingFolder.GetFolderAsync(ParentFolder);
-
-        await folder.DeleteAsync();
+        try
+        {
+            var folder = await ApplicationData.Current.RoamingFolder.GetFolderAsync(ParentFolder);
+            await folder.DeleteAsync();
+        }
+        catch
+        { 
+            
+        }
     }
 #endif
 

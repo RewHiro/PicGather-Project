@@ -25,6 +25,7 @@ public class Resetter : MonoBehaviour {
     public void TreeReset()
     {
         Camera.main.GetComponent<ResetDirector>().enabled = true;
+
         NonActive(gameObject);
         NonActive(stampGesture);
         NonActive(tutorialSkip);

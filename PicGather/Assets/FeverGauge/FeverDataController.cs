@@ -32,7 +32,6 @@ public class FeverDataController : MonoBehaviour {
         var folderPath = "Database/";
         var filePath = folderPath + name + ".json";
 
-        if (!LibForWinRT.IsFileExistAsync(filePath).Result) return new FeverData(-1,-1,-1);
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else
@@ -43,7 +42,7 @@ public class FeverDataController : MonoBehaviour {
 
         var jsonText = File.ReadAllText(filePath);
 #endif
-        if (jsonText.Length == 0) return new FeverData(-1,-1,-1);
+        if (string.IsNullOrEmpty(jsonText)) return new FeverData(-1, -1, -1);
         var json = LitJson.JsonMapper.ToObject<FeverData>(jsonText);
 
         return json;
