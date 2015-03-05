@@ -72,8 +72,8 @@ public class LeafWitherController : MonoBehaviour
             State = STATE.Dead;
             FruitManager = GameObject.FindObjectOfType(typeof(FruitManagerController)) as FruitManagerController;
             FruitManager.ChildrenCreate(transform.position);
-            
-            Manager = GameObject.FindObjectOfType<LeafStampManagerController>() as LeafStampManagerController;
+
+            Manager = GameObject.FindObjectOfType(typeof(LeafStampManagerController)) as LeafStampManagerController;
             Manager.ChildrensDataSave();
         }
     }
@@ -99,9 +99,8 @@ public class LeafWitherController : MonoBehaviour
         var screenPos = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         if (screenPos.y <= -100)
         {
-            Destroy(gameObject);
-
             Manager.ChildrensDataSave();
+            Destroy(gameObject);
         }
     }
 

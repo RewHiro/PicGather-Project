@@ -54,7 +54,7 @@ public class FairyEating : MonoBehaviour {
 
             Player.Play(eatSE);
 
-            var Manager = GameObject.FindObjectOfType<FruitManagerController>() as FruitManagerController;
+            var Manager = GameObject.FindObjectOfType(typeof(FruitManagerController)) as FruitManagerController;
             Manager.ChildrensDataSave();
         }
 

@@ -115,6 +115,7 @@ public class TreeChanger : MonoBehaviour
     public void ChangeNormalState()
     {
         DataSave.AllSave();
+        Save();
         CameraMain.BroadenMoveRadius(BroadenValue);
         State = STATE.Normal;
 
@@ -166,12 +167,14 @@ public class TreeChanger : MonoBehaviour
         if (TreeData[CreateIndex].FeverNumTimes != Fever.NumTimes)
         {
             Scaling.NextScale();
+            Save();
         }
         else if (CreateIndex <= TreeData.Count)
         {
             CreateIndex++;
+            Save();
+            CreateIndex--;
         }
-        Save();
     }
 
     /// <summary>
@@ -248,11 +251,12 @@ public class TreeChanger : MonoBehaviour
     {
         if (State != STATE.Destroy) return;
 
-        Destroy(Tree);
-
         ChangeNormalState();
 
         IsStartFirst = false;
+
+        Destroy(Tree);
+
     }
 
 }

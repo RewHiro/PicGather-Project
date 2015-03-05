@@ -44,6 +44,7 @@ public class NoteMover : MonoBehaviour {
         renderer.material.color -= alpha;
         if (renderer.material.color.a <= 0)
         {
+            iTween.Stop(gameObject);
             Destroy(gameObject);
         }
     }

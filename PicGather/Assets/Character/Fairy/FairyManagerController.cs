@@ -16,12 +16,11 @@ public class FairyManagerController : CharacterManager
         Name = "Fairy";
         Init();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	    
-	}
 
+    // Update is called once per frame
+    void Update()
+    {
+    }
     /// <summary>
     /// テンプレート(Sample)を設定する
     /// </summary>

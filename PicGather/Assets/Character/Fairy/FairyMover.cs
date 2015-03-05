@@ -42,6 +42,7 @@ public class FairyMover : MonoBehaviour {
         Anima = GetComponent<FairyAnimator>();
         StandbyTime = Random.Range(5.0f, 10.0f);
         ArrivalTime = Random.Range(3.0f, 6.0f);
+
 	}
 	
 	// Update is called once per frame
@@ -52,6 +53,7 @@ public class FairyMover : MonoBehaviour {
         StartMove();
         Arrival();
         MoveToFerveGauge();
+
 	}
 
     /// <summary>
@@ -78,6 +80,7 @@ public class FairyMover : MonoBehaviour {
         {
             SetMoveTo();
         }
+
     }
 
     /// <summary>
@@ -88,6 +91,8 @@ public class FairyMover : MonoBehaviour {
     {
         var fruits = GameObject.FindGameObjectsWithTag("Fruit");
         if (fruits.Length == 0) return;
+
+        // AddDebugData("SetMoveTo Begin");
 
         var randomNum = Random.Range(0, fruits.Length);
         FruitPos = fruits[randomNum].transform.position;
@@ -163,13 +168,15 @@ public class FairyMover : MonoBehaviour {
     {
         var value = gameObject.transform.lossyScale.x;
         FeverGauge.GetComponent<FeverManager>().AddScore(value);
-        Destroy(gameObject);
 
-        var Manager = GameObject.FindObjectOfType<FairyManagerController>() as FairyManagerController;
+        var Manager = GameObject.FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
         Manager.ChildrensDataSave();
 
         var SEPlayer = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
         SEPlayer.Play(FeverGaugeHitResName);
+
+        Destroy(gameObject);
+
     }
 
     /// <summary>

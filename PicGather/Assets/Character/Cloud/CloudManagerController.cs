@@ -15,13 +15,9 @@ public class CloudManagerController : CharacterManager
     {
         Name = "Cloud";
         Init();
-
     }
-
-	
 	// Update is called once per frame
 	void Update () {
-	    
-	}
 
+	}
 }

@@ -73,10 +73,11 @@ public class CloudDisappear : MonoBehaviour
         Count += Time.deltaTime;
         if (Count >= DisappearTime)
         {
+            var manager = GameObject.FindObjectOfType(typeof(CloudManagerController)) as CloudManagerController;
+            manager.ChildrensDataSave();
+
             Destroy(gameObject);
 
-            var manager = GameObject.FindObjectOfType<CloudManagerController>();
-            manager.ChildrensDataSave();
         }
     }
 }

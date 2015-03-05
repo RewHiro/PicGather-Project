@@ -10,6 +10,8 @@ public class FeverGaugeParticle : MonoBehaviour {
 
     public void Stop()
     {
+        if (!particleSystem.isPlaying) return;
+
         particleSystem.Stop(false);
     }
 
