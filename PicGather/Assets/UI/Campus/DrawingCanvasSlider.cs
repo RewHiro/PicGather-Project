@@ -125,6 +125,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         CampusTemplate.NonSelect();
         ModeManager.ChangeGameMode();
         CampusDes.Des();
+        BGM.Stop();
         UIModeChanger.Enable(true);
     }
 
@@ -171,7 +172,6 @@ public class DrawingCanvasSlider : MonoBehaviour {
 
         State = STATE.Close;
         MoveAnimation.PlayQueued(CloseAnimClip.name);
-        BGM.Stop();
         SEPlayer.Play(resName);
     }
 

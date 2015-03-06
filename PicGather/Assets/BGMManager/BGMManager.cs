@@ -22,7 +22,7 @@ public class BGMManager : MonoBehaviour {
     string drawingResName = string.Empty;
 
 
-    readonly FadeTimeData fadeTime = new FadeTimeData(1.0f, 1.0f);
+    readonly FadeTimeData fadeTime = new FadeTimeData(2.0f, 2.0f);
 
     /// <summary
     /// BGMを切り替える
