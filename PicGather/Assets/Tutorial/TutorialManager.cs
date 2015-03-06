@@ -126,6 +126,8 @@ public class TutorialManager : MonoBehaviour {
     {
         var TutorialMngr = FindObjectOfType<TutorialManager>();
 
+        if (TutorialMngr == null) return;
+
         var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
 
         if (CampusTemplate == null || CampusTemplate.IsSelect == false) return;
