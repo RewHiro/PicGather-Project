@@ -41,10 +41,10 @@ public class StoryBoardAnimator : MonoBehaviour {
         if (Count >= ChangeTime)
         {
             Count = 0;
-            Index++;
+            AddIndex(1);
 
             if (IsNextScene()) return;
-            StoryImage.sprite = StorySprite[Index];
+            RefreshSprite();
         }
     }
 
@@ -67,5 +67,32 @@ public class StoryBoardAnimator : MonoBehaviour {
     public void Finish()
     {
         IsFinish = true;
+    }
+
+    /// <summary>
+    /// Indexを加算する
+    /// </summary>
+    /// <param name="addValue">加算量</param>
+    public void AddIndex(int addValue)
+    {
+        if (IsFinish) return;
+
+        Count = 0;
+        Index += addValue;
+
+        if(IsNextScene())
+        {
+            Index = StorySprite.Count - 1;
+        }
+    }
+
+    /// <summary>
+    /// Spriteの更新
+    /// </summary>
+    public void RefreshSprite()
+    {
+        if (IsFinish) return;
+
+        StoryImage.sprite = StorySprite[Index];
     }
 }
