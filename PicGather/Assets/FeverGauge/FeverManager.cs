@@ -73,11 +73,6 @@ public class FeverManager : MonoBehaviour {
             Particle.Stop();
             Sound.Play();
         }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            AddScore(3.0f);
-        }
-
     }
 
     /// <summary>
@@ -145,7 +140,6 @@ public class FeverManager : MonoBehaviour {
                 ModeManager.ChangeGameMode();
                 Sound.Stop();
                 UIEnabled.Enabled();
-
             }
 
         }

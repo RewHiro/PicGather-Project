@@ -18,7 +18,6 @@ using System.IO;
 public class CharacterManager : MonoBehaviour
 {
     public int ID { get; protected set; }
-    public int LimitCreateNum { get; protected set; }
     public string Name { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
@@ -35,6 +34,8 @@ public class CharacterManager : MonoBehaviour
     List<GameObject> ChildrenPrefabs = new List<GameObject>();
 
     protected CharacterDataWriting SaveData = null;
+    private int CreateNum = 0;
+    protected int LimitCreateNum = 0;
 
     enum STATE
     {
@@ -50,6 +51,7 @@ public class CharacterManager : MonoBehaviour
     /// </summary>
     public virtual void Init()
     {
+        CreateNum = LimitCreateNum;
         CanDrawing = true;
 
         SaveData = GetComponent<CharacterDataWriting>();
@@ -163,15 +165,11 @@ public class CharacterManager : MonoBehaviour
     /// </summary>
     void LimitCreate()
     {
-        if (LimitCreateNum <= 0)
+        CreateNum--;
+        if (CreateNum <= 0)
         {
             CanDrawing = false;
-            LimitCreateNum = 0;
-            return;
-        }
-        else
-        {
-            LimitCreateNum--;
+            CreateNum = 0;
         }
     }
 
@@ -180,8 +178,10 @@ public class CharacterManager : MonoBehaviour
     /// </summary>
     public void LimitCreateNumIncrease()
     {
+        if (CreateNum > LimitCreateNum) return;
+
         CanDrawing = true;
-        LimitCreateNum++;
+        CreateNum ++;
     }
 
 

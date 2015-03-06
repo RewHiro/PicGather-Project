@@ -21,8 +21,8 @@ public class BGMManager : MonoBehaviour {
     [SerializeField]
     string drawingResName = string.Empty;
 
-
-    readonly FadeTimeData fadeTime = new FadeTimeData(2.0f, 2.0f);
+    [SerializeField]
+    FadeTimeData fadeTime = new FadeTimeData(2.0f, 2.0f);
 
     /// <summary
     /// BGMを切り替える
@@ -60,7 +60,7 @@ public class BGMManager : MonoBehaviour {
         {
             player.Play(noonResName, fadeTime);
         }
-        else
+        else if (DateTimeController.IsNight)
         {
             player.Play(nightResName, fadeTime);
         }

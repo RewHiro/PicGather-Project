@@ -29,6 +29,8 @@ public class HighLightManager : MonoBehaviour {
         IsHighLightMode = false;
         ThisImage = GetComponent<Image>();
 
+        var value = MinValue;
+        ThisImage.color = new Color(value, value, value);
     }
 	
     void Update()

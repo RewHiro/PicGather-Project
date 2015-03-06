@@ -33,7 +33,7 @@ public class RainFerverController : MonoBehaviour {
         renderer.material.mainTexture = TextureAlLoading.RandomLoadTexture(Character);
 
         var Scale = 0.8f;
-        transform.localScale = new Vector3(Scale, Scale, Scale);
+        transform.localScale = new Vector3(Scale*1.5f, Scale, Scale);
     }
 	
 	// Update is called once per frame
