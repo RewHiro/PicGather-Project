@@ -29,14 +29,15 @@ public class HighLightManager : MonoBehaviour {
         IsHighLightMode = false;
         ThisImage = GetComponent<Image>();
 
-        iTween.ValueTo(gameObject, iTween.Hash("from", MinValue, "to", MaxValue, "time", LoopTime,"delay",DelayTime,"easetype",iTween.EaseType.easeInSine,"looptype",iTween.LoopType.pingPong, "onupdate", "UpdateHandler"));
     }
 	
+    void Update()
+    {
+    }
+
 	// Update is called once per frame
     private void UpdateHandler(float value)
     {
-        if (!IsHighLightMode) value = MinValue;
-
         ThisImage.color = new Color(value,value,value);
     }
 
@@ -46,6 +47,9 @@ public class HighLightManager : MonoBehaviour {
     public void AlreadyCheckedNewLeaf()
     {
         IsHighLightMode = false;
+        iTween.Stop(gameObject);
+        var value = MinValue;
+        ThisImage.color = new Color(value, value, value);
     }
 
     /// <summary>
@@ -59,5 +63,6 @@ public class HighLightManager : MonoBehaviour {
         if (!CampusTemplate.IsSelect || CCController.CharaManager.Name != "Leaf") return;
 
         IsHighLightMode = true;
+        iTween.ValueTo(gameObject, iTween.Hash("from", MinValue, "to", MaxValue, "time", LoopTime, "delay", DelayTime, "easetype", iTween.EaseType.easeInSine, "looptype", iTween.LoopType.pingPong, "onupdate", "UpdateHandler"));
     }
 }

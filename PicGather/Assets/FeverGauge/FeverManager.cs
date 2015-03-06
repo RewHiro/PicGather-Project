@@ -71,6 +71,7 @@ public class FeverManager : MonoBehaviour {
         {
             IsIncrease = false;
             Particle.Stop();
+            Sound.Play();
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -118,15 +119,15 @@ public class FeverManager : MonoBehaviour {
         if (FeverScore > MaxFeverScore && ModeManager.IsGameMode)
         {
             NumTimes++;
-            MaxFeverScore *= 3;
+            MaxFeverScore *= 2;
             FeverScore = MaxFeverScore;
 
             Data.Write(new FeverData(NumTimes, 0, MaxFeverScore));
             TreeChange.NextChange();
 
             IncreaseScore = 0;
+            Sound.Stop();
             ModeManager.ChangeFerverMode();
-            Sound.Play();
             UIEnabled.Unavailable();
             Ferver();
 
@@ -144,8 +145,6 @@ public class FeverManager : MonoBehaviour {
                 ModeManager.ChangeGameMode();
                 Sound.Stop();
                 UIEnabled.Enabled();
-
-                //AllSave.AllSave();
 
             }
 

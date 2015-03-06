@@ -125,7 +125,7 @@ public class TutorialManager : MonoBehaviour {
     public void SaveAndChangeCampusMode(bool _changed)
     {
         var TutorialMngr = FindObjectOfType<TutorialManager>();
-
+        
         if (TutorialMngr == null) return;
 
         var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;

@@ -13,21 +13,13 @@ public class TouchEffectScalng : MonoBehaviour
     [SerializeField]
     private float ChangingTime = 1.0f;
 
-    private Image ThisImage = null;
-
-    [SerializeField, Range(0.0f,1.0f)]
-    private float MinAlpha = 0.0f;
-    
-    [SerializeField, Range(0.0f, 1.0f)]
-    private float MaxAlpha = 1.0f;
-
 	// Use this for initialization
 	void Start () {
         transform.localScale = new Vector3(MinScale,MinScale,MinScale);
 
-        iTween.ScaleTo(gameObject, iTween.Hash("x", MaxScale, "y", MaxScale, "z", MaxScale, "time", ChangingTime, "easetype", iTween.EaseType.easeOutExpo));
+        iTween.ScaleTo(gameObject, iTween.Hash("x", MaxScale, "y", MaxScale, "z", MaxScale, "time", ChangingTime, "easetype", iTween.EaseType.easeOutQuad));
 
-        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0, "time", ChangingTime,"easetype",iTween.EaseType.easeInCubic));
+        iTween.FadeTo(gameObject, iTween.Hash("alpha", 0, "time", ChangingTime,"easetype",iTween.EaseType.easeInQuad));
 	
         Destroy(gameObject, ChangingTime);
 	}

@@ -50,7 +50,7 @@ public class StampListMover : MonoBehaviour {
 	void Update () {
 
         Opening();
-        //ChangeNonActive();
+        ChangeNonActive();
 
 	}
 

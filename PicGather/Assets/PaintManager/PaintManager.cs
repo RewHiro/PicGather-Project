@@ -22,6 +22,9 @@ public class PaintManager : MonoBehaviour {
     [SerializeField]
     GameObject campus = null;
 
+    [SerializeField]
+    SelectColorPenController SelectPen = null;
+
     GameObject characterCanvas = null;
     bool CanDrawing = false;
 
@@ -168,6 +171,7 @@ public class PaintManager : MonoBehaviour {
         lineCount = 1;
         isOver = false;
         lineColor = Color.black;
+        SelectPen.Init();
         CanDrawing = false;
     }
 
