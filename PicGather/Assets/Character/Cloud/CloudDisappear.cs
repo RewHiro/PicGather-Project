@@ -75,6 +75,7 @@ public class CloudDisappear : MonoBehaviour
         {
             var manager = GameObject.FindObjectOfType(typeof(CloudManagerController)) as CloudManagerController;
             manager.ChildrensDataSave();
+            manager.LimitCreateNumIncrease();
 
             Destroy(gameObject);
 

@@ -22,6 +22,8 @@ public class LeafStampManagerController : CharacterManager
     // Use this for initialization
     void Awake()
     {
+        LimitCreateNum = 100;
+
         Name = "Leaf";
         ID = 3;
         Init();

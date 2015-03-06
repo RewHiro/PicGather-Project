@@ -18,9 +18,11 @@ using System.IO;
 public class CharacterManager : MonoBehaviour
 {
     public int ID { get; protected set; }
+    public int LimitCreateNum { get; protected set; }
     public string Name { get; protected set; }
     public bool IsCreate { get { return (State == STATE.Create); } }
     public bool CanSave { get { return (State == STATE.None); } }
+    public bool CanDrawing { get; protected set; }
     public Texture2D CampusTexture { get; private set; }
 
     [SerializeField]
@@ -48,6 +50,8 @@ public class CharacterManager : MonoBehaviour
     /// </summary>
     public virtual void Init()
     {
+        CanDrawing = true;
+
         SaveData = GetComponent<CharacterDataWriting>();
         State = STATE.None;
         CampusTexture = null;
@@ -66,7 +70,6 @@ public class CharacterManager : MonoBehaviour
         var jsonText = LibForWinRT.ReadFileText(filePath).Result;
 
 #else
-        
         var folderpath = Application.persistentDataPath + "/Database/" ;
         var filePath = folderpath + Name + ".json";
         
@@ -107,6 +110,8 @@ public class CharacterManager : MonoBehaviour
         clone.transform.lossyScale.Scale(new Vector3(chara.Pos.X, chara.Pos.Y, chara.Pos.Z));
         TextureLoad(clone, chara);
         CreateChildrenDataSave(clone,chara.ID);
+
+        LimitCreate();
     }
 
     protected virtual void TextureLoad(GameObject clone,CharacterData chara)
@@ -146,11 +151,40 @@ public class CharacterManager : MonoBehaviour
     {
         if (State != STATE.None) return;
 
+        LimitCreate();
         ID++;
         State = STATE.Create;
         SaveData.Write(new CharacterData(ID, name,transform.position, transform.lossyScale));
-
+        
     }
+
+    /// <summary>
+    /// 限界生成処理
+    /// </summary>
+    void LimitCreate()
+    {
+        if (LimitCreateNum <= 0)
+        {
+            CanDrawing = false;
+            LimitCreateNum = 0;
+            return;
+        }
+        else
+        {
+            LimitCreateNum--;
+            Debug.Log(Name + " : " + LimitCreateNum);
+        }
+    }
+
+    /// <summary>
+    /// 生成できる数を増加
+    /// </summary>
+    public void LimitCreateNumIncrease()
+    {
+        CanDrawing = true;
+        LimitCreateNum++;
+    }
+
 
     /// <summary>
     /// テンプレート(Sample)を設定する
