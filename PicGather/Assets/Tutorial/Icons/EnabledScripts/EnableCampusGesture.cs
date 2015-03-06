@@ -62,6 +62,8 @@ public class EnableCampusGesture : MonoBehaviour
     {
         if (!TutorialMngr.IsCampusMode) return false;
 
+        if (CCController.CharaManager == null) return false;
+
         if (CampusTemplate.IsSelect)
         {
             if (!TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
@@ -92,6 +94,7 @@ public class EnableCampusGesture : MonoBehaviour
     private void AlreadyDrawnCheck()
     {
         if (!CampusTemplate.IsSelect) return;
+        if (CCController.CharaManager == null) return;
 
         if (Input.touchCount > 0)
         {

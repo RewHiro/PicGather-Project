@@ -62,6 +62,8 @@ public class EnableGesture : MonoBehaviour
     {
         if (!TutorialMngr.IsCampusMode) return false;
 
+        if (CCController.CharaManager == null) return false;
+
         if (CampusTemplate.IsSelect)
         {
             if (!TutorialMngr.AlreadyEndedList[(int)TutorialManager.TutorialList.DrawCloud] &&
@@ -92,6 +94,7 @@ public class EnableGesture : MonoBehaviour
     private void AlreadyDrawnCheck()
     {
         if (CampusTemplate.IsSelect == false) return;
+        if (CCController.CharaManager == null) return;
 
         if (Input.touchCount > 0)
         {
@@ -110,7 +113,6 @@ public class EnableGesture : MonoBehaviour
 
         }
         else return;
-
 
         switch(CCController.CharaManager.Name)
         {

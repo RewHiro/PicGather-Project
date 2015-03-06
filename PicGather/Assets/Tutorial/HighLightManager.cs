@@ -62,6 +62,8 @@ public class HighLightManager : MonoBehaviour {
         var CCController = FindObjectOfType(typeof(CampusCaptureController)) as CampusCaptureController;
         var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
 
+        if (CCController.CharaManager == null) return;
+
         if (!CampusTemplate.IsSelect || CCController.CharaManager.Name != "Leaf") return;
 
         IsHighLightMode = true;

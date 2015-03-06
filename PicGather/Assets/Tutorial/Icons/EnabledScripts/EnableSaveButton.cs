@@ -41,6 +41,7 @@ public class EnableSaveButton : MonoBehaviour
     /// <returns>満たしている...true 満たしていない...false</returns>
     private bool EnableImage()
     {
+        if (CCController.CharaManager == null) return false;
         if (!TutorialMngr.IsCampusMode) return false;
         if (CampusTemplate.IsSelect)
         if (CCController.CharaManager.Name == "Leaf" || CCController.CharaManager.Name == "Fairy" || CCController.CharaManager.Name == "Cloud")

@@ -60,6 +60,8 @@ public class CloudMover : MonoBehaviour {
 	
 	void Update () 
     {
+        if (ModeManager.IsDrawingMode) return;
+
         CircleRotation();
         AppearanceMove();
         NormalMove();

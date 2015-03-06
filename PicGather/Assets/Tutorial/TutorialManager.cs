@@ -83,7 +83,7 @@ public class TutorialManager : MonoBehaviour {
     public void ChangeState()
     {
         var CCController = FindObjectOfType<CampusCaptureController>();
-
+        if (CCController.CharaManager == null) return;
         var CampusTemplate = FindObjectOfType(typeof(CampusTemplateSetting)) as CampusTemplateSetting;
         if (CampusTemplate == null || CampusTemplate.IsSelect == false) return;
 
