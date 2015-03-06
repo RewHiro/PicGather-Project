@@ -17,7 +17,7 @@ public class CelestialBodyTouchEffecter : MonoBehaviour {
     {
         var clone = (GameObject)Instantiate(EffectPrefab, button.transform.position, Quaternion.identity);
         clone.transform.parent = transform;
-
+        iTween.ScaleTo(clone, Vector3.zero, 0);
         var resName = Random.Range(0, SoundResName.Count);
         Player.Play(SoundResName[resName]);
     }

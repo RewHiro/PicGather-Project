@@ -172,7 +172,6 @@ public class CharacterManager : MonoBehaviour
         else
         {
             LimitCreateNum--;
-            Debug.Log(Name + " : " + LimitCreateNum);
         }
     }
 

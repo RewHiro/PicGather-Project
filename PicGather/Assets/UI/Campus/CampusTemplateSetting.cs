@@ -15,9 +15,8 @@ public class CampusTemplateSetting : MonoBehaviour {
     Sprite NonSelectSprite = null;
 
     [SerializeField]
-    GameObject FrontPrefab = null;
+    GameObject FrontFace = null;
 
-    GameObject Clone = null;
     Image TemplateImage = null;
     public bool IsSelect { get; private set; }
 
@@ -35,7 +34,7 @@ public class CampusTemplateSetting : MonoBehaviour {
     {
         TemplateImage.sprite = templateSprite;
         IsSelect = true;
-        DestroyFront();
+        NonActiveFace();
     }
     
     /// <summary>
@@ -45,11 +44,7 @@ public class CampusTemplateSetting : MonoBehaviour {
     public void SetDoubleSprite(Sprite templateSprite)
     {
         TemplateImage.sprite = templateSprite;
-        Clone = (GameObject)Instantiate(FrontPrefab,transform.position,Quaternion.identity);
-        Clone.transform.parent = transform;
-        iTween.ScaleTo(Clone, new Vector3(1, 1, 1), 0);
-        Clone.renderer.sortingLayerName = "CampusFront";
-        Clone.renderer.sortingOrder = 10000000;
+        FrontFace.SetActive(true);
         IsSelect = true;
     }
     
@@ -61,14 +56,16 @@ public class CampusTemplateSetting : MonoBehaviour {
     {
         TemplateImage.sprite = NonSelectSprite;
         IsSelect = false;
-        DestroyFront();
+        NonActiveFace();
     }
 
-    void DestroyFront()
+    /// <summary>
+    /// 顔を非アクティブにする
+    /// </summary>
+    void NonActiveFace()
     {
-        if (Clone)
-        {
-            Destroy(Clone);
-        }
+        if (!FrontFace.activeSelf) return;
+     
+        FrontFace.SetActive(false);
     }
 }

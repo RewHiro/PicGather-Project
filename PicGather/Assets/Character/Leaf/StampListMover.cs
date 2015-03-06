@@ -30,6 +30,7 @@ public class StampListMover : MonoBehaviour {
     string CloseSoundResName = string.Empty;
 
     Animation MoveAnimation = null;
+    Vector3 ClosePos = Vector3.zero;
 
     public bool IsCreate { get { return (State == STATE.Stop); } }
     public bool IsClosed { get { return (State == STATE.Close); } }
@@ -40,17 +41,24 @@ public class StampListMover : MonoBehaviour {
 	void Start () {
         State = STATE.Close;
         MoveAnimation = GetComponent<Animation>();
+
+        var rectTrans = transform as RectTransform;
+        ClosePos = rectTrans.anchoredPosition3D;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (ModeManager.IsFerverMode || ModeManager.IsEventMode && State != STATE.Close)
-        {
-            CloseAnimation();
-            StampList.SetActive(false);
 
-        }
+        Opening();
+        //ChangeNonActive();
 
+	}
+
+    /// <summary>
+    /// 開いているとき
+    /// </summary>
+    void Opening()
+    {
         if (State == STATE.Open)
         {
             if (!MoveAnimation.isPlaying)
@@ -59,7 +67,21 @@ public class StampListMover : MonoBehaviour {
             }
         }
 
-	}
+    }
+
+    /// <summary>
+    /// 非アクティブ
+    /// </summary>
+    void ChangeNonActive()
+    {
+        if (!ModeManager.IsGameMode)
+        {
+            CloseAnimation();
+
+            if (!StampList.activeSelf) return;
+            StampList.SetActive(false);
+        }
+    }
 
     public void Open()
     {
@@ -67,7 +89,7 @@ public class StampListMover : MonoBehaviour {
         if (State != STATE.Close) return;
 
         State = STATE.Open;
-        MoveAnimation.PlayQueued(OpenAnimClip.name);
+        MoveAnimation.Blend(OpenAnimClip.name, 0.3f);
         SEPlayer.Play(OpenSoundResName);
 
         if (StampList.activeSelf) return;
@@ -85,10 +107,20 @@ public class StampListMover : MonoBehaviour {
 
     public void CloseAnimation()
     {
-        if (State != STATE.Stop) return;
+        if (State == STATE.Close) return;
 
         State = STATE.Close;
-        MoveAnimation.PlayQueued(CloseAnimClip.name);
+        MoveAnimation.Blend(CloseAnimClip.name, 0.3f);
     }
 
+    /// <summary>
+    /// 閉じるに切り替える
+    /// </summary>
+    public void ChangeClose()
+    {
+        State = STATE.Close;
+
+        var rectTrans = transform as RectTransform;
+        rectTrans.anchoredPosition3D = ClosePos;
+    }
 }

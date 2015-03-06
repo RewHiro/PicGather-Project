@@ -21,14 +21,11 @@ public class CanNotCharacterDrawing : MonoBehaviour {
     {
         if (!Manager.CanDrawing)
         {
-            Debug.Log(Manager.Name + " : NotDrawing");
             CharaButton.enabled = false;
             NotPrefab.SetActive(true);
         }
         else
         {
-            Debug.Log(Manager.Name + " : CanDrawing");
-
             CharaButton.enabled = true;
             NotPrefab.SetActive(false);
         }

@@ -139,11 +139,12 @@ public class DrawingCanvasSlider : MonoBehaviour {
         if (MoveAnimation.isPlaying) return;
 
         State = STATE.Open;
-        MoveAnimation.PlayQueued(OpenAnimClip.name);
-        UIModeChanger.Enable(false);
-        StampList.CloseAnimation();
+        MoveAnimation.Blend(OpenAnimClip.name, 0.3f);
+        StampList.ChangeClose();
         BGM.Stop();
         SEPlayer.Play(OpenSoundResName);
+        UIModeChanger.Enable(false);
+
     }
 
     /// <summary>
@@ -171,7 +172,7 @@ public class DrawingCanvasSlider : MonoBehaviour {
         if (MoveAnimation.isPlaying) return;
 
         State = STATE.Close;
-        MoveAnimation.PlayQueued(CloseAnimClip.name);
+        MoveAnimation.Blend(CloseAnimClip.name, 0.3f);
         SEPlayer.Play(resName);
     }
 
