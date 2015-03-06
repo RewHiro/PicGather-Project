@@ -169,11 +169,12 @@ public class FairyMover : MonoBehaviour {
         var value = gameObject.transform.lossyScale.x;
         FeverGauge.GetComponent<FeverManager>().AddScore(value);
 
-        var Manager = GameObject.FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
-        Manager.ChildrensDataSave();
+        var manager = GameObject.FindObjectOfType(typeof(FairyManagerController)) as FairyManagerController;
+        manager.LimitCreateNumIncrease();
+        manager.ChildrensDataSave();
 
-        var SEPlayer = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
-        SEPlayer.Play(FeverGaugeHitResName);
+        var sePlayer = GameObject.FindObjectOfType(typeof(SoundEffectPlayer)) as SoundEffectPlayer;
+        sePlayer.Play(FeverGaugeHitResName);
 
         Destroy(gameObject);
 

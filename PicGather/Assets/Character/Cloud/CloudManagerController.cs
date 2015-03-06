@@ -13,6 +13,8 @@ public class CloudManagerController : CharacterManager
 	// Use this for initialization
     void Awake()
     {
+        LimitCreateNum = 10;
+
         Name = "Cloud";
         Init();
     }
