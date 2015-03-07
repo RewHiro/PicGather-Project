@@ -37,7 +37,7 @@ public class PaintManager : MonoBehaviour {
     public readonly Vector2 valueAdjustment = new Vector2(3, 8);
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
-    public readonly Vector2 campusOffSet = new Vector2(250, 220);
+    public readonly Vector2 campusOffSet = new Vector2(276, 152);
 #else    
     public readonly Vector2 campusOffSet = new Vector2(140, 100);
 #endif
@@ -52,8 +52,8 @@ public class PaintManager : MonoBehaviour {
         campusSize = campus.GetComponent<RectTransform>().rect.size;
 
 #if UNITY_METRO_8_1 && !UNITY_EDITOR
-        campusSize.x -= 240;
-        campusSize.y -= 120;
+        campusSize.x -= 110;
+        campusSize.y -= 105;
 #else
         campusSize.x -= 250;
         campusSize.y -= 140;

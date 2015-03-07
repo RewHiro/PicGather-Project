@@ -16,7 +16,7 @@ public class EventIconController : MonoBehaviour {
         rectTrans = transform as RectTransform;
         rectTrans.sizeDelta.Set(100,100);
         rectTrans.anchoredPosition3D = new Vector3(0, 0, 0);
-        rectTrans.localScale = new Vector3(1, 1, 1);
+        rectTrans.localScale = new Vector3(0.5f, 0.5f, 1);
 
         Icon = GetComponent<Image>();
 
